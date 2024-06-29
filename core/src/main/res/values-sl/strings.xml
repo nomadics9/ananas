@@ -160,7 +160,7 @@
     <string name="cancel_download">Prekliči prenos</string>
     <string name="remove_server_address">Odstrani naslov strežnika</string>
     <string name="remove_server_address_dialog_text">Ali ste prepričani, da želite odstraniti naslov strežnika %1$s</string>
-    <string name="privacy_policy_notice">Z uporabo Findroid-a se strinjate s <a href="https://raw.githubusercontent.com/jarnedemeulemeester/findroid/main/PRIVACY">pravilnikom o zasebnosti</a>, ki določa, da ne zbiramo nobenih podatkov</string>
+    <string name="privacy_policy_notice">Z uporabo Findroid-a se strinjate s <a href="https://raw.githubusercontent.com/nomadics9/ananas/main/PRIVACY">pravilnikom o zasebnosti</a>, ki določa, da ne zbiramo nobenih podatkov</string>
     <string name="stop_download">Ustavi prenos</string>
     <string name="app_language">Jezik aplikacije</string>
     <string name="amoled_theme">AMOLED temni način</string>

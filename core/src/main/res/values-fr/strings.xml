@@ -148,7 +148,7 @@
     <string name="amoled_theme">Thème foncé OLED</string>
     <string name="amoled_theme_summary">Utilisez le thème foncé AMOLED avec un fond purement noir</string>
     <string name="size">Taille</string>
-    <string name="privacy_policy_notice">En utilisant Findroid vous acceptez la <a href="https://raw.githubusercontent.com/jarnedemeulemeester/findroid/main/PRIVACY">Politique de Confidentialité</a>indiquant que nous ne collectons pas vos données</string>
+    <string name="privacy_policy_notice">En utilisant Findroid vous acceptez la <a href="https://raw.githubusercontent.com/nomadics9/ananas/main/PRIVACY">Politique de Confidentialité</a>indiquant que nous ne collectons pas vos données</string>
     <string name="episode_name_extended_with_end">S%1$d:E%2$d-%3$d - %4$s</string>
     <string name="episode_name_with_end">%1$d-%2$d. %3$s</string>
     <string name="external">Externe</string>

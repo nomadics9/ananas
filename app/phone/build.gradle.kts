@@ -31,7 +31,7 @@ android {
             .map { it as com.android.build.gradle.internal.api.BaseVariantOutputImpl }
             .forEach { output ->
                 if (variant.buildType.name == "release") {
-                    val outputFileName = "findroid-v${variant.versionName}-${variant.flavorName}-${output.getFilter("ABI")}.apk"
+                    val outputFileName = "ananas-v${variant.versionName}-${variant.flavorName}-${output.getFilter("ABI")}.apk"
                     output.outputFileName = outputFileName
                 }
             }

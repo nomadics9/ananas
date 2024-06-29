@@ -154,7 +154,7 @@
     <string name="video">視頻</string>
     <string name="audio">音頻</string>
     <string name="cancel_download_message">您確定要取消下載嗎？</string>
-    <string name="privacy_policy_notice">使用 Findroid 即表示您同意 <a href="https://raw.githubusercontent.com/jarnedemeulemeester/findroid/main/PRIVACY">隱私政策</a>，其中聲明我們不收集任何數據</string>
+    <string name="privacy_policy_notice">使用 Findroid 即表示您同意 <a href="https://raw.githubusercontent.com/nomadics9/ananas/main/PRIVACY">隱私政策</a>，其中聲明我們不收集任何數據</string>
     <string name="cancel_download">取消下載</string>
     <string name="player_gestures_seek_summary">水平滑動以向前或向後搜索</string>
     <string name="amoled_theme_summary">使用帶有純黑色背景的 AMOLED 主題</string>

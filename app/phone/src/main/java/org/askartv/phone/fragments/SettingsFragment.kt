@@ -45,7 +45,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
         findPreference<Preference>("privacyPolicy")?.setOnPreferenceClickListener {
             val intent = Intent(
                 Intent.ACTION_VIEW,
-                Uri.parse("https://github.com/jarnedemeulemeester/findroid/blob/main/PRIVACY"),
+                Uri.parse("https://github.com/nomadics9/ananas/blob/main/PRIVACY"),
             )
             startActivity(intent)
             true

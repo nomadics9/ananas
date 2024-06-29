@@ -1,6 +1,6 @@
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
-rootProject.name = "askarfin"
+rootProject.name = "ananas"
 
 include(":app:phone")
 include(":app:tv")
