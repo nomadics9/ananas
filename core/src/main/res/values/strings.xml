@@ -1,6 +1,6 @@
 <resources>
-    <string name="app_name" translatable="false">Alaskarfin</string>
-    <string name="app_description">AlaskarTV Phone version app</string>
+    <string name="app_name" translatable="false">AnanasTV</string>
+    <string name="app_description">Ananas app</string>
     <string name="jellyfin_banner">Jellyfin banner</string>
     <string name="add_server">Add server</string>
     <string name="add_server_error_outdated">Server version outdated: %1$s. Please update your server</string>
@@ -145,7 +145,7 @@
     <string name="pref_player_mpv_vo">Video output</string>
     <string name="pref_player_mpv_ao">Audio output</string>
     <string name="pref_player_intro_skipper">Intro Skipper</string>
-    <string name="pref_player_intro_skipper_summary">Requires ConfusedPolarBear\'s Intro Skipper plugin to be installed on the server</string>
+    <string name="pref_player_intro_skipper_summary">Enables "Skip Intro" button</string>
     <string name="pref_player_trickplay">Trickplay</string>
     <string name="pref_player_trickplay_summary">Display preview images while scrubbing</string>
     <string name="pref_player_chapter_markers">Chapter markers</string>
@@ -171,7 +171,7 @@
     <string name="offline_mode_go_online">Go online</string>
     <string name="downloading_error">Error while downloading</string>
     <string name="not_enough_storage">This item requires %1$s of free storage but only %2$s is available</string>
-    <string name="no_server_connection">No connection to the Jellyfin server, to watch offline enable Offline Mode</string>
+    <string name="no_server_connection">No connection to AlaskarTV server, to watch offline enable Offline Mode</string>
     <string name="select_storage_location">Select storage location</string>
     <string name="storage_unavailable">Storage location is unavailable</string>
     <string name="internal">Internal</string>
@@ -181,7 +181,7 @@
     <string name="cancel_download">Cancel download</string>
     <string name="cancel_download_message">Are you sure you want to cancel the download?</string>
     <string name="stop_download">Stop download</string>
-    <string name="privacy_policy_notice">By using AlaskarTV you agree with the <a href='https://raw.githubusercontent.com/nomadics9/ananas/main/PRIVACY'>Privacy Policy</a> which states that we do not collect any data</string>
+    <string name="privacy_policy_notice">By using Ananas you agree with the <a href='https://raw.githubusercontent.com/nomadics9/ananas/main/PRIVACY'>Privacy Policy</a> which states that we do not collect any data</string>
     <string name="no_servers_found">No servers found</string>
     <string name="no_users_found">No users found</string>
     <string name="select_user">Select user</string>
