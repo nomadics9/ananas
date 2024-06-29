@@ -33,7 +33,7 @@ constructor(
     // Appearance
     val theme get() = sharedPreferences.getString(Constants.PREF_THEME, null)
     val dynamicColors get() = sharedPreferences.getBoolean(Constants.PREF_DYNAMIC_COLORS, true)
-    val amoledTheme get() = sharedPreferences.getBoolean(Constants.PREF_AMOLED_THEME, false)
+    val amoledTheme get() = sharedPreferences.getBoolean(Constants.PREF_AMOLED_THEME, true)
     var displayExtraInfo: Boolean
         get() = sharedPreferences.getBoolean(Constants.PREF_DISPLAY_EXTRA_INFO, false)
         set(value) {
@@ -73,7 +73,7 @@ constructor(
         Constants.PREF_PLAYER_SEEK_FORWARD_INC,
         DEFAULT_SEEK_FORWARD_INCREMENT_MS.toString(),
     )!!.toLongOrNull() ?: DEFAULT_SEEK_FORWARD_INCREMENT_MS
-    val playerMpv get() = sharedPreferences.getBoolean(Constants.PREF_PLAYER_MPV, false)
+    val playerMpv get() = sharedPreferences.getBoolean(Constants.PREF_PLAYER_MPV, true)
     val playerMpvHwdec get() = sharedPreferences.getString(Constants.PREF_PLAYER_MPV_HWDEC, "mediacodec")!!
     val playerMpvVo get() = sharedPreferences.getString(Constants.PREF_PLAYER_MPV_VO, "gpu-next")!!
     val playerMpvAo get() = sharedPreferences.getString(Constants.PREF_PLAYER_MPV_AO, "audiotrack")!!
