@@ -8,7 +8,7 @@ plugins {
 }
 
 android {
-    namespace = "org.askartv.phone.player.video"
+    namespace = "com.nomadics9.ananas.player.video"
     compileSdk = Versions.compileSdk
     buildToolsVersion = Versions.buildTools
 

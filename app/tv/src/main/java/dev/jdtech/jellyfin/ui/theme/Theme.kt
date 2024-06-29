@@ -1,4 +1,4 @@
-package org.askartv.phone.ui.theme
+package com.nomadics9.ananas.ui.theme
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box

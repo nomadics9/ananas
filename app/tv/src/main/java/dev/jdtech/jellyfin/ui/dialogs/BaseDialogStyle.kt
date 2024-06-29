@@ -1,4 +1,4 @@
-package org.askartv.phone.ui.dialogs
+package com.nomadics9.ananas.ui.dialogs
 
 import androidx.compose.ui.window.DialogProperties
 import com.ramcosta.composedestinations.spec.DestinationStyle

@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <Preference
-        app:fragment="org.askartv.phone.fragments.SettingsLanguageFragment"
+        app:fragment="com.nomadics9.ananas.fragments.SettingsLanguageFragment"
         app:title="@string/settings_category_language"
         app:icon="@drawable/ic_languages"/>
 
@@ -23,32 +23,32 @@
         app:title="@string/addresses" />
 
     <Preference
-        app:fragment="org.askartv.phone.fragments.SettingsAppearanceFragment"
+        app:fragment="com.nomadics9.ananas.fragments.SettingsAppearanceFragment"
         app:icon="@drawable/ic_palette"
         app:title="@string/settings_category_appearance" />
 
     <Preference
-        app:fragment="org.askartv.phone.fragments.SettingsDownloadsFragment"
+        app:fragment="com.nomadics9.ananas.fragments.SettingsDownloadsFragment"
         app:icon="@drawable/ic_download"
         app:title="@string/settings_category_download"/>
 
     <Preference
-        app:fragment="org.askartv.phone.fragments.SettingsPlayerFragment"
+        app:fragment="com.nomadics9.ananas.fragments.SettingsPlayerFragment"
         app:icon="@drawable/ic_play"
         app:title="@string/settings_category_player" />
 
     <Preference
-        app:fragment="org.askartv.phone.fragments.SettingsDeviceFragment"
+        app:fragment="com.nomadics9.ananas.fragments.SettingsDeviceFragment"
         app:title="@string/settings_category_device"
         app:icon="@drawable/ic_smartphone" />
 
     <Preference
-        app:fragment="org.askartv.phone.fragments.SettingsNetworkFragment"
+        app:fragment="com.nomadics9.ananas.fragments.SettingsNetworkFragment"
         app:title="@string/settings_category_network"
         app:icon="@drawable/ic_network"/>
 
     <Preference
-        app:fragment="org.askartv.phone.fragments.SettingsCacheFragment"
+        app:fragment="com.nomadics9.ananas.fragments.SettingsCacheFragment"
         app:title="@string/settings_category_cache" />
 
     <SwitchPreferenceCompat

@@ -1,4 +1,4 @@
-package org.askartv.phone.ui
+package com.nomadics9.ananas.ui
 
 import android.content.Intent
 import android.net.Uri
@@ -56,21 +56,21 @@ import androidx.tv.material3.Text
 import coil.compose.AsyncImage
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
-import org.askartv.phone.destinations.PlayerActivityDestination
-import org.askartv.phone.destinations.SeasonScreenDestination
-import org.askartv.phone.models.FindroidSeason
-import org.askartv.phone.ui.components.Direction
-import org.askartv.phone.ui.components.ItemCard
-import org.askartv.phone.ui.dummy.dummyShow
-import org.askartv.phone.ui.theme.FindroidTheme
-import org.askartv.phone.ui.theme.Yellow
-import org.askartv.phone.ui.theme.spacings
-import org.askartv.phone.utils.ObserveAsEvents
-import org.askartv.phone.viewmodels.PlayerItemsEvent
-import org.askartv.phone.viewmodels.PlayerViewModel
-import org.askartv.phone.viewmodels.ShowViewModel
+import com.nomadics9.ananas.destinations.PlayerActivityDestination
+import com.nomadics9.ananas.destinations.SeasonScreenDestination
+import com.nomadics9.ananas.models.FindroidSeason
+import com.nomadics9.ananas.ui.components.Direction
+import com.nomadics9.ananas.ui.components.ItemCard
+import com.nomadics9.ananas.ui.dummy.dummyShow
+import com.nomadics9.ananas.ui.theme.FindroidTheme
+import com.nomadics9.ananas.ui.theme.Yellow
+import com.nomadics9.ananas.ui.theme.spacings
+import com.nomadics9.ananas.utils.ObserveAsEvents
+import com.nomadics9.ananas.viewmodels.PlayerItemsEvent
+import com.nomadics9.ananas.viewmodels.PlayerViewModel
+import com.nomadics9.ananas.viewmodels.ShowViewModel
 import java.util.UUID
-import org.askartv.phone.core.R as CoreR
+import com.nomadics9.ananas.core.R as CoreR
 
 @Destination
 @Composable

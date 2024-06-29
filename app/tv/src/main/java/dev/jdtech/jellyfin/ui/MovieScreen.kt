@@ -1,4 +1,4 @@
-package org.askartv.phone.ui
+package com.nomadics9.ananas.ui
 
 import android.content.Intent
 import android.net.Uri
@@ -46,24 +46,24 @@ import androidx.tv.material3.Text
 import coil.compose.AsyncImage
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
-import org.askartv.phone.destinations.PlayerActivityDestination
-import org.askartv.phone.models.AudioChannel
-import org.askartv.phone.models.AudioCodec
-import org.askartv.phone.models.DisplayProfile
-import org.askartv.phone.models.Resolution
-import org.askartv.phone.models.VideoMetadata
-import org.askartv.phone.ui.dummy.dummyMovie
-import org.askartv.phone.ui.theme.FindroidTheme
-import org.askartv.phone.ui.theme.Yellow
-import org.askartv.phone.ui.theme.spacings
-import org.askartv.phone.utils.ObserveAsEvents
-import org.askartv.phone.viewmodels.MovieViewModel
-import org.askartv.phone.viewmodels.PlayerItemsEvent
-import org.askartv.phone.viewmodels.PlayerViewModel
+import com.nomadics9.ananas.destinations.PlayerActivityDestination
+import com.nomadics9.ananas.models.AudioChannel
+import com.nomadics9.ananas.models.AudioCodec
+import com.nomadics9.ananas.models.DisplayProfile
+import com.nomadics9.ananas.models.Resolution
+import com.nomadics9.ananas.models.VideoMetadata
+import com.nomadics9.ananas.ui.dummy.dummyMovie
+import com.nomadics9.ananas.ui.theme.FindroidTheme
+import com.nomadics9.ananas.ui.theme.Yellow
+import com.nomadics9.ananas.ui.theme.spacings
+import com.nomadics9.ananas.utils.ObserveAsEvents
+import com.nomadics9.ananas.viewmodels.MovieViewModel
+import com.nomadics9.ananas.viewmodels.PlayerItemsEvent
+import com.nomadics9.ananas.viewmodels.PlayerViewModel
 import org.jellyfin.sdk.model.api.BaseItemPerson
 import org.jellyfin.sdk.model.api.PersonKind
 import java.util.UUID
-import org.askartv.phone.core.R as CoreR
+import com.nomadics9.ananas.core.R as CoreR
 
 @Destination
 @Composable

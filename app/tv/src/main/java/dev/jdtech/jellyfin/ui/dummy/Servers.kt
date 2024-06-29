@@ -1,7 +1,7 @@
-package org.askartv.phone.ui.dummy
+package com.nomadics9.ananas.ui.dummy
 
-import org.askartv.phone.models.DiscoveredServer
-import org.askartv.phone.models.Server
+import com.nomadics9.ananas.models.DiscoveredServer
+import com.nomadics9.ananas.models.Server
 import java.util.UUID
 
 val dummyDiscoveredServer = DiscoveredServer(

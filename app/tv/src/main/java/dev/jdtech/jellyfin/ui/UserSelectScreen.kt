@@ -1,4 +1,4 @@
-package org.askartv.phone.ui
+package com.nomadics9.ananas.ui
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
@@ -43,22 +43,22 @@ import coil.request.ImageRequest
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.ramcosta.composedestinations.navigation.popUpTo
-import org.askartv.phone.NavGraphs
-import org.askartv.phone.api.JellyfinApi
-import org.askartv.phone.destinations.LoginScreenDestination
-import org.askartv.phone.destinations.MainScreenDestination
-import org.askartv.phone.models.Server
-import org.askartv.phone.models.User
-import org.askartv.phone.ui.dummy.dummyServer
-import org.askartv.phone.ui.dummy.dummyUser
-import org.askartv.phone.ui.dummy.dummyUsers
-import org.askartv.phone.ui.theme.FindroidTheme
-import org.askartv.phone.ui.theme.spacings
-import org.askartv.phone.utils.ObserveAsEvents
-import org.askartv.phone.viewmodels.UserSelectEvent
-import org.askartv.phone.viewmodels.UserSelectViewModel
+import com.nomadics9.ananas.NavGraphs
+import com.nomadics9.ananas.api.JellyfinApi
+import com.nomadics9.ananas.destinations.LoginScreenDestination
+import com.nomadics9.ananas.destinations.MainScreenDestination
+import com.nomadics9.ananas.models.Server
+import com.nomadics9.ananas.models.User
+import com.nomadics9.ananas.ui.dummy.dummyServer
+import com.nomadics9.ananas.ui.dummy.dummyUser
+import com.nomadics9.ananas.ui.dummy.dummyUsers
+import com.nomadics9.ananas.ui.theme.FindroidTheme
+import com.nomadics9.ananas.ui.theme.spacings
+import com.nomadics9.ananas.utils.ObserveAsEvents
+import com.nomadics9.ananas.viewmodels.UserSelectEvent
+import com.nomadics9.ananas.viewmodels.UserSelectViewModel
 import org.jellyfin.sdk.model.api.ImageType
-import org.askartv.phone.core.R as CoreR
+import com.nomadics9.ananas.core.R as CoreR
 
 @Destination
 @Composable

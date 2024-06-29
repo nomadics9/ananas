@@ -9,12 +9,12 @@ plugins {
 }
 
 android {
-    namespace = "org.askartv.phone"
+    namespace = "com.nomadics9.ananas"
     compileSdk = Versions.compileSdk
     buildToolsVersion = Versions.buildTools
 
     defaultConfig {
-        applicationId = "org.askartv.phone"
+        applicationId = "com.nomadics9.ananas"
         minSdk = Versions.minSdk
         targetSdk = Versions.targetSdk
 

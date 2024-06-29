@@ -1,4 +1,4 @@
-package org.askartv.phone.ui.components
+package com.nomadics9.ananas.ui.components
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Box
@@ -26,10 +26,10 @@ import androidx.tv.material3.ClickableSurfaceScale
 import androidx.tv.material3.MaterialTheme
 import androidx.tv.material3.Surface
 import androidx.tv.material3.Text
-import org.askartv.phone.models.FindroidEpisode
-import org.askartv.phone.ui.dummy.dummyEpisode
-import org.askartv.phone.ui.theme.FindroidTheme
-import org.askartv.phone.ui.theme.spacings
+import com.nomadics9.ananas.models.FindroidEpisode
+import com.nomadics9.ananas.ui.dummy.dummyEpisode
+import com.nomadics9.ananas.ui.theme.FindroidTheme
+import com.nomadics9.ananas.ui.theme.spacings
 
 @Composable
 fun EpisodeCard(
@@ -76,7 +76,7 @@ fun EpisodeCard(
             Column {
                 Text(
                     text = stringResource(
-                        id = org.askartv.phone.core.R.string.episode_name,
+                        id = com.nomadics9.ananas.core.R.string.episode_name,
                         episode.indexNumber,
                         episode.name,
                     ),

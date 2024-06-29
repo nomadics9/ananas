@@ -1,4 +1,4 @@
-package org.askartv.phone.ui
+package com.nomadics9.ananas.ui
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -38,13 +38,13 @@ import androidx.tv.material3.MaterialTheme
 import androidx.tv.material3.Text
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
-import org.askartv.phone.destinations.LoginScreenDestination
-import org.askartv.phone.ui.theme.FindroidTheme
-import org.askartv.phone.ui.theme.spacings
-import org.askartv.phone.utils.ObserveAsEvents
-import org.askartv.phone.viewmodels.AddServerEvent
-import org.askartv.phone.viewmodels.AddServerViewModel
-import org.askartv.phone.core.R as CoreR
+import com.nomadics9.ananas.destinations.LoginScreenDestination
+import com.nomadics9.ananas.ui.theme.FindroidTheme
+import com.nomadics9.ananas.ui.theme.spacings
+import com.nomadics9.ananas.utils.ObserveAsEvents
+import com.nomadics9.ananas.viewmodels.AddServerEvent
+import com.nomadics9.ananas.viewmodels.AddServerViewModel
+import com.nomadics9.ananas.core.R as CoreR
 
 @Destination
 @Composable

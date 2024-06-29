@@ -1,4 +1,4 @@
-package org.askartv.phone.ui.components.player
+package com.nomadics9.ananas.ui.components.player
 
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsFocusedAsState

@@ -1,4 +1,4 @@
-package org.askartv.phone
+package com.nomadics9.ananas
 
 import android.app.Application
 import coil.ImageLoader

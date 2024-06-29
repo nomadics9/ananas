@@ -1,4 +1,4 @@
-package org.askartv.phone
+package com.nomadics9.ananas
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -6,11 +6,11 @@ import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import com.ramcosta.composedestinations.DestinationsNavHost
 import dagger.hilt.android.AndroidEntryPoint
-import org.askartv.phone.database.ServerDatabaseDao
-import org.askartv.phone.destinations.AddServerScreenDestination
-import org.askartv.phone.destinations.LoginScreenDestination
-import org.askartv.phone.ui.theme.FindroidTheme
-import org.askartv.phone.viewmodels.MainViewModel
+import com.nomadics9.ananas.database.ServerDatabaseDao
+import com.nomadics9.ananas.destinations.AddServerScreenDestination
+import com.nomadics9.ananas.destinations.LoginScreenDestination
+import com.nomadics9.ananas.ui.theme.FindroidTheme
+import com.nomadics9.ananas.viewmodels.MainViewModel
 import javax.inject.Inject
 
 @AndroidEntryPoint

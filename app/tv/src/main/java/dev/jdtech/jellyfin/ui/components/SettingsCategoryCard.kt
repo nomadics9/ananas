@@ -1,4 +1,4 @@
-package org.askartv.phone.ui.components
+package com.nomadics9.ananas.ui.components
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Column
@@ -25,10 +25,10 @@ import androidx.tv.material3.Icon
 import androidx.tv.material3.MaterialTheme
 import androidx.tv.material3.Surface
 import androidx.tv.material3.Text
-import org.askartv.phone.models.PreferenceCategory
-import org.askartv.phone.ui.theme.FindroidTheme
-import org.askartv.phone.ui.theme.spacings
-import org.askartv.phone.core.R as CoreR
+import com.nomadics9.ananas.models.PreferenceCategory
+import com.nomadics9.ananas.ui.theme.FindroidTheme
+import com.nomadics9.ananas.ui.theme.spacings
+import com.nomadics9.ananas.core.R as CoreR
 
 @Composable
 fun SettingsCategoryCard(

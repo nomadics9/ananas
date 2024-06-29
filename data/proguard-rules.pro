@@ -39,4 +39,4 @@
 #    static <1>$$serializer INSTANCE;
 #}
 
--keepnames class org.askartv.phone.models.CollectionType
+-keepnames class com.nomadics9.ananas.models.CollectionType

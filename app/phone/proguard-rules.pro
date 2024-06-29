@@ -20,16 +20,16 @@
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
 
--keepnames class org.askartv.phone.models.PlayerItem
+-keepnames class com.nomadics9.ananas.models.PlayerItem
 
 # ProGuard thinks all SettingsFragments are unused
--keep class org.askartv.phone.fragments.SettingsLanguageFragment
--keep class org.askartv.phone.fragments.SettingsAppearanceFragment
--keep class org.askartv.phone.fragments.SettingsDownloadsFragment
--keep class org.askartv.phone.fragments.SettingsPlayerFragment
--keep class org.askartv.phone.fragments.SettingsDeviceFragment
--keep class org.askartv.phone.fragments.SettingsCacheFragment
--keep class org.askartv.phone.fragments.SettingsNetworkFragment
+-keep class com.nomadics9.ananas.fragments.SettingsLanguageFragment
+-keep class com.nomadics9.ananas.fragments.SettingsAppearanceFragment
+-keep class com.nomadics9.ananas.fragments.SettingsDownloadsFragment
+-keep class com.nomadics9.ananas.fragments.SettingsPlayerFragment
+-keep class com.nomadics9.ananas.fragments.SettingsDeviceFragment
+-keep class com.nomadics9.ananas.fragments.SettingsCacheFragment
+-keep class com.nomadics9.ananas.fragments.SettingsNetworkFragment
 
 # These classes are from okhttp and are not used in Android
 -dontwarn org.bouncycastle.jsse.BCSSLSocket

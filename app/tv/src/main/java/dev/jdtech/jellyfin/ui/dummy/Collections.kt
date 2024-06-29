@@ -1,8 +1,8 @@
-package org.askartv.phone.ui.dummy
+package com.nomadics9.ananas.ui.dummy
 
-import org.askartv.phone.models.CollectionType
-import org.askartv.phone.models.FindroidCollection
-import org.askartv.phone.models.FindroidImages
+import com.nomadics9.ananas.models.CollectionType
+import com.nomadics9.ananas.models.FindroidCollection
+import com.nomadics9.ananas.models.FindroidImages
 import java.util.UUID
 
 private val dummyMoviesCollection = FindroidCollection(

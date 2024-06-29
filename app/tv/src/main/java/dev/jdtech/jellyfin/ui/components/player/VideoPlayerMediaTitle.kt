@@ -1,4 +1,4 @@
-package org.askartv.phone.ui.components.player
+package com.nomadics9.ananas.ui.components.player
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
@@ -6,7 +6,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.tv.material3.MaterialTheme
 import androidx.tv.material3.Text
-import org.askartv.phone.ui.theme.FindroidTheme
+import com.nomadics9.ananas.ui.theme.FindroidTheme
 
 @Composable
 fun VideoPlayerMediaTitle(

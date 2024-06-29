@@ -1,4 +1,4 @@
-package org.askartv.phone.ui.components.player
+package com.nomadics9.ananas.ui.components.player
 
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.Canvas
@@ -26,8 +26,8 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.tv.material3.MaterialTheme
-import org.askartv.phone.ui.theme.FindroidTheme
-import org.askartv.phone.utils.handleDPadKeyEvents
+import com.nomadics9.ananas.ui.theme.FindroidTheme
+import com.nomadics9.ananas.utils.handleDPadKeyEvents
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable

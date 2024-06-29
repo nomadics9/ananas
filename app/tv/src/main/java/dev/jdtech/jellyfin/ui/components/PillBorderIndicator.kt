@@ -1,4 +1,4 @@
-package org.askartv.phone.ui.components
+package com.nomadics9.ananas.ui.components
 
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.animateDpAsState

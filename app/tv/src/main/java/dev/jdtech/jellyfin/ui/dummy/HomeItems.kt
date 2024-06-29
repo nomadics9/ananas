@@ -1,10 +1,10 @@
-package org.askartv.phone.ui.dummy
+package com.nomadics9.ananas.ui.dummy
 
-import org.askartv.phone.models.CollectionType
-import org.askartv.phone.models.HomeItem
-import org.askartv.phone.models.HomeSection
-import org.askartv.phone.models.UiText
-import org.askartv.phone.models.View
+import com.nomadics9.ananas.models.CollectionType
+import com.nomadics9.ananas.models.HomeItem
+import com.nomadics9.ananas.models.HomeSection
+import com.nomadics9.ananas.models.UiText
+import com.nomadics9.ananas.models.View
 import java.util.UUID
 
 val dummyHomeItems = listOf(

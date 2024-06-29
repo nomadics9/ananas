@@ -1,4 +1,4 @@
-package org.askartv.phone.ui
+package com.nomadics9.ananas.ui
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
@@ -26,24 +26,24 @@ import androidx.tv.material3.MaterialTheme
 import androidx.tv.material3.Text
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
-import org.askartv.phone.destinations.MovieScreenDestination
-import org.askartv.phone.destinations.PlayerActivityDestination
-import org.askartv.phone.destinations.ShowScreenDestination
-import org.askartv.phone.models.FindroidEpisode
-import org.askartv.phone.models.FindroidItem
-import org.askartv.phone.models.FindroidMovie
-import org.askartv.phone.models.FindroidShow
-import org.askartv.phone.models.HomeItem
-import org.askartv.phone.ui.components.Direction
-import org.askartv.phone.ui.components.ItemCard
-import org.askartv.phone.ui.dummy.dummyHomeItems
-import org.askartv.phone.ui.theme.FindroidTheme
-import org.askartv.phone.ui.theme.spacings
-import org.askartv.phone.utils.ObserveAsEvents
-import org.askartv.phone.viewmodels.HomeViewModel
-import org.askartv.phone.viewmodels.PlayerItemsEvent
-import org.askartv.phone.viewmodels.PlayerViewModel
-import org.askartv.phone.core.R as CoreR
+import com.nomadics9.ananas.destinations.MovieScreenDestination
+import com.nomadics9.ananas.destinations.PlayerActivityDestination
+import com.nomadics9.ananas.destinations.ShowScreenDestination
+import com.nomadics9.ananas.models.FindroidEpisode
+import com.nomadics9.ananas.models.FindroidItem
+import com.nomadics9.ananas.models.FindroidMovie
+import com.nomadics9.ananas.models.FindroidShow
+import com.nomadics9.ananas.models.HomeItem
+import com.nomadics9.ananas.ui.components.Direction
+import com.nomadics9.ananas.ui.components.ItemCard
+import com.nomadics9.ananas.ui.dummy.dummyHomeItems
+import com.nomadics9.ananas.ui.theme.FindroidTheme
+import com.nomadics9.ananas.ui.theme.spacings
+import com.nomadics9.ananas.utils.ObserveAsEvents
+import com.nomadics9.ananas.viewmodels.HomeViewModel
+import com.nomadics9.ananas.viewmodels.PlayerItemsEvent
+import com.nomadics9.ananas.viewmodels.PlayerViewModel
+import com.nomadics9.ananas.core.R as CoreR
 
 @Destination
 @Composable

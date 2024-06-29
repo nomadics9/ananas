@@ -1,6 +1,6 @@
-package org.askartv.phone.ui.dummy
+package com.nomadics9.ananas.ui.dummy
 
-import org.askartv.phone.models.User
+import com.nomadics9.ananas.models.User
 import java.util.UUID
 
 val dummyUser = User(

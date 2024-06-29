@@ -1,7 +1,7 @@
-package org.askartv.phone.ui.dummy
+package com.nomadics9.ananas.ui.dummy
 
-import org.askartv.phone.models.FindroidImages
-import org.askartv.phone.models.FindroidShow
+import com.nomadics9.ananas.models.FindroidImages
+import com.nomadics9.ananas.models.FindroidShow
 import java.time.LocalDateTime
 import java.util.UUID
 

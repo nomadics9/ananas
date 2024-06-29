@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "org.askartv.phone.preferences"
+    namespace = "com.nomadics9.ananas.preferences"
     compileSdk = Versions.compileSdk
     buildToolsVersion = Versions.buildTools
 

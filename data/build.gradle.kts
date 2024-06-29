@@ -7,7 +7,7 @@ plugins {
 }
 
 android {
-    namespace = "org.askartv.phone.data"
+    namespace = "com.nomadics9.ananas.data"
     compileSdk = Versions.compileSdk
     buildToolsVersion = Versions.buildTools
 

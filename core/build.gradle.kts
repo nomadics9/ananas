@@ -10,7 +10,7 @@ plugins {
 }
 
 android {
-    namespace = "org.askartv.phone.core"
+    namespace = "com.nomadics9.ananas.core"
     compileSdk = Versions.compileSdk
     buildToolsVersion = Versions.buildTools
 

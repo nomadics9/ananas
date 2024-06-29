@@ -1,4 +1,4 @@
-package org.askartv.phone.ui
+package com.nomadics9.ananas.ui
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
@@ -40,17 +40,17 @@ import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootNavGraph
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.ramcosta.composedestinations.navigation.EmptyDestinationsNavigator
-import org.askartv.phone.destinations.SettingsScreenDestination
-import org.askartv.phone.models.User
-import org.askartv.phone.ui.components.LoadingIndicator
-import org.askartv.phone.ui.components.PillBorderIndicator
-import org.askartv.phone.ui.components.ProfileButton
-import org.askartv.phone.ui.dummy.dummyServer
-import org.askartv.phone.ui.dummy.dummyUser
-import org.askartv.phone.ui.theme.FindroidTheme
-import org.askartv.phone.ui.theme.spacings
-import org.askartv.phone.viewmodels.MainViewModel
-import org.askartv.phone.core.R as CoreR
+import com.nomadics9.ananas.destinations.SettingsScreenDestination
+import com.nomadics9.ananas.models.User
+import com.nomadics9.ananas.ui.components.LoadingIndicator
+import com.nomadics9.ananas.ui.components.PillBorderIndicator
+import com.nomadics9.ananas.ui.components.ProfileButton
+import com.nomadics9.ananas.ui.dummy.dummyServer
+import com.nomadics9.ananas.ui.dummy.dummyUser
+import com.nomadics9.ananas.ui.theme.FindroidTheme
+import com.nomadics9.ananas.ui.theme.spacings
+import com.nomadics9.ananas.viewmodels.MainViewModel
+import com.nomadics9.ananas.core.R as CoreR
 
 @RootNavGraph(start = true)
 @Destination

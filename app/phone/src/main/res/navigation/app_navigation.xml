@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="org.askartv.phone.fragments.HomeFragment"
+        android:name="com.nomadics9.ananas.fragments.HomeFragment"
         android:label="@string/title_home"
         tools:layout="@layout/fragment_home">
         <action
@@ -53,7 +53,7 @@
 
     <fragment
         android:id="@+id/mediaFragment"
-        android:name="org.askartv.phone.fragments.MediaFragment"
+        android:name="com.nomadics9.ananas.fragments.MediaFragment"
         android:label="@string/title_media"
         tools:layout="@layout/fragment_media">
         <action
@@ -70,7 +70,7 @@
 
     <fragment
         android:id="@+id/twoPaneSettingsFragment"
-        android:name="org.askartv.phone.fragments.TwoPaneSettingsFragment"
+        android:name="com.nomadics9.ananas.fragments.TwoPaneSettingsFragment"
         android:label="@string/title_settings">
         <action
             android:id="@+id/action_navigation_settings_to_serverSelectFragment"
@@ -87,10 +87,10 @@
     </fragment>
     <fragment
         android:id="@+id/settingsFragment"
-        android:name="org.askartv.phone.fragments.SettingsFragment" />
+        android:name="com.nomadics9.ananas.fragments.SettingsFragment" />
     <fragment
         android:id="@+id/libraryFragment"
-        android:name="org.askartv.phone.fragments.LibraryFragment"
+        android:name="com.nomadics9.ananas.fragments.LibraryFragment"
         android:label="{libraryName}"
         tools:layout="@layout/fragment_library">
         <argument
@@ -122,14 +122,14 @@
             app:popExitAnim="@anim/nav_default_pop_exit_anim" />
         <argument
             android:name="libraryType"
-            app:argType="org.askartv.phone.models.CollectionType" />
+            app:argType="com.nomadics9.ananas.models.CollectionType" />
         <action
             android:id="@+id/action_libraryFragment_self"
             app:destination="@id/libraryFragment" />
     </fragment>
     <fragment
         android:id="@+id/showFragment"
-        android:name="org.askartv.phone.fragments.ShowFragment"
+        android:name="com.nomadics9.ananas.fragments.ShowFragment"
         android:label="{itemName}"
         tools:layout="@layout/fragment_show">
         <argument
@@ -158,7 +158,7 @@
 
     <fragment
         android:id="@+id/movieFragment"
-        android:name="org.askartv.phone.fragments.MovieFragment"
+        android:name="com.nomadics9.ananas.fragments.MovieFragment"
         android:label="{itemName}"
         tools:layout="@layout/fragment_movie">
         <argument
@@ -179,7 +179,7 @@
 
     <fragment
         android:id="@+id/seasonFragment"
-        android:name="org.askartv.phone.fragments.SeasonFragment"
+        android:name="com.nomadics9.ananas.fragments.SeasonFragment"
         android:label="{seasonName}"
         tools:layout="@layout/fragment_season">
         <argument
@@ -211,7 +211,7 @@
     </fragment>
     <dialog
         android:id="@+id/episodeBottomSheetFragment"
-        android:name="org.askartv.phone.fragments.EpisodeBottomSheetFragment"
+        android:name="com.nomadics9.ananas.fragments.EpisodeBottomSheetFragment"
         android:label="EpisodeBottomSheetFragment"
         tools:layout="@layout/episode_bottom_sheet">
         <argument
@@ -226,7 +226,7 @@
     </dialog>
     <fragment
         android:id="@+id/favoriteFragment"
-        android:name="org.askartv.phone.fragments.FavoriteFragment"
+        android:name="com.nomadics9.ananas.fragments.FavoriteFragment"
         android:label="@string/title_favorite"
         tools:layout="@layout/fragment_favorite">
         <action
@@ -241,7 +241,7 @@
     </fragment>
     <fragment
         android:id="@+id/collectionFragment"
-        android:name="org.askartv.phone.fragments.CollectionFragment"
+        android:name="com.nomadics9.ananas.fragments.CollectionFragment"
         android:label="{collectionName}"
         tools:layout="@layout/fragment_favorite">
         <argument
@@ -264,7 +264,7 @@
     </fragment>
     <fragment
         android:id="@+id/searchResultFragment"
-        android:name="org.askartv.phone.fragments.SearchResultFragment"
+        android:name="com.nomadics9.ananas.fragments.SearchResultFragment"
         android:label="{query}"
         tools:layout="@layout/fragment_search_result">
         <action
@@ -282,7 +282,7 @@
     </fragment>
     <fragment
         android:id="@+id/addServerFragment"
-        android:name="org.askartv.phone.fragments.AddServerFragment"
+        android:name="com.nomadics9.ananas.fragments.AddServerFragment"
         android:label="@string/add_server"
         tools:layout="@layout/fragment_add_server">
         <action
@@ -291,7 +291,7 @@
     </fragment>
     <fragment
         android:id="@+id/serverSelectFragment"
-        android:name="org.askartv.phone.fragments.ServerSelectFragment"
+        android:name="com.nomadics9.ananas.fragments.ServerSelectFragment"
         android:label="@string/select_server"
         tools:layout="@layout/fragment_server_select">
         <action
@@ -308,7 +308,7 @@
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
-        android:name="org.askartv.phone.fragments.LoginFragment"
+        android:name="com.nomadics9.ananas.fragments.LoginFragment"
         android:label="@string/login"
         tools:layout="@layout/fragment_login">
         <action
@@ -324,7 +324,7 @@
 
     <fragment
         android:id="@+id/personDetailFragment"
-        android:name="org.askartv.phone.fragments.PersonDetailFragment"
+        android:name="com.nomadics9.ananas.fragments.PersonDetailFragment"
         android:label="@string/person_detail_title"
         tools:layout="@layout/fragment_person_detail">
 
@@ -342,12 +342,12 @@
 
     <activity
         android:id="@+id/playerActivity"
-        android:name="org.askartv.phone.PlayerActivity"
+        android:name="com.nomadics9.ananas.PlayerActivity"
         android:label="activity_player"
         tools:layout="@layout/activity_player">
         <argument
             android:name="items"
-            app:argType="org.askartv.phone.models.PlayerItem[]" />
+            app:argType="com.nomadics9.ananas.models.PlayerItem[]" />
     </activity>
 
     <include app:graph="@navigation/aboutlibs_navigation" />
@@ -357,7 +357,7 @@
 
     <fragment
         android:id="@+id/usersFragment"
-        android:name="org.askartv.phone.fragments.UsersFragment"
+        android:name="com.nomadics9.ananas.fragments.UsersFragment"
         android:label="@string/users"
         tools:layout="@layout/fragment_users">
         <action
@@ -375,7 +375,7 @@
 
     <fragment
         android:id="@+id/serverAddressesFragment"
-        android:name="org.askartv.phone.fragments.ServerAddressesFragment"
+        android:name="com.nomadics9.ananas.fragments.ServerAddressesFragment"
         android:label="@string/addresses"
         tools:layout="@layout/fragment_server_addresses">
         <action
@@ -390,7 +390,7 @@
 
     <fragment
         android:id="@+id/downloadsFragment"
-        android:name="org.askartv.phone.fragments.DownloadsFragment"
+        android:name="com.nomadics9.ananas.fragments.DownloadsFragment"
         android:label="@string/title_download"
         tools:layout="@layout/fragment_favorite">
         <action

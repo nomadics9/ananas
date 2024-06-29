@@ -1,11 +1,11 @@
-package org.askartv.phone.ui.dummy
+package com.nomadics9.ananas.ui.dummy
 
-import org.askartv.phone.models.EpisodeItem
-import org.askartv.phone.models.FindroidEpisode
-import org.askartv.phone.models.FindroidImages
-import org.askartv.phone.models.FindroidMediaStream
-import org.askartv.phone.models.FindroidSource
-import org.askartv.phone.models.FindroidSourceType
+import com.nomadics9.ananas.models.EpisodeItem
+import com.nomadics9.ananas.models.FindroidEpisode
+import com.nomadics9.ananas.models.FindroidImages
+import com.nomadics9.ananas.models.FindroidMediaStream
+import com.nomadics9.ananas.models.FindroidSource
+import com.nomadics9.ananas.models.FindroidSourceType
 import org.jellyfin.sdk.model.api.MediaStreamType
 import java.time.LocalDateTime
 import java.util.UUID

@@ -1,4 +1,4 @@
-package org.askartv.phone.ui.components
+package com.nomadics9.ananas.ui.components
 
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.CircularProgressIndicator

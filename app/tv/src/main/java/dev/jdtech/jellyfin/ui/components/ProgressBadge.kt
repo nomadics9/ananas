@@ -1,4 +1,4 @@
-package org.askartv.phone.ui.components
+package com.nomadics9.ananas.ui.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -17,12 +17,12 @@ import androidx.compose.ui.unit.dp
 import androidx.tv.material3.Icon
 import androidx.tv.material3.MaterialTheme
 import androidx.tv.material3.Text
-import org.askartv.phone.models.FindroidItem
-import org.askartv.phone.ui.dummy.dummyEpisode
-import org.askartv.phone.ui.dummy.dummyShow
-import org.askartv.phone.ui.theme.FindroidTheme
-import org.askartv.phone.ui.theme.spacings
-import org.askartv.phone.core.R as CoreR
+import com.nomadics9.ananas.models.FindroidItem
+import com.nomadics9.ananas.ui.dummy.dummyEpisode
+import com.nomadics9.ananas.ui.dummy.dummyShow
+import com.nomadics9.ananas.ui.theme.FindroidTheme
+import com.nomadics9.ananas.ui.theme.spacings
+import com.nomadics9.ananas.core.R as CoreR
 
 @Composable
 fun ProgressBadge(

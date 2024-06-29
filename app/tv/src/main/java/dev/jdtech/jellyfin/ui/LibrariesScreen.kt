@@ -1,4 +1,4 @@
-package org.askartv.phone.ui
+package com.nomadics9.ananas.ui
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
@@ -20,15 +20,15 @@ import androidx.tv.foundation.lazy.grid.items
 import androidx.tv.material3.MaterialTheme
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
-import org.askartv.phone.destinations.LibraryScreenDestination
-import org.askartv.phone.models.CollectionType
-import org.askartv.phone.models.FindroidCollection
-import org.askartv.phone.ui.components.Direction
-import org.askartv.phone.ui.components.ItemCard
-import org.askartv.phone.ui.dummy.dummyCollections
-import org.askartv.phone.ui.theme.FindroidTheme
-import org.askartv.phone.ui.theme.spacings
-import org.askartv.phone.viewmodels.MediaViewModel
+import com.nomadics9.ananas.destinations.LibraryScreenDestination
+import com.nomadics9.ananas.models.CollectionType
+import com.nomadics9.ananas.models.FindroidCollection
+import com.nomadics9.ananas.ui.components.Direction
+import com.nomadics9.ananas.ui.components.ItemCard
+import com.nomadics9.ananas.ui.dummy.dummyCollections
+import com.nomadics9.ananas.ui.theme.FindroidTheme
+import com.nomadics9.ananas.ui.theme.spacings
+import com.nomadics9.ananas.viewmodels.MediaViewModel
 import java.util.UUID
 
 @Destination
