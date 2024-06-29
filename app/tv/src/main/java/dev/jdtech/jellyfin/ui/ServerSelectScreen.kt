@@ -1,4 +1,4 @@
-package dev.jdtech.jellyfin.ui
+package org.askartv.phone.ui
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
@@ -43,21 +43,21 @@ import androidx.tv.material3.Text
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.ramcosta.composedestinations.navigation.popUpTo
-import dev.jdtech.jellyfin.NavGraphs
-import dev.jdtech.jellyfin.destinations.AddServerScreenDestination
-import dev.jdtech.jellyfin.destinations.MainScreenDestination
-import dev.jdtech.jellyfin.destinations.UserSelectScreenDestination
-import dev.jdtech.jellyfin.models.DiscoveredServer
-import dev.jdtech.jellyfin.models.Server
-import dev.jdtech.jellyfin.ui.dummy.dummyDiscoveredServer
-import dev.jdtech.jellyfin.ui.dummy.dummyDiscoveredServers
-import dev.jdtech.jellyfin.ui.dummy.dummyServers
-import dev.jdtech.jellyfin.ui.theme.FindroidTheme
-import dev.jdtech.jellyfin.ui.theme.spacings
-import dev.jdtech.jellyfin.utils.ObserveAsEvents
-import dev.jdtech.jellyfin.viewmodels.ServerSelectEvent
-import dev.jdtech.jellyfin.viewmodels.ServerSelectViewModel
-import dev.jdtech.jellyfin.core.R as CoreR
+import org.askartv.phone.NavGraphs
+import org.askartv.phone.destinations.AddServerScreenDestination
+import org.askartv.phone.destinations.MainScreenDestination
+import org.askartv.phone.destinations.UserSelectScreenDestination
+import org.askartv.phone.models.DiscoveredServer
+import org.askartv.phone.models.Server
+import org.askartv.phone.ui.dummy.dummyDiscoveredServer
+import org.askartv.phone.ui.dummy.dummyDiscoveredServers
+import org.askartv.phone.ui.dummy.dummyServers
+import org.askartv.phone.ui.theme.FindroidTheme
+import org.askartv.phone.ui.theme.spacings
+import org.askartv.phone.utils.ObserveAsEvents
+import org.askartv.phone.viewmodels.ServerSelectEvent
+import org.askartv.phone.viewmodels.ServerSelectViewModel
+import org.askartv.phone.core.R as CoreR
 
 @Destination
 @Composable

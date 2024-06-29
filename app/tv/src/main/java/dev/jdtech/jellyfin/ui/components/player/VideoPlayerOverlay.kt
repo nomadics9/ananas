@@ -1,4 +1,4 @@
-package dev.jdtech.jellyfin.ui.components.player
+package org.askartv.phone.ui.components.player
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
@@ -22,8 +22,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.tv.material3.MaterialTheme
-import dev.jdtech.jellyfin.ui.theme.FindroidTheme
-import dev.jdtech.jellyfin.ui.theme.spacings
+import org.askartv.phone.ui.theme.FindroidTheme
+import org.askartv.phone.ui.theme.spacings
 
 @Composable
 fun VideoPlayerOverlay(

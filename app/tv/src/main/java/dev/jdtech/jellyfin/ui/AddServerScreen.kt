@@ -1,4 +1,4 @@
-package dev.jdtech.jellyfin.ui
+package org.askartv.phone.ui
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -38,13 +38,13 @@ import androidx.tv.material3.MaterialTheme
 import androidx.tv.material3.Text
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
-import dev.jdtech.jellyfin.destinations.LoginScreenDestination
-import dev.jdtech.jellyfin.ui.theme.FindroidTheme
-import dev.jdtech.jellyfin.ui.theme.spacings
-import dev.jdtech.jellyfin.utils.ObserveAsEvents
-import dev.jdtech.jellyfin.viewmodels.AddServerEvent
-import dev.jdtech.jellyfin.viewmodels.AddServerViewModel
-import dev.jdtech.jellyfin.core.R as CoreR
+import org.askartv.phone.destinations.LoginScreenDestination
+import org.askartv.phone.ui.theme.FindroidTheme
+import org.askartv.phone.ui.theme.spacings
+import org.askartv.phone.utils.ObserveAsEvents
+import org.askartv.phone.viewmodels.AddServerEvent
+import org.askartv.phone.viewmodels.AddServerViewModel
+import org.askartv.phone.core.R as CoreR
 
 @Destination
 @Composable

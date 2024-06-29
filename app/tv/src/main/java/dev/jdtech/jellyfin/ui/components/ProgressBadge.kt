@@ -1,4 +1,4 @@
-package dev.jdtech.jellyfin.ui.components
+package org.askartv.phone.ui.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -17,12 +17,12 @@ import androidx.compose.ui.unit.dp
 import androidx.tv.material3.Icon
 import androidx.tv.material3.MaterialTheme
 import androidx.tv.material3.Text
-import dev.jdtech.jellyfin.models.FindroidItem
-import dev.jdtech.jellyfin.ui.dummy.dummyEpisode
-import dev.jdtech.jellyfin.ui.dummy.dummyShow
-import dev.jdtech.jellyfin.ui.theme.FindroidTheme
-import dev.jdtech.jellyfin.ui.theme.spacings
-import dev.jdtech.jellyfin.core.R as CoreR
+import org.askartv.phone.models.FindroidItem
+import org.askartv.phone.ui.dummy.dummyEpisode
+import org.askartv.phone.ui.dummy.dummyShow
+import org.askartv.phone.ui.theme.FindroidTheme
+import org.askartv.phone.ui.theme.spacings
+import org.askartv.phone.core.R as CoreR
 
 @Composable
 fun ProgressBadge(

@@ -1,4 +1,4 @@
-package dev.jdtech.jellyfin.ui
+package org.askartv.phone.ui
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
@@ -43,22 +43,22 @@ import coil.request.ImageRequest
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.ramcosta.composedestinations.navigation.popUpTo
-import dev.jdtech.jellyfin.NavGraphs
-import dev.jdtech.jellyfin.api.JellyfinApi
-import dev.jdtech.jellyfin.destinations.LoginScreenDestination
-import dev.jdtech.jellyfin.destinations.MainScreenDestination
-import dev.jdtech.jellyfin.models.Server
-import dev.jdtech.jellyfin.models.User
-import dev.jdtech.jellyfin.ui.dummy.dummyServer
-import dev.jdtech.jellyfin.ui.dummy.dummyUser
-import dev.jdtech.jellyfin.ui.dummy.dummyUsers
-import dev.jdtech.jellyfin.ui.theme.FindroidTheme
-import dev.jdtech.jellyfin.ui.theme.spacings
-import dev.jdtech.jellyfin.utils.ObserveAsEvents
-import dev.jdtech.jellyfin.viewmodels.UserSelectEvent
-import dev.jdtech.jellyfin.viewmodels.UserSelectViewModel
+import org.askartv.phone.NavGraphs
+import org.askartv.phone.api.JellyfinApi
+import org.askartv.phone.destinations.LoginScreenDestination
+import org.askartv.phone.destinations.MainScreenDestination
+import org.askartv.phone.models.Server
+import org.askartv.phone.models.User
+import org.askartv.phone.ui.dummy.dummyServer
+import org.askartv.phone.ui.dummy.dummyUser
+import org.askartv.phone.ui.dummy.dummyUsers
+import org.askartv.phone.ui.theme.FindroidTheme
+import org.askartv.phone.ui.theme.spacings
+import org.askartv.phone.utils.ObserveAsEvents
+import org.askartv.phone.viewmodels.UserSelectEvent
+import org.askartv.phone.viewmodels.UserSelectViewModel
 import org.jellyfin.sdk.model.api.ImageType
-import dev.jdtech.jellyfin.core.R as CoreR
+import org.askartv.phone.core.R as CoreR
 
 @Destination
 @Composable

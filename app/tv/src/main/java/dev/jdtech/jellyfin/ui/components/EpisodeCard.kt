@@ -1,4 +1,4 @@
-package dev.jdtech.jellyfin.ui.components
+package org.askartv.phone.ui.components
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Box
@@ -26,10 +26,10 @@ import androidx.tv.material3.ClickableSurfaceScale
 import androidx.tv.material3.MaterialTheme
 import androidx.tv.material3.Surface
 import androidx.tv.material3.Text
-import dev.jdtech.jellyfin.models.FindroidEpisode
-import dev.jdtech.jellyfin.ui.dummy.dummyEpisode
-import dev.jdtech.jellyfin.ui.theme.FindroidTheme
-import dev.jdtech.jellyfin.ui.theme.spacings
+import org.askartv.phone.models.FindroidEpisode
+import org.askartv.phone.ui.dummy.dummyEpisode
+import org.askartv.phone.ui.theme.FindroidTheme
+import org.askartv.phone.ui.theme.spacings
 
 @Composable
 fun EpisodeCard(
@@ -76,7 +76,7 @@ fun EpisodeCard(
             Column {
                 Text(
                     text = stringResource(
-                        id = dev.jdtech.jellyfin.core.R.string.episode_name,
+                        id = org.askartv.phone.core.R.string.episode_name,
                         episode.indexNumber,
                         episode.name,
                     ),

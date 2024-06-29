@@ -1,4 +1,4 @@
-package dev.jdtech.jellyfin.ui.components
+package org.askartv.phone.ui.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.aspectRatio
@@ -8,9 +8,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.tv.material3.MaterialTheme
 import coil.compose.AsyncImage
-import dev.jdtech.jellyfin.models.FindroidEpisode
-import dev.jdtech.jellyfin.models.FindroidItem
-import dev.jdtech.jellyfin.models.FindroidMovie
+import org.askartv.phone.models.FindroidEpisode
+import org.askartv.phone.models.FindroidItem
+import org.askartv.phone.models.FindroidMovie
 
 enum class Direction {
     HORIZONTAL, VERTICAL

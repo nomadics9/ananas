@@ -1,4 +1,4 @@
-package dev.jdtech.jellyfin.ui.components
+package org.askartv.phone.ui.components
 
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.CircularProgressIndicator

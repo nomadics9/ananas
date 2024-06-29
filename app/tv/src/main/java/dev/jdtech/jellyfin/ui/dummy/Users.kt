@@ -1,6 +1,6 @@
-package dev.jdtech.jellyfin.ui.dummy
+package org.askartv.phone.ui.dummy
 
-import dev.jdtech.jellyfin.models.User
+import org.askartv.phone.models.User
 import java.util.UUID
 
 val dummyUser = User(

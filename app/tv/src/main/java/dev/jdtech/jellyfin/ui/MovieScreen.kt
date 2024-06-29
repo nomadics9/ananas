@@ -1,4 +1,4 @@
-package dev.jdtech.jellyfin.ui
+package org.askartv.phone.ui
 
 import android.content.Intent
 import android.net.Uri
@@ -46,24 +46,24 @@ import androidx.tv.material3.Text
 import coil.compose.AsyncImage
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
-import dev.jdtech.jellyfin.destinations.PlayerActivityDestination
-import dev.jdtech.jellyfin.models.AudioChannel
-import dev.jdtech.jellyfin.models.AudioCodec
-import dev.jdtech.jellyfin.models.DisplayProfile
-import dev.jdtech.jellyfin.models.Resolution
-import dev.jdtech.jellyfin.models.VideoMetadata
-import dev.jdtech.jellyfin.ui.dummy.dummyMovie
-import dev.jdtech.jellyfin.ui.theme.FindroidTheme
-import dev.jdtech.jellyfin.ui.theme.Yellow
-import dev.jdtech.jellyfin.ui.theme.spacings
-import dev.jdtech.jellyfin.utils.ObserveAsEvents
-import dev.jdtech.jellyfin.viewmodels.MovieViewModel
-import dev.jdtech.jellyfin.viewmodels.PlayerItemsEvent
-import dev.jdtech.jellyfin.viewmodels.PlayerViewModel
+import org.askartv.phone.destinations.PlayerActivityDestination
+import org.askartv.phone.models.AudioChannel
+import org.askartv.phone.models.AudioCodec
+import org.askartv.phone.models.DisplayProfile
+import org.askartv.phone.models.Resolution
+import org.askartv.phone.models.VideoMetadata
+import org.askartv.phone.ui.dummy.dummyMovie
+import org.askartv.phone.ui.theme.FindroidTheme
+import org.askartv.phone.ui.theme.Yellow
+import org.askartv.phone.ui.theme.spacings
+import org.askartv.phone.utils.ObserveAsEvents
+import org.askartv.phone.viewmodels.MovieViewModel
+import org.askartv.phone.viewmodels.PlayerItemsEvent
+import org.askartv.phone.viewmodels.PlayerViewModel
 import org.jellyfin.sdk.model.api.BaseItemPerson
 import org.jellyfin.sdk.model.api.PersonKind
 import java.util.UUID
-import dev.jdtech.jellyfin.core.R as CoreR
+import org.askartv.phone.core.R as CoreR
 
 @Destination
 @Composable

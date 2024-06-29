@@ -10,19 +10,19 @@ plugins {
 }
 
 android {
-    namespace = "dev.jdtech.jellyfin"
+    namespace = "org.askartv.phone"
     compileSdk = Versions.compileSdk
     buildToolsVersion = Versions.buildTools
 
     defaultConfig {
-        applicationId = "dev.jdtech.jellyfin"
+        applicationId = "org.askartv.phone"
         minSdk = Versions.minSdk
         targetSdk = Versions.targetSdk
 
         versionCode = Versions.appCode
         versionName = Versions.appName
 
-        testInstrumentationRunner = "dev.jdtech.jellyfin.HiltTestRunner"
+        testInstrumentationRunner = "org.askartv.phone.HiltTestRunner"
     }
 
     applicationVariants.all {

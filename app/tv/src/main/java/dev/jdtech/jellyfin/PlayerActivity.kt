@@ -1,4 +1,4 @@
-package dev.jdtech.jellyfin
+package org.askartv.phone
 
 import android.os.Bundle
 import android.view.WindowManager
@@ -9,11 +9,11 @@ import com.ramcosta.composedestinations.annotation.ActivityDestination
 import com.ramcosta.composedestinations.manualcomposablecalls.composable
 import com.ramcosta.composedestinations.scope.resultRecipient
 import dagger.hilt.android.AndroidEntryPoint
-import dev.jdtech.jellyfin.destinations.PlayerActivityDestination
-import dev.jdtech.jellyfin.destinations.PlayerScreenDestination
-import dev.jdtech.jellyfin.models.PlayerItem
-import dev.jdtech.jellyfin.ui.PlayerScreen
-import dev.jdtech.jellyfin.ui.theme.FindroidTheme
+import org.askartv.phone.destinations.PlayerActivityDestination
+import org.askartv.phone.destinations.PlayerScreenDestination
+import org.askartv.phone.models.PlayerItem
+import org.askartv.phone.ui.PlayerScreen
+import org.askartv.phone.ui.theme.FindroidTheme
 
 data class PlayerActivityNavArgs(
     val items: ArrayList<PlayerItem>,

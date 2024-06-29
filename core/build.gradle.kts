@@ -10,7 +10,7 @@ plugins {
 }
 
 android {
-    namespace = "dev.jdtech.jellyfin.core"
+    namespace = "org.askartv.phone.core"
     compileSdk = Versions.compileSdk
     buildToolsVersion = Versions.buildTools
 

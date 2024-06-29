@@ -1,4 +1,4 @@
-package dev.jdtech.jellyfin.ui
+package org.askartv.phone.ui
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
@@ -23,22 +23,22 @@ import androidx.tv.material3.MaterialTheme
 import androidx.tv.material3.Text
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
-import dev.jdtech.jellyfin.destinations.ServerSelectScreenDestination
-import dev.jdtech.jellyfin.destinations.SettingsSubScreenDestination
-import dev.jdtech.jellyfin.destinations.UserSelectScreenDestination
-import dev.jdtech.jellyfin.models.Preference
-import dev.jdtech.jellyfin.models.PreferenceCategory
-import dev.jdtech.jellyfin.models.PreferenceSelect
-import dev.jdtech.jellyfin.models.PreferenceSwitch
-import dev.jdtech.jellyfin.ui.components.SettingsCategoryCard
-import dev.jdtech.jellyfin.ui.components.SettingsSelectCard
-import dev.jdtech.jellyfin.ui.components.SettingsSwitchCard
-import dev.jdtech.jellyfin.ui.theme.FindroidTheme
-import dev.jdtech.jellyfin.ui.theme.spacings
-import dev.jdtech.jellyfin.utils.ObserveAsEvents
-import dev.jdtech.jellyfin.viewmodels.SettingsEvent
-import dev.jdtech.jellyfin.viewmodels.SettingsViewModel
-import dev.jdtech.jellyfin.core.R as CoreR
+import org.askartv.phone.destinations.ServerSelectScreenDestination
+import org.askartv.phone.destinations.SettingsSubScreenDestination
+import org.askartv.phone.destinations.UserSelectScreenDestination
+import org.askartv.phone.models.Preference
+import org.askartv.phone.models.PreferenceCategory
+import org.askartv.phone.models.PreferenceSelect
+import org.askartv.phone.models.PreferenceSwitch
+import org.askartv.phone.ui.components.SettingsCategoryCard
+import org.askartv.phone.ui.components.SettingsSelectCard
+import org.askartv.phone.ui.components.SettingsSwitchCard
+import org.askartv.phone.ui.theme.FindroidTheme
+import org.askartv.phone.ui.theme.spacings
+import org.askartv.phone.utils.ObserveAsEvents
+import org.askartv.phone.viewmodels.SettingsEvent
+import org.askartv.phone.viewmodels.SettingsViewModel
+import org.askartv.phone.core.R as CoreR
 
 @Destination
 @Composable

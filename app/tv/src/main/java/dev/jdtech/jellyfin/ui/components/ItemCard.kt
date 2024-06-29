@@ -1,4 +1,4 @@
-package dev.jdtech.jellyfin.ui.components
+package org.askartv.phone.ui.components
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
@@ -24,13 +24,13 @@ import androidx.tv.material3.ClickableSurfaceScale
 import androidx.tv.material3.MaterialTheme
 import androidx.tv.material3.Surface
 import androidx.tv.material3.Text
-import dev.jdtech.jellyfin.core.R
-import dev.jdtech.jellyfin.models.FindroidEpisode
-import dev.jdtech.jellyfin.models.FindroidItem
-import dev.jdtech.jellyfin.ui.dummy.dummyEpisode
-import dev.jdtech.jellyfin.ui.dummy.dummyMovie
-import dev.jdtech.jellyfin.ui.theme.FindroidTheme
-import dev.jdtech.jellyfin.ui.theme.spacings
+import org.askartv.phone.core.R
+import org.askartv.phone.models.FindroidEpisode
+import org.askartv.phone.models.FindroidItem
+import org.askartv.phone.ui.dummy.dummyEpisode
+import org.askartv.phone.ui.dummy.dummyMovie
+import org.askartv.phone.ui.theme.FindroidTheme
+import org.askartv.phone.ui.theme.spacings
 
 @Composable
 fun ItemCard(

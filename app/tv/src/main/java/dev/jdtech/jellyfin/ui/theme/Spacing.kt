@@ -1,4 +1,4 @@
-package dev.jdtech.jellyfin.ui.theme
+package org.askartv.phone.ui.theme
 
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.compositionLocalOf

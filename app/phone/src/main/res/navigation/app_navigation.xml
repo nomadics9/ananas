@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="dev.jdtech.jellyfin.fragments.HomeFragment"
+        android:name="org.askartv.phone.fragments.HomeFragment"
         android:label="@string/title_home"
         tools:layout="@layout/fragment_home">
         <action
@@ -53,7 +53,7 @@
 
     <fragment
         android:id="@+id/mediaFragment"
-        android:name="dev.jdtech.jellyfin.fragments.MediaFragment"
+        android:name="org.askartv.phone.fragments.MediaFragment"
         android:label="@string/title_media"
         tools:layout="@layout/fragment_media">
         <action
@@ -70,7 +70,7 @@
 
     <fragment
         android:id="@+id/twoPaneSettingsFragment"
-        android:name="dev.jdtech.jellyfin.fragments.TwoPaneSettingsFragment"
+        android:name="org.askartv.phone.fragments.TwoPaneSettingsFragment"
         android:label="@string/title_settings">
         <action
             android:id="@+id/action_navigation_settings_to_serverSelectFragment"
@@ -87,10 +87,10 @@
     </fragment>
     <fragment
         android:id="@+id/settingsFragment"
-        android:name="dev.jdtech.jellyfin.fragments.SettingsFragment" />
+        android:name="org.askartv.phone.fragments.SettingsFragment" />
     <fragment
         android:id="@+id/libraryFragment"
-        android:name="dev.jdtech.jellyfin.fragments.LibraryFragment"
+        android:name="org.askartv.phone.fragments.LibraryFragment"
         android:label="{libraryName}"
         tools:layout="@layout/fragment_library">
         <argument
@@ -122,14 +122,14 @@
             app:popExitAnim="@anim/nav_default_pop_exit_anim" />
         <argument
             android:name="libraryType"
-            app:argType="dev.jdtech.jellyfin.models.CollectionType" />
+            app:argType="org.askartv.phone.models.CollectionType" />
         <action
             android:id="@+id/action_libraryFragment_self"
             app:destination="@id/libraryFragment" />
     </fragment>
     <fragment
         android:id="@+id/showFragment"
-        android:name="dev.jdtech.jellyfin.fragments.ShowFragment"
+        android:name="org.askartv.phone.fragments.ShowFragment"
         android:label="{itemName}"
         tools:layout="@layout/fragment_show">
         <argument
@@ -158,7 +158,7 @@
 
     <fragment
         android:id="@+id/movieFragment"
-        android:name="dev.jdtech.jellyfin.fragments.MovieFragment"
+        android:name="org.askartv.phone.fragments.MovieFragment"
         android:label="{itemName}"
         tools:layout="@layout/fragment_movie">
         <argument
@@ -179,7 +179,7 @@
 
     <fragment
         android:id="@+id/seasonFragment"
-        android:name="dev.jdtech.jellyfin.fragments.SeasonFragment"
+        android:name="org.askartv.phone.fragments.SeasonFragment"
         android:label="{seasonName}"
         tools:layout="@layout/fragment_season">
         <argument
@@ -211,7 +211,7 @@
     </fragment>
     <dialog
         android:id="@+id/episodeBottomSheetFragment"
-        android:name="dev.jdtech.jellyfin.fragments.EpisodeBottomSheetFragment"
+        android:name="org.askartv.phone.fragments.EpisodeBottomSheetFragment"
         android:label="EpisodeBottomSheetFragment"
         tools:layout="@layout/episode_bottom_sheet">
         <argument
@@ -226,7 +226,7 @@
     </dialog>
     <fragment
         android:id="@+id/favoriteFragment"
-        android:name="dev.jdtech.jellyfin.fragments.FavoriteFragment"
+        android:name="org.askartv.phone.fragments.FavoriteFragment"
         android:label="@string/title_favorite"
         tools:layout="@layout/fragment_favorite">
         <action
@@ -241,7 +241,7 @@
     </fragment>
     <fragment
         android:id="@+id/collectionFragment"
-        android:name="dev.jdtech.jellyfin.fragments.CollectionFragment"
+        android:name="org.askartv.phone.fragments.CollectionFragment"
         android:label="{collectionName}"
         tools:layout="@layout/fragment_favorite">
         <argument
@@ -264,7 +264,7 @@
     </fragment>
     <fragment
         android:id="@+id/searchResultFragment"
-        android:name="dev.jdtech.jellyfin.fragments.SearchResultFragment"
+        android:name="org.askartv.phone.fragments.SearchResultFragment"
         android:label="{query}"
         tools:layout="@layout/fragment_search_result">
         <action
@@ -282,7 +282,7 @@
     </fragment>
     <fragment
         android:id="@+id/addServerFragment"
-        android:name="dev.jdtech.jellyfin.fragments.AddServerFragment"
+        android:name="org.askartv.phone.fragments.AddServerFragment"
         android:label="@string/add_server"
         tools:layout="@layout/fragment_add_server">
         <action
@@ -291,7 +291,7 @@
     </fragment>
     <fragment
         android:id="@+id/serverSelectFragment"
-        android:name="dev.jdtech.jellyfin.fragments.ServerSelectFragment"
+        android:name="org.askartv.phone.fragments.ServerSelectFragment"
         android:label="@string/select_server"
         tools:layout="@layout/fragment_server_select">
         <action
@@ -308,7 +308,7 @@
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
-        android:name="dev.jdtech.jellyfin.fragments.LoginFragment"
+        android:name="org.askartv.phone.fragments.LoginFragment"
         android:label="@string/login"
         tools:layout="@layout/fragment_login">
         <action
@@ -324,7 +324,7 @@
 
     <fragment
         android:id="@+id/personDetailFragment"
-        android:name="dev.jdtech.jellyfin.fragments.PersonDetailFragment"
+        android:name="org.askartv.phone.fragments.PersonDetailFragment"
         android:label="@string/person_detail_title"
         tools:layout="@layout/fragment_person_detail">
 
@@ -342,12 +342,12 @@
 
     <activity
         android:id="@+id/playerActivity"
-        android:name="dev.jdtech.jellyfin.PlayerActivity"
+        android:name="org.askartv.phone.PlayerActivity"
         android:label="activity_player"
         tools:layout="@layout/activity_player">
         <argument
             android:name="items"
-            app:argType="dev.jdtech.jellyfin.models.PlayerItem[]" />
+            app:argType="org.askartv.phone.models.PlayerItem[]" />
     </activity>
 
     <include app:graph="@navigation/aboutlibs_navigation" />
@@ -357,7 +357,7 @@
 
     <fragment
         android:id="@+id/usersFragment"
-        android:name="dev.jdtech.jellyfin.fragments.UsersFragment"
+        android:name="org.askartv.phone.fragments.UsersFragment"
         android:label="@string/users"
         tools:layout="@layout/fragment_users">
         <action
@@ -375,7 +375,7 @@
 
     <fragment
         android:id="@+id/serverAddressesFragment"
-        android:name="dev.jdtech.jellyfin.fragments.ServerAddressesFragment"
+        android:name="org.askartv.phone.fragments.ServerAddressesFragment"
         android:label="@string/addresses"
         tools:layout="@layout/fragment_server_addresses">
         <action
@@ -390,7 +390,7 @@
 
     <fragment
         android:id="@+id/downloadsFragment"
-        android:name="dev.jdtech.jellyfin.fragments.DownloadsFragment"
+        android:name="org.askartv.phone.fragments.DownloadsFragment"
         android:label="@string/title_download"
         tools:layout="@layout/fragment_favorite">
         <action

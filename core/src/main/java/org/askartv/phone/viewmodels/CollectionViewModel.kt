@@ -1,0 +1,97 @@
+package org.askartv.phone.viewmodels
+
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
+import org.askartv.phone.Constants
+import org.askartv.phone.core.R
+import org.askartv.phone.models.FavoriteSection
+import org.askartv.phone.models.FindroidEpisode
+import org.askartv.phone.models.FindroidMovie
+import org.askartv.phone.models.FindroidShow
+import org.askartv.phone.models.SortBy
+import org.askartv.phone.models.UiText
+import org.askartv.phone.repository.JellyfinRepository
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import java.util.UUID
+import javax.inject.Inject
+
+@HiltViewModel
+class CollectionViewModel
+@Inject
+constructor(
+    private val jellyfinRepository: JellyfinRepository,
+) : ViewModel() {
+    private val _uiState = MutableStateFlow<UiState>(UiState.Loading)
+    val uiState = _uiState.asStateFlow()
+
+    sealed class UiState {
+        data class Normal(val collectionSections: List<FavoriteSection>) : UiState()
+        data object Loading : UiState()
+        data class Error(val error: Exception) : UiState()
+    }
+
+    fun loadItems(parentId: UUID) {
+        viewModelScope.launch {
+            _uiState.emit(UiState.Loading)
+
+            try {
+                val items = jellyfinRepository.getItems(
+                    parentId = parentId,
+                    sortBy = SortBy.RELEASE_DATE,
+                )
+
+                if (items.isEmpty()) {
+                    _uiState.emit(UiState.Normal(emptyList()))
+                    return@launch
+                }
+
+                val favoriteSections = mutableListOf<FavoriteSection>()
+
+                withContext(Dispatchers.Default) {
+                    FavoriteSection(
+                        Constants.FAVORITE_TYPE_MOVIES,
+                        UiText.StringResource(R.string.movies_label),
+                        items.filterIsInstance<FindroidMovie>(),
+                    ).let {
+                        if (it.items.isNotEmpty()) {
+                            favoriteSections.add(
+                                it,
+                            )
+                        }
+                    }
+                    FavoriteSection(
+                        Constants.FAVORITE_TYPE_SHOWS,
+                        UiText.StringResource(R.string.shows_label),
+                        items.filterIsInstance<FindroidShow>(),
+                    ).let {
+                        if (it.items.isNotEmpty()) {
+                            favoriteSections.add(
+                                it,
+                            )
+                        }
+                    }
+                    FavoriteSection(
+                        Constants.FAVORITE_TYPE_EPISODES,
+                        UiText.StringResource(R.string.episodes_label),
+                        items.filterIsInstance<FindroidEpisode>(),
+                    ).let {
+                        if (it.items.isNotEmpty()) {
+                            favoriteSections.add(
+                                it,
+                            )
+                        }
+                    }
+                }
+
+                _uiState.emit(UiState.Normal(favoriteSections))
+            } catch (e: Exception) {
+                _uiState.emit(UiState.Error(e))
+            }
+        }
+    }
+}

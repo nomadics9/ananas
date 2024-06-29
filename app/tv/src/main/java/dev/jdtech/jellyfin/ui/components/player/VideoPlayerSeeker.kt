@@ -1,4 +1,4 @@
-package dev.jdtech.jellyfin.ui.components.player
+package org.askartv.phone.ui.components.player
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -19,10 +19,10 @@ import androidx.tv.material3.Icon
 import androidx.tv.material3.IconButton
 import androidx.tv.material3.MaterialTheme
 import androidx.tv.material3.Text
-import dev.jdtech.jellyfin.ui.theme.FindroidTheme
-import dev.jdtech.jellyfin.ui.theme.spacings
+import org.askartv.phone.ui.theme.FindroidTheme
+import org.askartv.phone.ui.theme.spacings
 import kotlin.time.Duration
-import dev.jdtech.jellyfin.core.R as CoreR
+import org.askartv.phone.core.R as CoreR
 
 @Composable
 fun VideoPlayerSeeker(

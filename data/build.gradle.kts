@@ -7,7 +7,7 @@ plugins {
 }
 
 android {
-    namespace = "dev.jdtech.jellyfin.data"
+    namespace = "org.askartv.phone.data"
     compileSdk = Versions.compileSdk
     buildToolsVersion = Versions.buildTools
 

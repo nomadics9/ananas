@@ -1,4 +1,4 @@
-package dev.jdtech.jellyfin.ui
+package org.askartv.phone.ui
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
@@ -20,15 +20,15 @@ import androidx.tv.foundation.lazy.grid.items
 import androidx.tv.material3.MaterialTheme
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
-import dev.jdtech.jellyfin.destinations.LibraryScreenDestination
-import dev.jdtech.jellyfin.models.CollectionType
-import dev.jdtech.jellyfin.models.FindroidCollection
-import dev.jdtech.jellyfin.ui.components.Direction
-import dev.jdtech.jellyfin.ui.components.ItemCard
-import dev.jdtech.jellyfin.ui.dummy.dummyCollections
-import dev.jdtech.jellyfin.ui.theme.FindroidTheme
-import dev.jdtech.jellyfin.ui.theme.spacings
-import dev.jdtech.jellyfin.viewmodels.MediaViewModel
+import org.askartv.phone.destinations.LibraryScreenDestination
+import org.askartv.phone.models.CollectionType
+import org.askartv.phone.models.FindroidCollection
+import org.askartv.phone.ui.components.Direction
+import org.askartv.phone.ui.components.ItemCard
+import org.askartv.phone.ui.dummy.dummyCollections
+import org.askartv.phone.ui.theme.FindroidTheme
+import org.askartv.phone.ui.theme.spacings
+import org.askartv.phone.viewmodels.MediaViewModel
 import java.util.UUID
 
 @Destination

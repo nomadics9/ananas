@@ -1,8 +1,8 @@
-package dev.jdtech.jellyfin.ui.dummy
+package org.askartv.phone.ui.dummy
 
-import dev.jdtech.jellyfin.models.CollectionType
-import dev.jdtech.jellyfin.models.FindroidCollection
-import dev.jdtech.jellyfin.models.FindroidImages
+import org.askartv.phone.models.CollectionType
+import org.askartv.phone.models.FindroidCollection
+import org.askartv.phone.models.FindroidImages
 import java.util.UUID
 
 private val dummyMoviesCollection = FindroidCollection(

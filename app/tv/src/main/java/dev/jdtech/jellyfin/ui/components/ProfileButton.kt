@@ -1,4 +1,4 @@
-package dev.jdtech.jellyfin.ui.components
+package org.askartv.phone.ui.components
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.aspectRatio
@@ -21,11 +21,11 @@ import androidx.tv.material3.Icon
 import androidx.tv.material3.Surface
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
-import dev.jdtech.jellyfin.api.JellyfinApi
-import dev.jdtech.jellyfin.core.R
-import dev.jdtech.jellyfin.models.User
-import dev.jdtech.jellyfin.ui.dummy.dummyUser
-import dev.jdtech.jellyfin.ui.theme.FindroidTheme
+import org.askartv.phone.api.JellyfinApi
+import org.askartv.phone.core.R
+import org.askartv.phone.models.User
+import org.askartv.phone.ui.dummy.dummyUser
+import org.askartv.phone.ui.theme.FindroidTheme
 import org.jellyfin.sdk.model.api.ImageType
 
 @Composable

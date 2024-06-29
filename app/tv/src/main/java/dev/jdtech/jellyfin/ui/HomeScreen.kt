@@ -1,4 +1,4 @@
-package dev.jdtech.jellyfin.ui
+package org.askartv.phone.ui
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
@@ -26,24 +26,24 @@ import androidx.tv.material3.MaterialTheme
 import androidx.tv.material3.Text
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
-import dev.jdtech.jellyfin.destinations.MovieScreenDestination
-import dev.jdtech.jellyfin.destinations.PlayerActivityDestination
-import dev.jdtech.jellyfin.destinations.ShowScreenDestination
-import dev.jdtech.jellyfin.models.FindroidEpisode
-import dev.jdtech.jellyfin.models.FindroidItem
-import dev.jdtech.jellyfin.models.FindroidMovie
-import dev.jdtech.jellyfin.models.FindroidShow
-import dev.jdtech.jellyfin.models.HomeItem
-import dev.jdtech.jellyfin.ui.components.Direction
-import dev.jdtech.jellyfin.ui.components.ItemCard
-import dev.jdtech.jellyfin.ui.dummy.dummyHomeItems
-import dev.jdtech.jellyfin.ui.theme.FindroidTheme
-import dev.jdtech.jellyfin.ui.theme.spacings
-import dev.jdtech.jellyfin.utils.ObserveAsEvents
-import dev.jdtech.jellyfin.viewmodels.HomeViewModel
-import dev.jdtech.jellyfin.viewmodels.PlayerItemsEvent
-import dev.jdtech.jellyfin.viewmodels.PlayerViewModel
-import dev.jdtech.jellyfin.core.R as CoreR
+import org.askartv.phone.destinations.MovieScreenDestination
+import org.askartv.phone.destinations.PlayerActivityDestination
+import org.askartv.phone.destinations.ShowScreenDestination
+import org.askartv.phone.models.FindroidEpisode
+import org.askartv.phone.models.FindroidItem
+import org.askartv.phone.models.FindroidMovie
+import org.askartv.phone.models.FindroidShow
+import org.askartv.phone.models.HomeItem
+import org.askartv.phone.ui.components.Direction
+import org.askartv.phone.ui.components.ItemCard
+import org.askartv.phone.ui.dummy.dummyHomeItems
+import org.askartv.phone.ui.theme.FindroidTheme
+import org.askartv.phone.ui.theme.spacings
+import org.askartv.phone.utils.ObserveAsEvents
+import org.askartv.phone.viewmodels.HomeViewModel
+import org.askartv.phone.viewmodels.PlayerItemsEvent
+import org.askartv.phone.viewmodels.PlayerViewModel
+import org.askartv.phone.core.R as CoreR
 
 @Destination
 @Composable

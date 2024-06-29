@@ -1,7 +1,7 @@
-package dev.jdtech.jellyfin.ui.dummy
+package org.askartv.phone.ui.dummy
 
-import dev.jdtech.jellyfin.models.DiscoveredServer
-import dev.jdtech.jellyfin.models.Server
+import org.askartv.phone.models.DiscoveredServer
+import org.askartv.phone.models.Server
 import java.util.UUID
 
 val dummyDiscoveredServer = DiscoveredServer(

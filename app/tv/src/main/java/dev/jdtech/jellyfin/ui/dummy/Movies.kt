@@ -1,10 +1,10 @@
-package dev.jdtech.jellyfin.ui.dummy
+package org.askartv.phone.ui.dummy
 
-import dev.jdtech.jellyfin.models.FindroidImages
-import dev.jdtech.jellyfin.models.FindroidMediaStream
-import dev.jdtech.jellyfin.models.FindroidMovie
-import dev.jdtech.jellyfin.models.FindroidSource
-import dev.jdtech.jellyfin.models.FindroidSourceType
+import org.askartv.phone.models.FindroidImages
+import org.askartv.phone.models.FindroidMediaStream
+import org.askartv.phone.models.FindroidMovie
+import org.askartv.phone.models.FindroidSource
+import org.askartv.phone.models.FindroidSourceType
 import org.jellyfin.sdk.model.api.MediaStreamType
 import java.time.LocalDateTime
 import java.util.UUID

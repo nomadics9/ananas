@@ -1,4 +1,4 @@
-package dev.jdtech.jellyfin.ui.components.player
+package org.askartv.phone.ui.components.player
 
 import androidx.annotation.IntRange
 import androidx.compose.runtime.Composable

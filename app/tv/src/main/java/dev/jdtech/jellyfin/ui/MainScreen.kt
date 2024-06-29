@@ -1,4 +1,4 @@
-package dev.jdtech.jellyfin.ui
+package org.askartv.phone.ui
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
@@ -40,17 +40,17 @@ import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootNavGraph
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.ramcosta.composedestinations.navigation.EmptyDestinationsNavigator
-import dev.jdtech.jellyfin.destinations.SettingsScreenDestination
-import dev.jdtech.jellyfin.models.User
-import dev.jdtech.jellyfin.ui.components.LoadingIndicator
-import dev.jdtech.jellyfin.ui.components.PillBorderIndicator
-import dev.jdtech.jellyfin.ui.components.ProfileButton
-import dev.jdtech.jellyfin.ui.dummy.dummyServer
-import dev.jdtech.jellyfin.ui.dummy.dummyUser
-import dev.jdtech.jellyfin.ui.theme.FindroidTheme
-import dev.jdtech.jellyfin.ui.theme.spacings
-import dev.jdtech.jellyfin.viewmodels.MainViewModel
-import dev.jdtech.jellyfin.core.R as CoreR
+import org.askartv.phone.destinations.SettingsScreenDestination
+import org.askartv.phone.models.User
+import org.askartv.phone.ui.components.LoadingIndicator
+import org.askartv.phone.ui.components.PillBorderIndicator
+import org.askartv.phone.ui.components.ProfileButton
+import org.askartv.phone.ui.dummy.dummyServer
+import org.askartv.phone.ui.dummy.dummyUser
+import org.askartv.phone.ui.theme.FindroidTheme
+import org.askartv.phone.ui.theme.spacings
+import org.askartv.phone.viewmodels.MainViewModel
+import org.askartv.phone.core.R as CoreR
 
 @RootNavGraph(start = true)
 @Destination

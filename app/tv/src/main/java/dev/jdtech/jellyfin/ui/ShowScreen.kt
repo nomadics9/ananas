@@ -1,4 +1,4 @@
-package dev.jdtech.jellyfin.ui
+package org.askartv.phone.ui
 
 import android.content.Intent
 import android.net.Uri
@@ -56,21 +56,21 @@ import androidx.tv.material3.Text
 import coil.compose.AsyncImage
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
-import dev.jdtech.jellyfin.destinations.PlayerActivityDestination
-import dev.jdtech.jellyfin.destinations.SeasonScreenDestination
-import dev.jdtech.jellyfin.models.FindroidSeason
-import dev.jdtech.jellyfin.ui.components.Direction
-import dev.jdtech.jellyfin.ui.components.ItemCard
-import dev.jdtech.jellyfin.ui.dummy.dummyShow
-import dev.jdtech.jellyfin.ui.theme.FindroidTheme
-import dev.jdtech.jellyfin.ui.theme.Yellow
-import dev.jdtech.jellyfin.ui.theme.spacings
-import dev.jdtech.jellyfin.utils.ObserveAsEvents
-import dev.jdtech.jellyfin.viewmodels.PlayerItemsEvent
-import dev.jdtech.jellyfin.viewmodels.PlayerViewModel
-import dev.jdtech.jellyfin.viewmodels.ShowViewModel
+import org.askartv.phone.destinations.PlayerActivityDestination
+import org.askartv.phone.destinations.SeasonScreenDestination
+import org.askartv.phone.models.FindroidSeason
+import org.askartv.phone.ui.components.Direction
+import org.askartv.phone.ui.components.ItemCard
+import org.askartv.phone.ui.dummy.dummyShow
+import org.askartv.phone.ui.theme.FindroidTheme
+import org.askartv.phone.ui.theme.Yellow
+import org.askartv.phone.ui.theme.spacings
+import org.askartv.phone.utils.ObserveAsEvents
+import org.askartv.phone.viewmodels.PlayerItemsEvent
+import org.askartv.phone.viewmodels.PlayerViewModel
+import org.askartv.phone.viewmodels.ShowViewModel
 import java.util.UUID
-import dev.jdtech.jellyfin.core.R as CoreR
+import org.askartv.phone.core.R as CoreR
 
 @Destination
 @Composable

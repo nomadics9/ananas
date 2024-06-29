@@ -1,4 +1,4 @@
-package dev.jdtech.jellyfin
+package org.askartv.phone
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -6,11 +6,11 @@ import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import com.ramcosta.composedestinations.DestinationsNavHost
 import dagger.hilt.android.AndroidEntryPoint
-import dev.jdtech.jellyfin.database.ServerDatabaseDao
-import dev.jdtech.jellyfin.destinations.AddServerScreenDestination
-import dev.jdtech.jellyfin.destinations.LoginScreenDestination
-import dev.jdtech.jellyfin.ui.theme.FindroidTheme
-import dev.jdtech.jellyfin.viewmodels.MainViewModel
+import org.askartv.phone.database.ServerDatabaseDao
+import org.askartv.phone.destinations.AddServerScreenDestination
+import org.askartv.phone.destinations.LoginScreenDestination
+import org.askartv.phone.ui.theme.FindroidTheme
+import org.askartv.phone.viewmodels.MainViewModel
 import javax.inject.Inject
 
 @AndroidEntryPoint

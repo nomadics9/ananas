@@ -1,10 +1,10 @@
-package dev.jdtech.jellyfin.ui.dummy
+package org.askartv.phone.ui.dummy
 
-import dev.jdtech.jellyfin.models.CollectionType
-import dev.jdtech.jellyfin.models.HomeItem
-import dev.jdtech.jellyfin.models.HomeSection
-import dev.jdtech.jellyfin.models.UiText
-import dev.jdtech.jellyfin.models.View
+import org.askartv.phone.models.CollectionType
+import org.askartv.phone.models.HomeItem
+import org.askartv.phone.models.HomeSection
+import org.askartv.phone.models.UiText
+import org.askartv.phone.models.View
 import java.util.UUID
 
 val dummyHomeItems = listOf(

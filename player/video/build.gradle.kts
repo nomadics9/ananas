@@ -8,7 +8,7 @@ plugins {
 }
 
 android {
-    namespace = "dev.jdtech.jellyfin.player.video"
+    namespace = "org.askartv.phone.player.video"
     compileSdk = Versions.compileSdk
     buildToolsVersion = Versions.buildTools
 

@@ -1,4 +1,4 @@
-package dev.jdtech.jellyfin.ui.theme
+package org.askartv.phone.ui.theme
 
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Shapes

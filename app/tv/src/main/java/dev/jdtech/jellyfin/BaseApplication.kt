@@ -1,4 +1,4 @@
-package dev.jdtech.jellyfin
+package org.askartv.phone
 
 import android.app.Application
 import coil.ImageLoader

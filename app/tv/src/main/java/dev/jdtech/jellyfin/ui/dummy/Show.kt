@@ -1,7 +1,7 @@
-package dev.jdtech.jellyfin.ui.dummy
+package org.askartv.phone.ui.dummy
 
-import dev.jdtech.jellyfin.models.FindroidImages
-import dev.jdtech.jellyfin.models.FindroidShow
+import org.askartv.phone.models.FindroidImages
+import org.askartv.phone.models.FindroidShow
 import java.time.LocalDateTime
 import java.util.UUID
 
