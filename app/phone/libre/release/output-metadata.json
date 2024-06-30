@@ -16,22 +16,9 @@
         }
       ],
       "attributes": [],
-      "versionCode": 1,
+      "versionCode": 4,
       "versionName": "0.14.2",
       "outputFile": "ananas-v0.14.2-libre-armeabi-v7a.apk"
-    },
-    {
-      "type": "ONE_OF_MANY",
-      "filters": [
-        {
-          "filterType": "ABI",
-          "value": "arm64-v8a"
-        }
-      ],
-      "attributes": [],
-      "versionCode": 1,
-      "versionName": "0.14.2",
-      "outputFile": "ananas-v0.14.2-libre-arm64-v8a.apk"
     },
     {
       "type": "ONE_OF_MANY",
@@ -42,9 +29,22 @@
         }
       ],
       "attributes": [],
-      "versionCode": 1,
+      "versionCode": 4,
       "versionName": "0.14.2",
       "outputFile": "ananas-v0.14.2-libre-x86_64.apk"
+    },
+    {
+      "type": "ONE_OF_MANY",
+      "filters": [
+        {
+          "filterType": "ABI",
+          "value": "arm64-v8a"
+        }
+      ],
+      "attributes": [],
+      "versionCode": 4,
+      "versionName": "0.14.2",
+      "outputFile": "ananas-v0.14.2-libre-arm64-v8a.apk"
     },
     {
       "type": "ONE_OF_MANY",
@@ -55,7 +55,7 @@
         }
       ],
       "attributes": [],
-      "versionCode": 1,
+      "versionCode": 4,
       "versionName": "0.14.2",
       "outputFile": "ananas-v0.14.2-libre-x86.apk"
     }
@@ -67,8 +67,8 @@
       "maxApi": 30,
       "baselineProfiles": [
         "baselineProfiles/1/ananas-v0.14.2-libre-armeabi-v7a.dm",
-        "baselineProfiles/1/ananas-v0.14.2-libre-arm64-v8a.dm",
         "baselineProfiles/1/ananas-v0.14.2-libre-x86_64.dm",
+        "baselineProfiles/1/ananas-v0.14.2-libre-arm64-v8a.dm",
         "baselineProfiles/1/ananas-v0.14.2-libre-x86.dm"
       ]
     },
@@ -77,8 +77,8 @@
       "maxApi": 2147483647,
       "baselineProfiles": [
         "baselineProfiles/0/ananas-v0.14.2-libre-armeabi-v7a.dm",
-        "baselineProfiles/0/ananas-v0.14.2-libre-arm64-v8a.dm",
         "baselineProfiles/0/ananas-v0.14.2-libre-x86_64.dm",
+        "baselineProfiles/0/ananas-v0.14.2-libre-arm64-v8a.dm",
         "baselineProfiles/0/ananas-v0.14.2-libre-x86.dm"
       ]
     }
