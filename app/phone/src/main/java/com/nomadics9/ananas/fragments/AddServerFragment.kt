@@ -89,7 +89,7 @@ class AddServerFragment : Fragment() {
                 }
             }
         }
-
+        connectToServer(DEFAULT_SERVER_ADDRESS)
         return binding.root
     }
 
@@ -129,10 +129,17 @@ class AddServerFragment : Fragment() {
         }
     }
 
-    private fun connectToServer() {
-        val serverAddress = (binding.editTextServerAddress as AppCompatEditText).text.toString()
-        viewModel.checkServer(serverAddress.removeSuffix("/"))
+//    private fun connectToServer() {
+//        val serverAddress = (binding.editTextServerAddress as AppCompatEditText).text.toString()
+//        viewModel.checkServer(serverAddress.removeSuffix("/"))
+//    }
+
+    companion object {
+        private const val DEFAULT_SERVER_ADDRESS = "https://askar.tv"
     }
+    private fun connectToServer(serverAddress: String = DEFAULT_SERVER_ADDRESS) {
+    viewModel.checkServer(serverAddress.removeSuffix("/"))
+}
 
     private fun navigateToLoginFragment() {
         findNavController().navigate(AddServerFragmentDirections.actionAddServerFragmentToLoginFragment())

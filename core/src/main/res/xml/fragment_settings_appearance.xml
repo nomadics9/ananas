@@ -13,7 +13,7 @@
         app:summary="@string/dynamic_colors_summary"
         app:title="@string/dynamic_colors" />
     <SwitchPreferenceCompat
-        app:defaultValue="false"
+        app:defaultValue="true"
         app:key="pref_amoled_theme"
         app:summary="@string/amoled_theme_summary"
         app:title="@string/amoled_theme" />

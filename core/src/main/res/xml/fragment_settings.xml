@@ -49,23 +49,26 @@
 
     <Preference
         app:fragment="com.nomadics9.ananas.fragments.SettingsCacheFragment"
-        app:title="@string/settings_category_cache" />
+        app:title="@string/settings_category_cache"
+        app:icon="@drawable/ic_cache"/>
 
     <SwitchPreferenceCompat
         android:defaultValue="false"
         app:key="pref_offline_mode"
-        app:title="@string/offline_mode" />
+        app:title="@string/offline_mode"
+        app:icon="@drawable/ic_offline"/>
 
     <PreferenceCategory app:title="@string/about">
+
+        <Preference
+            app:key="privacyPolicy"
+            app:title="@string/privacy_policy"
+            app:icon="@drawable/ic_privacypolicy"/>
 
         <Preference
             app:key="appInfo"
             app:icon="@drawable/ic_logo"
             app:title="@string/app_info" />
-
-        <Preference
-            app:key="privacyPolicy"
-            app:title="@string/privacy_policy" />
 
 
     </PreferenceCategory>

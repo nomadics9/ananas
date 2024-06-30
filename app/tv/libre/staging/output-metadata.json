@@ -1,0 +1,87 @@
+{
+  "version": 3,
+  "artifactType": {
+    "type": "APK",
+    "kind": "Directory"
+  },
+  "applicationId": "com.nomadics9.ananas.staging",
+  "variantName": "libreStaging",
+  "elements": [
+    {
+      "type": "ONE_OF_MANY",
+      "filters": [
+        {
+          "filterType": "ABI",
+          "value": "armeabi-v7a"
+        }
+      ],
+      "attributes": [],
+      "versionCode": 1,
+      "versionName": "0.14.2",
+      "outputFile": "tv-libre-armeabi-v7a-staging.apk"
+    },
+    {
+      "type": "ONE_OF_MANY",
+      "filters": [
+        {
+          "filterType": "ABI",
+          "value": "x86_64"
+        }
+      ],
+      "attributes": [],
+      "versionCode": 1,
+      "versionName": "0.14.2",
+      "outputFile": "tv-libre-x86_64-staging.apk"
+    },
+    {
+      "type": "ONE_OF_MANY",
+      "filters": [
+        {
+          "filterType": "ABI",
+          "value": "x86"
+        }
+      ],
+      "attributes": [],
+      "versionCode": 1,
+      "versionName": "0.14.2",
+      "outputFile": "tv-libre-x86-staging.apk"
+    },
+    {
+      "type": "ONE_OF_MANY",
+      "filters": [
+        {
+          "filterType": "ABI",
+          "value": "arm64-v8a"
+        }
+      ],
+      "attributes": [],
+      "versionCode": 1,
+      "versionName": "0.14.2",
+      "outputFile": "tv-libre-arm64-v8a-staging.apk"
+    }
+  ],
+  "elementType": "File",
+  "baselineProfiles": [
+    {
+      "minApi": 28,
+      "maxApi": 30,
+      "baselineProfiles": [
+        "baselineProfiles/1/tv-libre-armeabi-v7a-staging.dm",
+        "baselineProfiles/1/tv-libre-x86_64-staging.dm",
+        "baselineProfiles/1/tv-libre-x86-staging.dm",
+        "baselineProfiles/1/tv-libre-arm64-v8a-staging.dm"
+      ]
+    },
+    {
+      "minApi": 31,
+      "maxApi": 2147483647,
+      "baselineProfiles": [
+        "baselineProfiles/0/tv-libre-armeabi-v7a-staging.dm",
+        "baselineProfiles/0/tv-libre-x86_64-staging.dm",
+        "baselineProfiles/0/tv-libre-x86-staging.dm",
+        "baselineProfiles/0/tv-libre-arm64-v8a-staging.dm"
+      ]
+    }
+  ],
+  "minSdkVersionForDexing": 28
+}
