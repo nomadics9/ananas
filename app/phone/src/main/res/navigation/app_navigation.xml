@@ -49,6 +49,9 @@
         <action
             android:id="@+id/action_homeFragment_to_searchResultFragment"
             app:destination="@id/searchResultFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_requestsWebFragment"
+            app:destination="@id/requestsWebFragment" />
     </fragment>
 
     <fragment
@@ -84,10 +87,20 @@
         <action
             android:id="@+id/action_settingsFragment_to_about_libraries"
             app:destination="@id/about_libraries" />
+        <action
+            android:id="@+id/action_navigation_settings_to_requestsWebFragment"
+            app:destination="@id/requestsWebFragment" />
     </fragment>
     <fragment
         android:id="@+id/settingsFragment"
-        android:name="com.nomadics9.ananas.fragments.SettingsFragment" />
+        android:name="com.nomadics9.ananas.fragments.SettingsFragment">
+    </fragment>
+    <fragment
+        android:id="@+id/requestsWebFragment"
+        android:name="com.nomadics9.ananas.fragments.RequestsWebViewFragment"
+        android:label="Requests"
+        tools:layout="@layout/fragment_webview">
+    </fragment>
     <fragment
         android:id="@+id/libraryFragment"
         android:name="com.nomadics9.ananas.fragments.LibraryFragment"

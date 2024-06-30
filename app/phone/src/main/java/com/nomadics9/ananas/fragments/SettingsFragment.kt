@@ -55,5 +55,10 @@ class SettingsFragment : PreferenceFragmentCompat() {
             findNavController().navigate(TwoPaneSettingsFragmentDirections.actionSettingsFragmentToAboutLibraries())
             true
         }
+
+        findPreference<Preference>("requests")?.setOnPreferenceClickListener {
+            findNavController().navigate(TwoPaneSettingsFragmentDirections.actionNavigationSettingsToRequestsWebFragment())
+            true
+        }
     }
 }

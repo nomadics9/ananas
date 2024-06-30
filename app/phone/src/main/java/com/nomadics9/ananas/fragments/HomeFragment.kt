@@ -74,6 +74,12 @@ class HomeFragment : Fragment() {
                     val searchView = search.actionView as SearchView
                     searchView.queryHint = getString(CoreR.string.search_hint)
 
+                    val requests = menu.findItem(CoreR.id.action_requests)
+                    requests.setOnMenuItemClickListener{
+                        navigateToRequestsWebViewFragment()
+                        true
+                    }
+
                     search.setOnActionExpandListener(
                         object : MenuItem.OnActionExpandListener {
                             override fun onMenuItemActionExpand(item: MenuItem): Boolean {
@@ -249,6 +255,12 @@ class HomeFragment : Fragment() {
     private fun navigateToSearchResultFragment(query: String) {
         findNavController().navigate(
             HomeFragmentDirections.actionHomeFragmentToSearchResultFragment(query),
+        )
+    }
+
+    private fun navigateToRequestsWebViewFragment() {
+        findNavController().navigate(
+            HomeFragmentDirections.actionHomeFragmentToRequestsWebFragment()
         )
     }
 }

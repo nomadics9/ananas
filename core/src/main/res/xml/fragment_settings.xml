@@ -13,6 +13,11 @@
         app:title="@string/settings_category_servers" />
 
     <Preference
+        app:icon="@drawable/ic_requests"
+        app:key="requests"
+        app:title="@string/alaskarTV_requests" />
+
+    <Preference
         app:icon="@drawable/ic_user"
         app:key="switchUser"
         app:title="@string/users" />
