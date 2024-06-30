@@ -56,7 +56,7 @@
         android:defaultValue="false"
         app:key="pref_offline_mode"
         app:title="@string/offline_mode"
-        app:icon="@drawable/ic_offline"/>
+        app:icon="@drawable/ic_server_off"/>
 
     <PreferenceCategory app:title="@string/about">
 
