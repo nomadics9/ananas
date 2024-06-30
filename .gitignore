@@ -14,7 +14,9 @@ captures/
 .externalNativeBuild/
 .cxx/
 *.apk
+*.dm
 output.json
+output-metadata.json
 
 # IntelliJ
 *.iml
