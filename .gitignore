@@ -16,7 +16,7 @@ captures/
 *.apk
 *.dm
 output.json
-output-metadata.json
+app/phone/libre/release/output-metadata.json
 
 # IntelliJ
 *.iml
