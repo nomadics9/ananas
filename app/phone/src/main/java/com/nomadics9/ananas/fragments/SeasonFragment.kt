@@ -2,8 +2,13 @@ package com.nomadics9.ananas.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.MenuHost
+import androidx.core.view.MenuProvider
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -16,12 +21,18 @@ import dagger.hilt.android.AndroidEntryPoint
 import com.nomadics9.ananas.adapters.EpisodeListAdapter
 import com.nomadics9.ananas.databinding.FragmentSeasonBinding
 import com.nomadics9.ananas.dialogs.ErrorDialogFragment
+import com.nomadics9.ananas.dialogs.getStorageSelectionDialog
 import com.nomadics9.ananas.models.FindroidEpisode
 import com.nomadics9.ananas.utils.checkIfLoginRequired
 import com.nomadics9.ananas.viewmodels.SeasonEvent
 import com.nomadics9.ananas.viewmodels.SeasonViewModel
 import kotlinx.coroutines.launch
 import timber.log.Timber
+
+import androidx.appcompat.app.AlertDialog
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.nomadics9.ananas.models.UiText
+
 
 @AndroidEntryPoint
 class SeasonFragment : Fragment() {
@@ -31,6 +42,7 @@ class SeasonFragment : Fragment() {
     private val args: SeasonFragmentArgs by navArgs()
 
     private lateinit var errorDialog: ErrorDialogFragment
+    private lateinit var downloadPreparingDialog: AlertDialog
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -38,6 +50,39 @@ class SeasonFragment : Fragment() {
         savedInstanceState: Bundle?,
     ): View {
         binding = FragmentSeasonBinding.inflate(inflater, container, false)
+        val menuHost: MenuHost = requireActivity()
+        menuHost.addMenuProvider(
+            object : MenuProvider {
+                override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                    menuInflater.inflate(com.nomadics9.ananas.core.R.menu.season_menu, menu)
+                }
+
+                override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                    return when (menuItem.itemId) {
+                        com.nomadics9.ananas.core.R.id.action_download_season -> {
+                            if (requireContext().getExternalFilesDirs(null).filterNotNull().size > 1) {
+                                val storageDialog = getStorageSelectionDialog(
+                                    requireContext(),
+                                    onItemSelected = { storageIndex ->
+                                        createEpisodesToDownloadDialog(storageIndex)
+                                    },
+                                    onCancel = {
+                                    },
+                                )
+                                viewModel.download()
+                                return true
+                            }
+                            createEpisodesToDownloadDialog()
+                            return true
+                        }
+                        else -> false
+                    }
+                }
+
+            },
+            viewLifecycleOwner,
+            Lifecycle.State.RESUMED,
+        )
         return binding.root
     }
 
@@ -56,6 +101,25 @@ class SeasonFragment : Fragment() {
                         }
                     }
                 }
+
+                launch {
+
+                    viewModel.downloadStatus.collect { (status, progress) ->
+                        when (status) {
+                            10 -> {
+                                downloadPreparingDialog.dismiss()
+                            }
+                        }
+                    }
+                }
+
+                launch {
+                    viewModel.downloadError.collect { uiText ->
+                        createErrorDialog(uiText)
+                    }
+                }
+
+
 
                 launch {
                     viewModel.eventsChannelFlow.collect { event ->
@@ -109,6 +173,47 @@ class SeasonFragment : Fragment() {
         binding.errorLayout.errorPanel.isVisible = true
         checkIfLoginRequired(uiState.error.message)
     }
+
+    private fun createDownloadPreparingDialog() {
+        val builder = MaterialAlertDialogBuilder(requireContext())
+        downloadPreparingDialog = builder
+            .setTitle(com.nomadics9.ananas.core.R.string.preparing_download)
+            .setView(com.nomadics9.ananas.R.layout.preparing_download_dialog)
+            .setCancelable(false)
+            .create()
+        downloadPreparingDialog.show()
+    }
+
+    private fun createErrorDialog(uiText: UiText) {
+        val builder = MaterialAlertDialogBuilder(requireContext())
+        builder
+            .setTitle(com.nomadics9.ananas.core.R.string.downloading_error)
+            .setMessage(uiText.asString(requireContext().resources))
+            .setPositiveButton(getString(com.nomadics9.ananas.core.R.string.close)) { _, _ ->
+            }
+        builder.show()
+    }
+
+    private fun createEpisodesToDownloadDialog(storageIndex: Int = 0) {
+        val builder = MaterialAlertDialogBuilder(requireContext())
+        val dialog = builder
+            .setTitle(com.nomadics9.ananas.core.R.string.download_season_dialog_title)
+            .setMessage(com.nomadics9.ananas.core.R.string.download_season_dialog_question)
+            .setPositiveButton(com.nomadics9.ananas.core.R.string.download_season_dialog_download_all) { _, _ ->
+                createDownloadPreparingDialog()
+                viewModel.download(storageIndex = storageIndex, downloadWatched = true)
+            }
+            .setNegativeButton(com.nomadics9.ananas.core.R.string.download_season_dialog_download_unwatched) { _, _ ->
+                createDownloadPreparingDialog()
+                viewModel.download(storageIndex = storageIndex, downloadWatched = false)
+            }
+            .create()
+        dialog.show()
+    }
+
+
+
+
 
     private fun navigateToEpisodeBottomSheetFragment(episode: FindroidEpisode) {
         findNavController().navigate(

@@ -10,6 +10,7 @@ local.properties
 
 # Android Studio generated files and folders
 captures/
+app/phone/libre/release/baselineProfiles
 .kotlin
 .externalNativeBuild/
 .cxx/

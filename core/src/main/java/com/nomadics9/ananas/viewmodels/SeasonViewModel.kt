@@ -15,14 +15,28 @@ import org.jellyfin.sdk.model.api.ItemFields
 import java.util.UUID
 import javax.inject.Inject
 
+import com.nomadics9.ananas.models.UiText
+import com.nomadics9.ananas.utils.Downloader
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
+import kotlin.random.Random
+
 @HiltViewModel
 class SeasonViewModel
 @Inject
 constructor(
     private val jellyfinRepository: JellyfinRepository,
-) : ViewModel() {
+    private val downloader: Downloader,
+    ) : ViewModel() {
     private val _uiState = MutableStateFlow<UiState>(UiState.Loading)
     val uiState = _uiState.asStateFlow()
+
+
+    private val _downloadStatus = MutableStateFlow(Pair(0, 0))
+    val downloadStatus = _downloadStatus.asStateFlow()
+
+    private val _downloadError = MutableSharedFlow<UiText>()
+    val downloadError = _downloadError.asSharedFlow()
 
     private val eventsChannel = Channel<SeasonEvent>()
     val eventsChannelFlow = eventsChannel.receiveAsFlow()
@@ -48,6 +62,24 @@ constructor(
             } catch (e: Exception) {
                 _uiState.emit(UiState.Error(e))
             }
+        }
+    }
+
+        fun download(sourceIndex: Int = 0, storageIndex: Int = 0, downloadWatched: Boolean = false) {
+        viewModelScope.launch {
+            for (episode in jellyfinRepository.getEpisodes(season.seriesId, season.id)) {
+                val item = jellyfinRepository.getEpisode(episode.id)
+                if (item.played && !downloadWatched) {
+                    continue }
+                val result = downloader.downloadItem(item, item.sources[sourceIndex].id, storageIndex)
+                if (result.second != null) {
+                    _downloadError.emit(result.second!!)
+                    break
+                }
+
+            }
+            // Send one time signal to fragment that the download has been initiated
+            _downloadStatus.emit(Pair(10, Random.nextInt()))
         }
     }
 

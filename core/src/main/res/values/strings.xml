@@ -195,4 +195,9 @@
     <string name="alaskarTV_requests">AlaskarTV Requests</string>
     <string name="pref_player_trickplay_gesture">Trick Play in seek gesture</string>
     <string name="pref_player_trickplay_gesture_summary">Requires \'Seek gesture\' and \'Trick Play\'</string>
+    <string name="download_season_button_description">Download season</string>
+    <string name="download_season_dialog_title">Download Season</string>
+    <string name="download_season_dialog_question">Which episodes do you want to download?</string>
+    <string name="download_season_dialog_download_all">All Episodes</string>
+    <string name="download_season_dialog_download_unwatched">Unwatched Episodes</string>
 </resources>
