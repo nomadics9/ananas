@@ -1,4 +1,4 @@
-package dev.jdtech.jellyfin.ui
+package com.nomadics9.ananas.ui
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
@@ -23,22 +23,22 @@ import androidx.tv.material3.MaterialTheme
 import androidx.tv.material3.Text
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
-import dev.jdtech.jellyfin.destinations.ServerSelectScreenDestination
-import dev.jdtech.jellyfin.destinations.SettingsSubScreenDestination
-import dev.jdtech.jellyfin.destinations.UserSelectScreenDestination
-import dev.jdtech.jellyfin.models.Preference
-import dev.jdtech.jellyfin.models.PreferenceCategory
-import dev.jdtech.jellyfin.models.PreferenceSelect
-import dev.jdtech.jellyfin.models.PreferenceSwitch
-import dev.jdtech.jellyfin.ui.components.SettingsCategoryCard
-import dev.jdtech.jellyfin.ui.components.SettingsSelectCard
-import dev.jdtech.jellyfin.ui.components.SettingsSwitchCard
-import dev.jdtech.jellyfin.ui.theme.FindroidTheme
-import dev.jdtech.jellyfin.ui.theme.spacings
-import dev.jdtech.jellyfin.utils.ObserveAsEvents
-import dev.jdtech.jellyfin.viewmodels.SettingsEvent
-import dev.jdtech.jellyfin.viewmodels.SettingsViewModel
-import dev.jdtech.jellyfin.core.R as CoreR
+import com.nomadics9.ananas.destinations.ServerSelectScreenDestination
+import com.nomadics9.ananas.destinations.SettingsSubScreenDestination
+import com.nomadics9.ananas.destinations.UserSelectScreenDestination
+import com.nomadics9.ananas.models.Preference
+import com.nomadics9.ananas.models.PreferenceCategory
+import com.nomadics9.ananas.models.PreferenceSelect
+import com.nomadics9.ananas.models.PreferenceSwitch
+import com.nomadics9.ananas.ui.components.SettingsCategoryCard
+import com.nomadics9.ananas.ui.components.SettingsSelectCard
+import com.nomadics9.ananas.ui.components.SettingsSwitchCard
+import com.nomadics9.ananas.ui.theme.FindroidTheme
+import com.nomadics9.ananas.ui.theme.spacings
+import com.nomadics9.ananas.utils.ObserveAsEvents
+import com.nomadics9.ananas.viewmodels.SettingsEvent
+import com.nomadics9.ananas.viewmodels.SettingsViewModel
+import com.nomadics9.ananas.core.R as CoreR
 
 @Destination
 @Composable

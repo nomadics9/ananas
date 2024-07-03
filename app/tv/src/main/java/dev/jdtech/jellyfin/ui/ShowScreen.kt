@@ -1,4 +1,4 @@
-package dev.jdtech.jellyfin.ui
+package com.nomadics9.ananas.ui
 
 import android.content.Intent
 import android.net.Uri
@@ -56,21 +56,21 @@ import androidx.tv.material3.Text
 import coil.compose.AsyncImage
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
-import dev.jdtech.jellyfin.destinations.PlayerActivityDestination
-import dev.jdtech.jellyfin.destinations.SeasonScreenDestination
-import dev.jdtech.jellyfin.models.FindroidSeason
-import dev.jdtech.jellyfin.ui.components.Direction
-import dev.jdtech.jellyfin.ui.components.ItemCard
-import dev.jdtech.jellyfin.ui.dummy.dummyShow
-import dev.jdtech.jellyfin.ui.theme.FindroidTheme
-import dev.jdtech.jellyfin.ui.theme.Yellow
-import dev.jdtech.jellyfin.ui.theme.spacings
-import dev.jdtech.jellyfin.utils.ObserveAsEvents
-import dev.jdtech.jellyfin.viewmodels.PlayerItemsEvent
-import dev.jdtech.jellyfin.viewmodels.PlayerViewModel
-import dev.jdtech.jellyfin.viewmodels.ShowViewModel
+import com.nomadics9.ananas.destinations.PlayerActivityDestination
+import com.nomadics9.ananas.destinations.SeasonScreenDestination
+import com.nomadics9.ananas.models.FindroidSeason
+import com.nomadics9.ananas.ui.components.Direction
+import com.nomadics9.ananas.ui.components.ItemCard
+import com.nomadics9.ananas.ui.dummy.dummyShow
+import com.nomadics9.ananas.ui.theme.FindroidTheme
+import com.nomadics9.ananas.ui.theme.Yellow
+import com.nomadics9.ananas.ui.theme.spacings
+import com.nomadics9.ananas.utils.ObserveAsEvents
+import com.nomadics9.ananas.viewmodels.PlayerItemsEvent
+import com.nomadics9.ananas.viewmodels.PlayerViewModel
+import com.nomadics9.ananas.viewmodels.ShowViewModel
 import java.util.UUID
-import dev.jdtech.jellyfin.core.R as CoreR
+import com.nomadics9.ananas.core.R as CoreR
 
 @Destination
 @Composable

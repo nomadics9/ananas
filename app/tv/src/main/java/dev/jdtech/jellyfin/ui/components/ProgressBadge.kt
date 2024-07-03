@@ -1,4 +1,4 @@
-package dev.jdtech.jellyfin.ui.components
+package com.nomadics9.ananas.ui.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -17,12 +17,12 @@ import androidx.compose.ui.unit.dp
 import androidx.tv.material3.Icon
 import androidx.tv.material3.MaterialTheme
 import androidx.tv.material3.Text
-import dev.jdtech.jellyfin.models.FindroidItem
-import dev.jdtech.jellyfin.ui.dummy.dummyEpisode
-import dev.jdtech.jellyfin.ui.dummy.dummyShow
-import dev.jdtech.jellyfin.ui.theme.FindroidTheme
-import dev.jdtech.jellyfin.ui.theme.spacings
-import dev.jdtech.jellyfin.core.R as CoreR
+import com.nomadics9.ananas.models.FindroidItem
+import com.nomadics9.ananas.ui.dummy.dummyEpisode
+import com.nomadics9.ananas.ui.dummy.dummyShow
+import com.nomadics9.ananas.ui.theme.FindroidTheme
+import com.nomadics9.ananas.ui.theme.spacings
+import com.nomadics9.ananas.core.R as CoreR
 
 @Composable
 fun ProgressBadge(

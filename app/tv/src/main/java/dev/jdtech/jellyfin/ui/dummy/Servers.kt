@@ -1,7 +1,7 @@
-package dev.jdtech.jellyfin.ui.dummy
+package com.nomadics9.ananas.ui.dummy
 
-import dev.jdtech.jellyfin.models.DiscoveredServer
-import dev.jdtech.jellyfin.models.Server
+import com.nomadics9.ananas.models.DiscoveredServer
+import com.nomadics9.ananas.models.Server
 import java.util.UUID
 
 val dummyDiscoveredServer = DiscoveredServer(

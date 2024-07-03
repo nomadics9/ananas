@@ -1,4 +1,4 @@
-package dev.jdtech.jellyfin.ui.components
+package com.nomadics9.ananas.ui.components
 
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.CircularProgressIndicator

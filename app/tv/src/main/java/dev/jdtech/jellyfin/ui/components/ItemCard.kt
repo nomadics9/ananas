@@ -1,4 +1,4 @@
-package dev.jdtech.jellyfin.ui.components
+package com.nomadics9.ananas.ui.components
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
@@ -24,13 +24,13 @@ import androidx.tv.material3.ClickableSurfaceScale
 import androidx.tv.material3.MaterialTheme
 import androidx.tv.material3.Surface
 import androidx.tv.material3.Text
-import dev.jdtech.jellyfin.core.R
-import dev.jdtech.jellyfin.models.FindroidEpisode
-import dev.jdtech.jellyfin.models.FindroidItem
-import dev.jdtech.jellyfin.ui.dummy.dummyEpisode
-import dev.jdtech.jellyfin.ui.dummy.dummyMovie
-import dev.jdtech.jellyfin.ui.theme.FindroidTheme
-import dev.jdtech.jellyfin.ui.theme.spacings
+import com.nomadics9.ananas.core.R
+import com.nomadics9.ananas.models.FindroidEpisode
+import com.nomadics9.ananas.models.FindroidItem
+import com.nomadics9.ananas.ui.dummy.dummyEpisode
+import com.nomadics9.ananas.ui.dummy.dummyMovie
+import com.nomadics9.ananas.ui.theme.FindroidTheme
+import com.nomadics9.ananas.ui.theme.spacings
 
 @Composable
 fun ItemCard(

@@ -1,4 +1,4 @@
-package dev.jdtech.jellyfin.ui.components.player
+package com.nomadics9.ananas.ui.components.player
 
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.Canvas
@@ -26,8 +26,8 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.tv.material3.MaterialTheme
-import dev.jdtech.jellyfin.ui.theme.FindroidTheme
-import dev.jdtech.jellyfin.utils.handleDPadKeyEvents
+import com.nomadics9.ananas.ui.theme.FindroidTheme
+import com.nomadics9.ananas.utils.handleDPadKeyEvents
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable

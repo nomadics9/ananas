@@ -1,4 +1,4 @@
-package dev.jdtech.jellyfin
+package com.nomadics9.ananas
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -6,11 +6,11 @@ import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import com.ramcosta.composedestinations.DestinationsNavHost
 import dagger.hilt.android.AndroidEntryPoint
-import dev.jdtech.jellyfin.database.ServerDatabaseDao
-import dev.jdtech.jellyfin.destinations.AddServerScreenDestination
-import dev.jdtech.jellyfin.destinations.LoginScreenDestination
-import dev.jdtech.jellyfin.ui.theme.FindroidTheme
-import dev.jdtech.jellyfin.viewmodels.MainViewModel
+import com.nomadics9.ananas.database.ServerDatabaseDao
+import com.nomadics9.ananas.destinations.AddServerScreenDestination
+import com.nomadics9.ananas.destinations.LoginScreenDestination
+import com.nomadics9.ananas.ui.theme.FindroidTheme
+import com.nomadics9.ananas.viewmodels.MainViewModel
 import javax.inject.Inject
 
 @AndroidEntryPoint

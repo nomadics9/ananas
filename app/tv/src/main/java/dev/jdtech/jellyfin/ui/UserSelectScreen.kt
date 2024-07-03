@@ -1,4 +1,4 @@
-package dev.jdtech.jellyfin.ui
+package com.nomadics9.ananas.ui
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
@@ -43,22 +43,22 @@ import coil.request.ImageRequest
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.ramcosta.composedestinations.navigation.popUpTo
-import dev.jdtech.jellyfin.NavGraphs
-import dev.jdtech.jellyfin.api.JellyfinApi
-import dev.jdtech.jellyfin.destinations.LoginScreenDestination
-import dev.jdtech.jellyfin.destinations.MainScreenDestination
-import dev.jdtech.jellyfin.models.Server
-import dev.jdtech.jellyfin.models.User
-import dev.jdtech.jellyfin.ui.dummy.dummyServer
-import dev.jdtech.jellyfin.ui.dummy.dummyUser
-import dev.jdtech.jellyfin.ui.dummy.dummyUsers
-import dev.jdtech.jellyfin.ui.theme.FindroidTheme
-import dev.jdtech.jellyfin.ui.theme.spacings
-import dev.jdtech.jellyfin.utils.ObserveAsEvents
-import dev.jdtech.jellyfin.viewmodels.UserSelectEvent
-import dev.jdtech.jellyfin.viewmodels.UserSelectViewModel
+import com.nomadics9.ananas.NavGraphs
+import com.nomadics9.ananas.api.JellyfinApi
+import com.nomadics9.ananas.destinations.LoginScreenDestination
+import com.nomadics9.ananas.destinations.MainScreenDestination
+import com.nomadics9.ananas.models.Server
+import com.nomadics9.ananas.models.User
+import com.nomadics9.ananas.ui.dummy.dummyServer
+import com.nomadics9.ananas.ui.dummy.dummyUser
+import com.nomadics9.ananas.ui.dummy.dummyUsers
+import com.nomadics9.ananas.ui.theme.FindroidTheme
+import com.nomadics9.ananas.ui.theme.spacings
+import com.nomadics9.ananas.utils.ObserveAsEvents
+import com.nomadics9.ananas.viewmodels.UserSelectEvent
+import com.nomadics9.ananas.viewmodels.UserSelectViewModel
 import org.jellyfin.sdk.model.api.ImageType
-import dev.jdtech.jellyfin.core.R as CoreR
+import com.nomadics9.ananas.core.R as CoreR
 
 @Destination
 @Composable

@@ -1,8 +1,8 @@
-package dev.jdtech.jellyfin.ui.dummy
+package com.nomadics9.ananas.ui.dummy
 
-import dev.jdtech.jellyfin.models.CollectionType
-import dev.jdtech.jellyfin.models.FindroidCollection
-import dev.jdtech.jellyfin.models.FindroidImages
+import com.nomadics9.ananas.models.CollectionType
+import com.nomadics9.ananas.models.FindroidCollection
+import com.nomadics9.ananas.models.FindroidImages
 import java.util.UUID
 
 private val dummyMoviesCollection = FindroidCollection(

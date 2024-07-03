@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "dev.jdtech.jellyfin.player.core"
+    namespace = "com.nomadics9.ananas.player.core"
     compileSdk = Versions.compileSdk
     buildToolsVersion = Versions.buildTools
 

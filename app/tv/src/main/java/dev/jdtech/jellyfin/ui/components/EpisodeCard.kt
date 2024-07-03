@@ -1,4 +1,4 @@
-package dev.jdtech.jellyfin.ui.components
+package com.nomadics9.ananas.ui.components
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Box
@@ -26,10 +26,10 @@ import androidx.tv.material3.ClickableSurfaceScale
 import androidx.tv.material3.MaterialTheme
 import androidx.tv.material3.Surface
 import androidx.tv.material3.Text
-import dev.jdtech.jellyfin.models.FindroidEpisode
-import dev.jdtech.jellyfin.ui.dummy.dummyEpisode
-import dev.jdtech.jellyfin.ui.theme.FindroidTheme
-import dev.jdtech.jellyfin.ui.theme.spacings
+import com.nomadics9.ananas.models.FindroidEpisode
+import com.nomadics9.ananas.ui.dummy.dummyEpisode
+import com.nomadics9.ananas.ui.theme.FindroidTheme
+import com.nomadics9.ananas.ui.theme.spacings
 
 @Composable
 fun EpisodeCard(
@@ -76,7 +76,7 @@ fun EpisodeCard(
             Column {
                 Text(
                     text = stringResource(
-                        id = dev.jdtech.jellyfin.core.R.string.episode_name,
+                        id = com.nomadics9.ananas.core.R.string.episode_name,
                         episode.indexNumber,
                         episode.name,
                     ),

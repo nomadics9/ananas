@@ -1,10 +1,10 @@
-package dev.jdtech.jellyfin.ui.dummy
+package com.nomadics9.ananas.ui.dummy
 
-import dev.jdtech.jellyfin.models.CollectionType
-import dev.jdtech.jellyfin.models.HomeItem
-import dev.jdtech.jellyfin.models.HomeSection
-import dev.jdtech.jellyfin.models.UiText
-import dev.jdtech.jellyfin.models.View
+import com.nomadics9.ananas.models.CollectionType
+import com.nomadics9.ananas.models.HomeItem
+import com.nomadics9.ananas.models.HomeSection
+import com.nomadics9.ananas.models.UiText
+import com.nomadics9.ananas.models.View
 import java.util.UUID
 
 val dummyHomeItems = listOf(

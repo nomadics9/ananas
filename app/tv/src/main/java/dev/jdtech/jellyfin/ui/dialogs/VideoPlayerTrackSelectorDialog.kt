@@ -1,4 +1,4 @@
-package dev.jdtech.jellyfin.ui.dialogs
+package com.nomadics9.ananas.ui.dialogs
 
 import android.os.Parcelable
 import androidx.compose.foundation.BorderStroke
@@ -31,12 +31,12 @@ import androidx.tv.material3.Text
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.result.EmptyResultBackNavigator
 import com.ramcosta.composedestinations.result.ResultBackNavigator
-import dev.jdtech.jellyfin.models.Track
-import dev.jdtech.jellyfin.ui.theme.FindroidTheme
-import dev.jdtech.jellyfin.ui.theme.spacings
+import com.nomadics9.ananas.models.Track
+import com.nomadics9.ananas.ui.theme.FindroidTheme
+import com.nomadics9.ananas.ui.theme.spacings
 import kotlinx.parcelize.Parcelize
-import dev.jdtech.jellyfin.core.R as CoreR
-import dev.jdtech.jellyfin.player.video.R as PlayerVideoR
+import com.nomadics9.ananas.core.R as CoreR
+import com.nomadics9.ananas.player.video.R as PlayerVideoR
 
 @Parcelize
 data class VideoPlayerTrackSelectorDialogResult(

@@ -1,4 +1,4 @@
-package dev.jdtech.jellyfin.ui
+package com.nomadics9.ananas.ui
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -41,15 +41,15 @@ import androidx.tv.material3.Text
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.ramcosta.composedestinations.navigation.popUpTo
-import dev.jdtech.jellyfin.NavGraphs
-import dev.jdtech.jellyfin.destinations.MainScreenDestination
-import dev.jdtech.jellyfin.models.UiText
-import dev.jdtech.jellyfin.ui.theme.FindroidTheme
-import dev.jdtech.jellyfin.ui.theme.spacings
-import dev.jdtech.jellyfin.utils.ObserveAsEvents
-import dev.jdtech.jellyfin.viewmodels.LoginEvent
-import dev.jdtech.jellyfin.viewmodels.LoginViewModel
-import dev.jdtech.jellyfin.core.R as CoreR
+import com.nomadics9.ananas.NavGraphs
+import com.nomadics9.ananas.destinations.MainScreenDestination
+import com.nomadics9.ananas.models.UiText
+import com.nomadics9.ananas.ui.theme.FindroidTheme
+import com.nomadics9.ananas.ui.theme.spacings
+import com.nomadics9.ananas.utils.ObserveAsEvents
+import com.nomadics9.ananas.viewmodels.LoginEvent
+import com.nomadics9.ananas.viewmodels.LoginViewModel
+import com.nomadics9.ananas.core.R as CoreR
 
 @Destination
 @Composable

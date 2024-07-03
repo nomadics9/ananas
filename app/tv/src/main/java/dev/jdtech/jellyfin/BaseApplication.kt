@@ -1,4 +1,4 @@
-package dev.jdtech.jellyfin
+package com.nomadics9.ananas
 
 import android.app.Application
 import coil.ImageLoader

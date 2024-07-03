@@ -7,7 +7,7 @@ plugins {
 }
 
 android {
-    namespace = "dev.jdtech.jellyfin.data"
+    namespace = "com.nomadics9.ananas.data"
     compileSdk = Versions.compileSdk
     buildToolsVersion = Versions.buildTools
 

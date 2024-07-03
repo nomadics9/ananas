@@ -1,7 +1,7 @@
-package dev.jdtech.jellyfin.ui.dummy
+package com.nomadics9.ananas.ui.dummy
 
-import dev.jdtech.jellyfin.models.FindroidImages
-import dev.jdtech.jellyfin.models.FindroidShow
+import com.nomadics9.ananas.models.FindroidImages
+import com.nomadics9.ananas.models.FindroidShow
 import java.time.LocalDateTime
 import java.util.UUID
 

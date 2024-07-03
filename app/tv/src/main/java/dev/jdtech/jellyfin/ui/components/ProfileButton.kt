@@ -1,4 +1,4 @@
-package dev.jdtech.jellyfin.ui.components
+package com.nomadics9.ananas.ui.components
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.aspectRatio
@@ -21,11 +21,11 @@ import androidx.tv.material3.Icon
 import androidx.tv.material3.Surface
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
-import dev.jdtech.jellyfin.api.JellyfinApi
-import dev.jdtech.jellyfin.core.R
-import dev.jdtech.jellyfin.models.User
-import dev.jdtech.jellyfin.ui.dummy.dummyUser
-import dev.jdtech.jellyfin.ui.theme.FindroidTheme
+import com.nomadics9.ananas.api.JellyfinApi
+import com.nomadics9.ananas.core.R
+import com.nomadics9.ananas.models.User
+import com.nomadics9.ananas.ui.dummy.dummyUser
+import com.nomadics9.ananas.ui.theme.FindroidTheme
 import org.jellyfin.sdk.model.api.ImageType
 
 @Composable

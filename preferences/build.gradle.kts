@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "dev.jdtech.jellyfin.preferences"
+    namespace = "com.nomadics9.ananas.preferences"
     compileSdk = Versions.compileSdk
     buildToolsVersion = Versions.buildTools
 

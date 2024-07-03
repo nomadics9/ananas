@@ -1,4 +1,4 @@
-package dev.jdtech.jellyfin.ui
+package com.nomadics9.ananas.ui
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
@@ -43,21 +43,21 @@ import androidx.tv.material3.Text
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.ramcosta.composedestinations.navigation.popUpTo
-import dev.jdtech.jellyfin.NavGraphs
-import dev.jdtech.jellyfin.destinations.AddServerScreenDestination
-import dev.jdtech.jellyfin.destinations.MainScreenDestination
-import dev.jdtech.jellyfin.destinations.UserSelectScreenDestination
-import dev.jdtech.jellyfin.models.DiscoveredServer
-import dev.jdtech.jellyfin.models.Server
-import dev.jdtech.jellyfin.ui.dummy.dummyDiscoveredServer
-import dev.jdtech.jellyfin.ui.dummy.dummyDiscoveredServers
-import dev.jdtech.jellyfin.ui.dummy.dummyServers
-import dev.jdtech.jellyfin.ui.theme.FindroidTheme
-import dev.jdtech.jellyfin.ui.theme.spacings
-import dev.jdtech.jellyfin.utils.ObserveAsEvents
-import dev.jdtech.jellyfin.viewmodels.ServerSelectEvent
-import dev.jdtech.jellyfin.viewmodels.ServerSelectViewModel
-import dev.jdtech.jellyfin.core.R as CoreR
+import com.nomadics9.ananas.NavGraphs
+import com.nomadics9.ananas.destinations.AddServerScreenDestination
+import com.nomadics9.ananas.destinations.MainScreenDestination
+import com.nomadics9.ananas.destinations.UserSelectScreenDestination
+import com.nomadics9.ananas.models.DiscoveredServer
+import com.nomadics9.ananas.models.Server
+import com.nomadics9.ananas.ui.dummy.dummyDiscoveredServer
+import com.nomadics9.ananas.ui.dummy.dummyDiscoveredServers
+import com.nomadics9.ananas.ui.dummy.dummyServers
+import com.nomadics9.ananas.ui.theme.FindroidTheme
+import com.nomadics9.ananas.ui.theme.spacings
+import com.nomadics9.ananas.utils.ObserveAsEvents
+import com.nomadics9.ananas.viewmodels.ServerSelectEvent
+import com.nomadics9.ananas.viewmodels.ServerSelectViewModel
+import com.nomadics9.ananas.core.R as CoreR
 
 @Destination
 @Composable

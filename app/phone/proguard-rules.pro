@@ -20,16 +20,16 @@
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
 
--keepnames class dev.jdtech.jellyfin.models.PlayerItem
+-keepnames class com.nomadics9.ananas.models.PlayerItem
 
 # ProGuard thinks all SettingsFragments are unused
--keep class dev.jdtech.jellyfin.fragments.SettingsLanguageFragment
--keep class dev.jdtech.jellyfin.fragments.SettingsAppearanceFragment
--keep class dev.jdtech.jellyfin.fragments.SettingsDownloadsFragment
--keep class dev.jdtech.jellyfin.fragments.SettingsPlayerFragment
--keep class dev.jdtech.jellyfin.fragments.SettingsDeviceFragment
--keep class dev.jdtech.jellyfin.fragments.SettingsCacheFragment
--keep class dev.jdtech.jellyfin.fragments.SettingsNetworkFragment
+-keep class com.nomadics9.ananas.fragments.SettingsLanguageFragment
+-keep class com.nomadics9.ananas.fragments.SettingsAppearanceFragment
+-keep class com.nomadics9.ananas.fragments.SettingsDownloadsFragment
+-keep class com.nomadics9.ananas.fragments.SettingsPlayerFragment
+-keep class com.nomadics9.ananas.fragments.SettingsDeviceFragment
+-keep class com.nomadics9.ananas.fragments.SettingsCacheFragment
+-keep class com.nomadics9.ananas.fragments.SettingsNetworkFragment
 
 # These classes are from okhttp and are not used in Android
 -dontwarn org.bouncycastle.jsse.BCSSLSocket

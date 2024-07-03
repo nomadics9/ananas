@@ -8,7 +8,7 @@ plugins {
 }
 
 android {
-    namespace = "dev.jdtech.jellyfin.player.video"
+    namespace = "com.nomadics9.ananas.player.video"
     compileSdk = Versions.compileSdk
     buildToolsVersion = Versions.buildTools
 

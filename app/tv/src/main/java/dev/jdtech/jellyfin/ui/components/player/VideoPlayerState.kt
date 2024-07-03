@@ -1,4 +1,4 @@
-package dev.jdtech.jellyfin.ui.components.player
+package com.nomadics9.ananas.ui.components.player
 
 import androidx.annotation.IntRange
 import androidx.compose.runtime.Composable

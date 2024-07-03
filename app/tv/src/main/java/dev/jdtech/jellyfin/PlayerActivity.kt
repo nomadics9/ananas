@@ -1,4 +1,4 @@
-package dev.jdtech.jellyfin
+package com.nomadics9.ananas
 
 import android.os.Bundle
 import android.view.WindowManager
@@ -9,11 +9,11 @@ import com.ramcosta.composedestinations.annotation.ActivityDestination
 import com.ramcosta.composedestinations.manualcomposablecalls.composable
 import com.ramcosta.composedestinations.scope.resultRecipient
 import dagger.hilt.android.AndroidEntryPoint
-import dev.jdtech.jellyfin.destinations.PlayerActivityDestination
-import dev.jdtech.jellyfin.destinations.PlayerScreenDestination
-import dev.jdtech.jellyfin.models.PlayerItem
-import dev.jdtech.jellyfin.ui.PlayerScreen
-import dev.jdtech.jellyfin.ui.theme.FindroidTheme
+import com.nomadics9.ananas.destinations.PlayerActivityDestination
+import com.nomadics9.ananas.destinations.PlayerScreenDestination
+import com.nomadics9.ananas.models.PlayerItem
+import com.nomadics9.ananas.ui.PlayerScreen
+import com.nomadics9.ananas.ui.theme.FindroidTheme
 
 data class PlayerActivityNavArgs(
     val items: ArrayList<PlayerItem>,

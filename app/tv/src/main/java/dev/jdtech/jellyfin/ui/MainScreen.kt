@@ -1,4 +1,4 @@
-package dev.jdtech.jellyfin.ui
+package com.nomadics9.ananas.ui
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
@@ -40,17 +40,17 @@ import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootNavGraph
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.ramcosta.composedestinations.navigation.EmptyDestinationsNavigator
-import dev.jdtech.jellyfin.destinations.SettingsScreenDestination
-import dev.jdtech.jellyfin.models.User
-import dev.jdtech.jellyfin.ui.components.LoadingIndicator
-import dev.jdtech.jellyfin.ui.components.PillBorderIndicator
-import dev.jdtech.jellyfin.ui.components.ProfileButton
-import dev.jdtech.jellyfin.ui.dummy.dummyServer
-import dev.jdtech.jellyfin.ui.dummy.dummyUser
-import dev.jdtech.jellyfin.ui.theme.FindroidTheme
-import dev.jdtech.jellyfin.ui.theme.spacings
-import dev.jdtech.jellyfin.viewmodels.MainViewModel
-import dev.jdtech.jellyfin.core.R as CoreR
+import com.nomadics9.ananas.destinations.SettingsScreenDestination
+import com.nomadics9.ananas.models.User
+import com.nomadics9.ananas.ui.components.LoadingIndicator
+import com.nomadics9.ananas.ui.components.PillBorderIndicator
+import com.nomadics9.ananas.ui.components.ProfileButton
+import com.nomadics9.ananas.ui.dummy.dummyServer
+import com.nomadics9.ananas.ui.dummy.dummyUser
+import com.nomadics9.ananas.ui.theme.FindroidTheme
+import com.nomadics9.ananas.ui.theme.spacings
+import com.nomadics9.ananas.viewmodels.MainViewModel
+import com.nomadics9.ananas.core.R as CoreR
 
 @RootNavGraph(start = true)
 @Destination

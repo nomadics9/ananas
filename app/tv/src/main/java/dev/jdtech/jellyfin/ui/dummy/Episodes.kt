@@ -1,11 +1,11 @@
-package dev.jdtech.jellyfin.ui.dummy
+package com.nomadics9.ananas.ui.dummy
 
-import dev.jdtech.jellyfin.models.EpisodeItem
-import dev.jdtech.jellyfin.models.FindroidEpisode
-import dev.jdtech.jellyfin.models.FindroidImages
-import dev.jdtech.jellyfin.models.FindroidMediaStream
-import dev.jdtech.jellyfin.models.FindroidSource
-import dev.jdtech.jellyfin.models.FindroidSourceType
+import com.nomadics9.ananas.models.EpisodeItem
+import com.nomadics9.ananas.models.FindroidEpisode
+import com.nomadics9.ananas.models.FindroidImages
+import com.nomadics9.ananas.models.FindroidMediaStream
+import com.nomadics9.ananas.models.FindroidSource
+import com.nomadics9.ananas.models.FindroidSourceType
 import org.jellyfin.sdk.model.api.MediaStreamType
 import java.time.LocalDateTime
 import java.util.UUID

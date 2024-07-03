@@ -1,6 +1,6 @@
-package dev.jdtech.jellyfin.ui.dummy
+package com.nomadics9.ananas.ui.dummy
 
-import dev.jdtech.jellyfin.models.User
+import com.nomadics9.ananas.models.User
 import java.util.UUID
 
 val dummyUser = User(

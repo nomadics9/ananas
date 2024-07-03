@@ -10,19 +10,19 @@ plugins {
 }
 
 android {
-    namespace = "dev.jdtech.jellyfin"
+    namespace = "com.nomadics9.ananas"
     compileSdk = Versions.compileSdk
     buildToolsVersion = Versions.buildTools
 
     defaultConfig {
-        applicationId = "dev.jdtech.jellyfin"
+        applicationId = "com.nomadics9.ananas"
         minSdk = Versions.minSdk
         targetSdk = Versions.targetSdk
 
         versionCode = Versions.appCode
         versionName = Versions.appName
 
-        testInstrumentationRunner = "dev.jdtech.jellyfin.HiltTestRunner"
+        testInstrumentationRunner = "com.nomadics9.ananas.HiltTestRunner"
     }
 
     applicationVariants.all {

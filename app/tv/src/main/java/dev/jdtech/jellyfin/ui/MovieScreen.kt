@@ -1,4 +1,4 @@
-package dev.jdtech.jellyfin.ui
+package com.nomadics9.ananas.ui
 
 import android.content.Intent
 import android.net.Uri
@@ -46,24 +46,24 @@ import androidx.tv.material3.Text
 import coil.compose.AsyncImage
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
-import dev.jdtech.jellyfin.destinations.PlayerActivityDestination
-import dev.jdtech.jellyfin.models.AudioChannel
-import dev.jdtech.jellyfin.models.AudioCodec
-import dev.jdtech.jellyfin.models.DisplayProfile
-import dev.jdtech.jellyfin.models.Resolution
-import dev.jdtech.jellyfin.models.VideoMetadata
-import dev.jdtech.jellyfin.ui.dummy.dummyMovie
-import dev.jdtech.jellyfin.ui.theme.FindroidTheme
-import dev.jdtech.jellyfin.ui.theme.Yellow
-import dev.jdtech.jellyfin.ui.theme.spacings
-import dev.jdtech.jellyfin.utils.ObserveAsEvents
-import dev.jdtech.jellyfin.viewmodels.MovieViewModel
-import dev.jdtech.jellyfin.viewmodels.PlayerItemsEvent
-import dev.jdtech.jellyfin.viewmodels.PlayerViewModel
+import com.nomadics9.ananas.destinations.PlayerActivityDestination
+import com.nomadics9.ananas.models.AudioChannel
+import com.nomadics9.ananas.models.AudioCodec
+import com.nomadics9.ananas.models.DisplayProfile
+import com.nomadics9.ananas.models.Resolution
+import com.nomadics9.ananas.models.VideoMetadata
+import com.nomadics9.ananas.ui.dummy.dummyMovie
+import com.nomadics9.ananas.ui.theme.FindroidTheme
+import com.nomadics9.ananas.ui.theme.Yellow
+import com.nomadics9.ananas.ui.theme.spacings
+import com.nomadics9.ananas.utils.ObserveAsEvents
+import com.nomadics9.ananas.viewmodels.MovieViewModel
+import com.nomadics9.ananas.viewmodels.PlayerItemsEvent
+import com.nomadics9.ananas.viewmodels.PlayerViewModel
 import org.jellyfin.sdk.model.api.BaseItemPerson
 import org.jellyfin.sdk.model.api.PersonKind
 import java.util.UUID
-import dev.jdtech.jellyfin.core.R as CoreR
+import com.nomadics9.ananas.core.R as CoreR
 
 @Destination
 @Composable
