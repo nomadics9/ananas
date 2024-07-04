@@ -200,4 +200,7 @@
     <string name="download_season_dialog_question">Which episodes do you want to download?</string>
     <string name="download_season_dialog_download_all">All Episodes</string>
     <string name="download_season_dialog_download_unwatched">Unwatched Episodes</string>
+    <string name="skip_intro_button">Skip Intro</string>
+    <string name="skip_credit_button">Next episode</string>
+    <string name="skip_credit_button_last">Close player</string>
 </resources>

@@ -6,9 +6,9 @@ import com.nomadics9.ananas.models.FindroidEpisode
 import com.nomadics9.ananas.models.FindroidItem
 import com.nomadics9.ananas.models.FindroidMovie
 import com.nomadics9.ananas.models.FindroidSeason
+import com.nomadics9.ananas.models.FindroidSegment
 import com.nomadics9.ananas.models.FindroidShow
 import com.nomadics9.ananas.models.FindroidSource
-import com.nomadics9.ananas.models.Intro
 import com.nomadics9.ananas.models.SortBy
 import kotlinx.coroutines.flow.Flow
 import org.jellyfin.sdk.model.api.BaseItemDto
@@ -83,7 +83,7 @@ interface JellyfinRepository {
 
     suspend fun getStreamUrl(itemId: UUID, mediaSourceId: String): String
 
-    suspend fun getIntroTimestamps(itemId: UUID): Intro?
+    suspend fun getSegmentsTimestamps(itemId: UUID): List<FindroidSegment>?
 
     suspend fun getTrickplayData(itemId: UUID, width: Int, index: Int): ByteArray?
 

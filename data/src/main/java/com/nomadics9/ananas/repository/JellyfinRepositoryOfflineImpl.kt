@@ -10,16 +10,16 @@ import com.nomadics9.ananas.models.FindroidEpisode
 import com.nomadics9.ananas.models.FindroidItem
 import com.nomadics9.ananas.models.FindroidMovie
 import com.nomadics9.ananas.models.FindroidSeason
+import com.nomadics9.ananas.models.FindroidSegment
 import com.nomadics9.ananas.models.FindroidShow
 import com.nomadics9.ananas.models.FindroidSource
-import com.nomadics9.ananas.models.Intro
 import com.nomadics9.ananas.models.SortBy
 import com.nomadics9.ananas.models.toFindroidEpisode
 import com.nomadics9.ananas.models.toFindroidMovie
 import com.nomadics9.ananas.models.toFindroidSeason
+import com.nomadics9.ananas.models.toFindroidSegments
 import com.nomadics9.ananas.models.toFindroidShow
 import com.nomadics9.ananas.models.toFindroidSource
-import com.nomadics9.ananas.models.toIntro
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
@@ -177,9 +177,9 @@ class JellyfinRepositoryOfflineImpl(
         TODO("Not yet implemented")
     }
 
-    override suspend fun getIntroTimestamps(itemId: UUID): Intro? =
+    override suspend fun getSegmentsTimestamps(itemId: UUID): List<FindroidSegment>? =
         withContext(Dispatchers.IO) {
-            database.getIntro(itemId)?.toIntro()
+            database.getSegments(itemId)?.toFindroidSegments()
         }
 
     override suspend fun getTrickplayData(itemId: UUID, width: Int, index: Int): ByteArray? =

@@ -37,13 +37,15 @@ import dagger.hilt.android.AndroidEntryPoint
 import com.nomadics9.ananas.databinding.ActivityPlayerBinding
 import com.nomadics9.ananas.dialogs.SpeedSelectionDialogFragment
 import com.nomadics9.ananas.dialogs.TrackSelectionDialogFragment
+import com.nomadics9.ananas.models.FindroidSegment
+import com.nomadics9.ananas.utils.PlayerGestureHelper
+import com.nomadics9.ananas.utils.PreviewScrubListener
 import com.nomadics9.ananas.viewmodels.PlayerActivityViewModel
 import com.nomadics9.ananas.viewmodels.PlayerEvents
 import kotlinx.coroutines.launch
-import com.nomadics9.ananas.utils.PlayerGestureHelper
-import com.nomadics9.ananas.utils.PreviewScrubListener
 import timber.log.Timber
 import javax.inject.Inject
+import com.nomadics9.ananas.core.R as CoreR
 
 var isControlsLocked: Boolean = false
 
@@ -58,6 +60,8 @@ class PlayerActivity : BasePlayerActivity() {
     override val viewModel: PlayerActivityViewModel by viewModels()
     private var previewScrubListener: PreviewScrubListener? = null
     private var wasZoom: Boolean = false
+    private var oldSegment: FindroidSegment? = null
+    private var buttonPressed: Boolean = false
 
     private val isPipSupported by lazy {
         // Check if device has PiP feature
@@ -119,7 +123,8 @@ class PlayerActivity : BasePlayerActivity() {
         val audioButton = binding.playerView.findViewById<ImageButton>(R.id.btn_audio_track)
         val subtitleButton = binding.playerView.findViewById<ImageButton>(R.id.btn_subtitle)
         val speedButton = binding.playerView.findViewById<ImageButton>(R.id.btn_speed)
-        val skipIntroButton = binding.playerView.findViewById<Button>(R.id.btn_skip_intro)
+        val skipButton = binding.playerView.findViewById<Button>(R.id.btn_skip_intro)
+        val watchCreditsButton = binding.playerView.findViewById<Button>(R.id.btn_watch_credits)
         val pipButton = binding.playerView.findViewById<ImageButton>(R.id.btn_pip)
         val lockButton = binding.playerView.findViewById<ImageButton>(R.id.btn_lockview)
         val unlockButton = binding.playerView.findViewById<ImageButton>(R.id.btn_unlock)
@@ -133,13 +138,80 @@ class PlayerActivity : BasePlayerActivity() {
                             // Title
                             videoNameTextView.text = currentItemTitle
 
-                            // Skip Intro button
-                            skipIntroButton.isVisible = !isInPictureInPictureMode && currentIntro != null
-                            skipIntroButton.setOnClickListener {
-                                currentIntro?.let {
-                                    binding.playerView.player?.seekTo((it.introEnd * 1000).toLong())
+                            // Skip Button
+                            if (currentSegment != oldSegment) buttonPressed = false
+                            // Button Visibility and Text
+                            when (currentSegment?.type) {
+                                "intro" -> {
+                                    skipButton.text =
+                                        getString(CoreR.string.skip_intro_button)
+                                    skipButton.isVisible =
+                                        !isInPictureInPictureMode && !buttonPressed && (showSkip == true || (binding.playerView.isControllerFullyVisible && currentSegment?.skip == true))
+                                    watchCreditsButton.isVisible = false
+                                }
+
+                                "credit" -> {
+                                    skipButton.text =
+                                        if (binding.playerView.player?.hasNextMediaItem() == true) {
+                                            getString(CoreR.string.skip_credit_button)
+                                        } else {
+                                            getString(CoreR.string.skip_credit_button_last)
+                                        }
+                                    skipButton.isVisible =
+                                        !isInPictureInPictureMode && !buttonPressed && currentSegment?.skip == true && !binding.playerView.isControllerFullyVisible
+                                    watchCreditsButton.isVisible = skipButton.isVisible
+                                }
+
+                                else -> {
+                                    skipButton.isVisible = false
+                                    watchCreditsButton.isVisible = false
                                 }
                             }
+                            binding.playerView.setControllerVisibilityListener(
+                                PlayerView.ControllerVisibilityListener { visibility ->
+                                    when (currentSegment?.type) {
+                                        "intro" -> {
+                                            skipButton.isVisible =
+                                                !buttonPressed && (showSkip == true || (visibility == View.VISIBLE && currentSegment?.skip == true))
+                                        }
+
+                                        "credit" -> {
+                                            skipButton.isVisible =
+                                                !buttonPressed && currentSegment?.skip == true && visibility == View.GONE
+                                            watchCreditsButton.isVisible = skipButton.isVisible
+                                        }
+                                    }
+                                },
+                            )
+                            // onClick
+                            if (currentSegment?.type == "credit") {
+                                watchCreditsButton.setOnClickListener {
+                                    buttonPressed = true
+                                    skipButton.isVisible = false
+                                    watchCreditsButton.isVisible = false
+                                }
+                            }
+                            skipButton.setOnClickListener {
+                                when (currentSegment?.type) {
+                                    "intro" -> {
+                                        currentSegment?.let {
+                                            binding.playerView.player?.seekTo((it.endTime * 1000).toLong())
+                                        }
+                                    }
+
+                                    "credit" -> {
+                                        if (binding.playerView.player?.hasNextMediaItem() == true) {
+                                            binding.playerView.player?.seekToNext()
+                                        } else {
+                                            finish()
+                                        }
+                                    }
+                                }
+                                buttonPressed = true
+                                skipButton.isVisible = false
+                                watchCreditsButton.isVisible = false
+                            }
+                            oldSegment = currentSegment
 
                             // Trickplay
                             previewScrubListener?.let {

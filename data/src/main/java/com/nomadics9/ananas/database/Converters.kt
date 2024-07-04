@@ -2,6 +2,7 @@ package com.nomadics9.ananas.database
 
 import androidx.room.TypeConverter
 import com.nomadics9.ananas.models.FindroidChapter
+import com.nomadics9.ananas.models.FindroidSegment
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import org.jellyfin.sdk.model.DateTime
@@ -36,6 +37,16 @@ class Converters {
 
     @TypeConverter
     fun fromStringToFindroidChapters(value: String?): List<FindroidChapter>? {
+        return value?.let { Json.decodeFromString(value) }
+    }
+
+    @TypeConverter
+    fun fromFindroidSegmentsToString(value: List<FindroidSegment>?): String? {
+        return value?.let { Json.encodeToString(value) }
+    }
+
+    @TypeConverter
+    fun fromStringToFindroidSegments(value: String?): List<FindroidSegment>? {
         return value?.let { Json.decodeFromString(value) }
     }
 }

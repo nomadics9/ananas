@@ -8,11 +8,11 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.nomadics9.ananas.bindItemImage
-import com.nomadics9.ananas.core.R
 import com.nomadics9.ananas.databinding.BaseItemBinding
 import com.nomadics9.ananas.models.FindroidEpisode
 import com.nomadics9.ananas.models.FindroidItem
 import com.nomadics9.ananas.models.isDownloaded
+import com.nomadics9.ananas.core.R as CoreR
 
 class ViewItemListAdapter(
     private val onClickListener: (item: FindroidItem) -> Unit,
@@ -27,7 +27,7 @@ class ViewItemListAdapter(
                 if (item.unplayedItemCount != null && item.unplayedItemCount!! > 0) View.VISIBLE else View.GONE
             if (fixedWidth) {
                 binding.itemLayout.layoutParams.width =
-                    parent.resources.getDimension(R.dimen.overview_media_width).toInt()
+                    parent.resources.getDimension(CoreR.dimen.overview_media_width).toInt()
                 (binding.itemLayout.layoutParams as ViewGroup.MarginLayoutParams).bottomMargin = 0
             }
 

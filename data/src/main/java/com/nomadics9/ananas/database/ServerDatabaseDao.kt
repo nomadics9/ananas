@@ -10,11 +10,11 @@ import com.nomadics9.ananas.models.FindroidEpisodeDto
 import com.nomadics9.ananas.models.FindroidMediaStreamDto
 import com.nomadics9.ananas.models.FindroidMovieDto
 import com.nomadics9.ananas.models.FindroidSeasonDto
+import com.nomadics9.ananas.models.FindroidSegmentsDto
 import com.nomadics9.ananas.models.FindroidShowDto
 import com.nomadics9.ananas.models.FindroidSourceDto
 import com.nomadics9.ananas.models.FindroidTrickplayInfoDto
 import com.nomadics9.ananas.models.FindroidUserDataDto
-import com.nomadics9.ananas.models.IntroDto
 import com.nomadics9.ananas.models.Server
 import com.nomadics9.ananas.models.ServerAddress
 import com.nomadics9.ananas.models.ServerWithAddressAndUser
@@ -205,13 +205,13 @@ interface ServerDatabaseDao {
     fun deleteEpisodesBySeasonId(seasonId: UUID)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertIntro(intro: IntroDto)
+    fun insertSegments(segment: FindroidSegmentsDto)
 
-    @Query("SELECT * FROM intros WHERE itemId = :itemId")
-    fun getIntro(itemId: UUID): IntroDto?
+    @Query("SELECT * FROM segments WHERE itemId = :itemId")
+    fun getSegments(itemId: UUID): FindroidSegmentsDto?
 
-    @Query("DELETE FROM intros WHERE itemId = :itemId")
-    fun deleteIntro(itemId: UUID)
+    @Query("DELETE FROM segments WHERE itemId = :itemId")
+    fun deleteSegments(itemId: UUID)
 
     @Query("SELECT * FROM seasons")
     fun getSeasons(): List<FindroidSeasonDto>

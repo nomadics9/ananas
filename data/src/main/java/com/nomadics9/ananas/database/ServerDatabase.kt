@@ -10,22 +10,23 @@ import com.nomadics9.ananas.models.FindroidEpisodeDto
 import com.nomadics9.ananas.models.FindroidMediaStreamDto
 import com.nomadics9.ananas.models.FindroidMovieDto
 import com.nomadics9.ananas.models.FindroidSeasonDto
+import com.nomadics9.ananas.models.FindroidSegmentsDto
 import com.nomadics9.ananas.models.FindroidShowDto
 import com.nomadics9.ananas.models.FindroidSourceDto
 import com.nomadics9.ananas.models.FindroidTrickplayInfoDto
 import com.nomadics9.ananas.models.FindroidUserDataDto
-import com.nomadics9.ananas.models.IntroDto
 import com.nomadics9.ananas.models.Server
 import com.nomadics9.ananas.models.ServerAddress
 import com.nomadics9.ananas.models.User
 
 @Database(
-    entities = [Server::class, ServerAddress::class, User::class, FindroidMovieDto::class, FindroidShowDto::class, FindroidSeasonDto::class, FindroidEpisodeDto::class, FindroidSourceDto::class, FindroidMediaStreamDto::class, IntroDto::class, FindroidUserDataDto::class, FindroidTrickplayInfoDto::class],
-    version = 5,
+    entities = [Server::class, ServerAddress::class, User::class, FindroidMovieDto::class, FindroidShowDto::class, FindroidSeasonDto::class, FindroidEpisodeDto::class, FindroidSourceDto::class, FindroidMediaStreamDto::class, FindroidSegmentsDto::class, FindroidUserDataDto::class, FindroidTrickplayInfoDto::class],
+    version = 6,
     autoMigrations = [
         AutoMigration(from = 2, to = 3),
         AutoMigration(from = 3, to = 4),
         AutoMigration(from = 4, to = 5, spec = ServerDatabase.TrickplayMigration::class),
+        AutoMigration(from = 5, to = 6, spec = ServerDatabase.IntrosMigration::class),
     ],
 )
 @TypeConverters(Converters::class)
@@ -34,4 +35,7 @@ abstract class ServerDatabase : RoomDatabase() {
 
     @DeleteTable(tableName = "trickPlayManifests")
     class TrickplayMigration : AutoMigrationSpec
+
+    @DeleteTable(tableName = "intros")
+    class IntrosMigration : AutoMigrationSpec
 }
