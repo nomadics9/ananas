@@ -37,6 +37,7 @@ import org.jellyfin.sdk.model.api.SortOrder
 import java.lang.IllegalArgumentException
 import javax.inject.Inject
 import com.nomadics9.ananas.core.R as CoreR
+import androidx.recyclerview.widget.GridLayoutManager
 
 @AndroidEntryPoint
 class LibraryFragment : Fragment() {
@@ -61,6 +62,11 @@ class LibraryFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        binding.itemsRecyclerView.layoutManager =
+            GridLayoutManager(context, preferences.spanCount)
+
+
 
         val menuHost: MenuHost = requireActivity()
         menuHost.addMenuProvider(

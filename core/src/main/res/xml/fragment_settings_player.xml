@@ -9,7 +9,8 @@
         <SwitchPreferenceCompat
             app:key="pref_player_mpv"
             app:summary="@string/mpv_player_summary"
-            app:title="@string/mpv_player" />
+            app:title="@string/mpv_player"
+            app:defaultValue="true"/>
         <ListPreference
             app:defaultValue="mediacodec"
             app:dependency="pref_player_mpv"

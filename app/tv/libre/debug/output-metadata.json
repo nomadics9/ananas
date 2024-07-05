@@ -16,7 +16,7 @@
         }
       ],
       "attributes": [],
-      "versionCode": 1,
+      "versionCode": 6,
       "versionName": "0.14.2",
       "outputFile": "tv-libre-armeabi-v7a-debug.apk"
     },
@@ -29,22 +29,9 @@
         }
       ],
       "attributes": [],
-      "versionCode": 1,
+      "versionCode": 6,
       "versionName": "0.14.2",
       "outputFile": "tv-libre-x86_64-debug.apk"
-    },
-    {
-      "type": "ONE_OF_MANY",
-      "filters": [
-        {
-          "filterType": "ABI",
-          "value": "x86"
-        }
-      ],
-      "attributes": [],
-      "versionCode": 1,
-      "versionName": "0.14.2",
-      "outputFile": "tv-libre-x86-debug.apk"
     },
     {
       "type": "ONE_OF_MANY",
@@ -55,9 +42,22 @@
         }
       ],
       "attributes": [],
-      "versionCode": 1,
+      "versionCode": 6,
       "versionName": "0.14.2",
       "outputFile": "tv-libre-arm64-v8a-debug.apk"
+    },
+    {
+      "type": "ONE_OF_MANY",
+      "filters": [
+        {
+          "filterType": "ABI",
+          "value": "x86"
+        }
+      ],
+      "attributes": [],
+      "versionCode": 6,
+      "versionName": "0.14.2",
+      "outputFile": "tv-libre-x86-debug.apk"
     }
   ],
   "elementType": "File",
