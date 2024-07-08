@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name" translatable="false">Ananas</string>
-    <string name="app_description">Ananas app</string>
+    <string name="app_description">Built with ♥️ by Nomadics</string>
     <string name="jellyfin_banner">Jellyfin banner</string>
     <string name="add_server">Add server</string>
     <string name="add_server_error_outdated">Server version outdated: %1$s. Please update your server</string>
