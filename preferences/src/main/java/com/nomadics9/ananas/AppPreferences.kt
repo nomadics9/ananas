@@ -32,7 +32,7 @@ constructor(
         }
 
     var autoOffline
-        get() = sharedPreferences.getBoolean(Constants.PREF_AUTO_OFFLINE, false)
+        get() = sharedPreferences.getBoolean(Constants.PREF_AUTO_OFFLINE, true)
         set(value) {
             sharedPreferences.edit {
                 putBoolean(Constants.PREF_AUTO_OFFLINE, value)

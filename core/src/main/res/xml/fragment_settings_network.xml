@@ -17,7 +17,7 @@
         app:title="@string/settings_socket_timeout"
         app:useSimpleSummaryProvider="true" />
     <SwitchPreferenceCompat
-        android:defaultValue="false"
+        android:defaultValue="true"
         app:key="pref_auto_offline"
         app:title="@string/turn_on_offline_mode_automatically" />
 </PreferenceScreen>
