@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.NavGraph
 import androidx.navigation.fragment.NavHostFragment
@@ -22,6 +23,10 @@ import com.nomadics9.ananas.database.ServerDatabaseDao
 import com.nomadics9.ananas.databinding.ActivityMainBinding
 import com.nomadics9.ananas.viewmodels.MainViewModel
 import com.nomadics9.ananas.work.SyncWorker
+import com.nomadics9.ananas.repository.JellyfinRepository
+import com.nomadics9.ananas.utils.restart
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 import com.nomadics9.ananas.core.R as CoreR
 
@@ -34,6 +39,9 @@ class MainActivity : AppCompatActivity() {
 
     @Inject
     lateinit var database: ServerDatabaseDao
+
+    @Inject
+    lateinit var jellyfinRepository: JellyfinRepository
 
     @Inject
     lateinit var appPreferences: AppPreferences
@@ -68,8 +76,16 @@ class MainActivity : AppCompatActivity() {
         val navView: NavigationBarView = binding.navView as NavigationBarView
 
         if (appPreferences.offlineMode) {
+            appPreferences.isOffline = true
+        }
+
+        if (appPreferences.isOffline) {
             navView.menu.clear()
             navView.inflateMenu(CoreR.menu.bottom_nav_menu_offline)
+        }
+
+        if (!appPreferences.isOffline && appPreferences.autoOffline) {
+            testServerConnection()
         }
 
         setSupportActionBar(binding.mainToolbar)
@@ -150,6 +166,20 @@ class MainActivity : AppCompatActivity() {
     private fun applyTheme() {
         if (appPreferences.amoledTheme) {
             setTheme(CoreR.style.ThemeOverlay_Findroid_Amoled)
+        }
+    }
+
+    private fun testServerConnection() {
+        val activity = this
+        lifecycleScope.launch {
+            try {
+                jellyfinRepository.getPublicSystemInfo()
+                // Give the UI a chance to load
+                delay(100)
+            } catch (e: Exception) {
+                appPreferences.isOffline = true
+                activity.restart()
+            }
         }
     }
 }
