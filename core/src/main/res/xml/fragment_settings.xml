@@ -10,7 +10,8 @@
     <Preference
         app:icon="@drawable/ic_server"
         app:key="switchServer"
-        app:title="@string/settings_category_servers" />
+        app:title="@string/settings_category_servers"
+        app:isPreferenceVisible="false"/>
 
     <Preference
         app:icon="@drawable/ic_requests"
@@ -25,7 +26,8 @@
     <Preference
         app:icon="@drawable/ic_globe"
         app:key="switchAddress"
-        app:title="@string/addresses" />
+        app:title="@string/addresses"
+        app:isPreferenceVisible="false"/>
 
     <Preference
         app:fragment="com.nomadics9.ananas.fragments.SettingsAppearanceFragment"
