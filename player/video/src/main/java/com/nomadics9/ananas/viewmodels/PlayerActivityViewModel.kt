@@ -3,6 +3,7 @@ package com.nomadics9.ananas.viewmodels
 import android.app.Application
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.net.Uri
 import android.os.Handler
 import android.os.Looper
 import androidx.lifecycle.SavedStateHandle
@@ -20,6 +21,7 @@ import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.exoplayer.trackselection.DefaultTrackSelector
 import dagger.hilt.android.lifecycle.HiltViewModel
 import com.nomadics9.ananas.AppPreferences
+import com.nomadics9.ananas.api.JellyfinApi
 import com.nomadics9.ananas.models.FindroidSegment
 import com.nomadics9.ananas.models.PlayerChapter
 import com.nomadics9.ananas.models.PlayerItem
@@ -38,6 +40,16 @@ import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import org.jellyfin.sdk.model.api.ClientCapabilitiesDto
+import org.jellyfin.sdk.model.api.DeviceProfile
+import org.jellyfin.sdk.model.api.DirectPlayProfile
+import org.jellyfin.sdk.model.api.DlnaProfileType
+import org.jellyfin.sdk.model.api.MediaStreamProtocol
+import org.jellyfin.sdk.model.api.PlaybackInfoDto
+import org.jellyfin.sdk.model.api.SubtitleDeliveryMethod
+import org.jellyfin.sdk.model.api.SubtitleProfile
+import org.jellyfin.sdk.model.api.TranscodeSeekInfo
+import org.jellyfin.sdk.model.api.TranscodingProfile
 import timber.log.Timber
 import java.util.UUID
 import javax.inject.Inject
@@ -49,6 +61,7 @@ class PlayerActivityViewModel
 constructor(
     private val application: Application,
     private val jellyfinRepository: JellyfinRepository,
+    private val jellyfinApi: JellyfinApi,
     private val appPreferences: AppPreferences,
     private val savedStateHandle: SavedStateHandle,
 ) : ViewModel(), Player.Listener {
@@ -468,6 +481,118 @@ constructor(
     override fun onIsPlayingChanged(isPlaying: Boolean) {
         super.onIsPlayingChanged(isPlaying)
         eventsChannel.trySend(PlayerEvents.IsPlayingChanged(isPlaying))
+    }
+
+    private fun getTranscodeResolutions(preferredQuality: String): Int {
+        return when (preferredQuality) {
+            "1080p" -> 1080
+            "720p" -> 720
+            "480p" -> 480
+            "360p" -> 360
+            else -> 1080
+        }
+    }
+
+    fun changeVideoQuality(quality: String) {
+        val mediaId = player.currentMediaItem?.mediaId ?: return
+        val itemId = UUID.fromString(mediaId)
+        //val playerItem = playerItemMap[itemId] ?: return
+        val currentItem = items.firstOrNull { it.itemId.toString() == mediaId } ?: return
+        val currentPosition = player.currentPosition
+
+        viewModelScope.launch {
+            try {
+                val transcodingResolution = getTranscodeResolutions(quality)
+                val (videoBitRate, audioBitRate) = jellyfinRepository.getVideoTranscodeBitRate(transcodingResolution)
+                if (transcodingResolution != null) {
+                    val deviceProfile = ClientCapabilitiesDto(
+                        supportedCommands = emptyList(),
+                        playableMediaTypes = emptyList(),
+                        supportsMediaControl = true,
+                        supportsPersistentIdentifier = true,
+                        deviceProfile = DeviceProfile(
+                            name = "Ananas User",
+                            id = jellyfinRepository.getUserId().toString(),
+                            maxStaticBitrate = 1_000_000_000,
+                            maxStreamingBitrate = 1_000_000_000,
+                            codecProfiles = emptyList(),
+                            containerProfiles = emptyList(),
+                            directPlayProfiles = listOf(
+                                DirectPlayProfile(type = DlnaProfileType.VIDEO),
+                                DirectPlayProfile(type = DlnaProfileType.AUDIO),
+                            ),
+                            transcodingProfiles = listOf(
+                                TranscodingProfile(
+                                    container = "ts",
+                                    protocol = MediaStreamProtocol.HLS,
+                                    audioCodec = "aac",
+                                    videoCodec = "hevc",
+                                    type = DlnaProfileType.VIDEO,
+                                    conditions = emptyList(),
+                                    copyTimestamps = true,
+                                    enableSubtitlesInManifest = true,
+                                    transcodeSeekInfo = TranscodeSeekInfo.AUTO,
+                                )
+                            ),
+                            subtitleProfiles = listOf(
+                                SubtitleProfile("srt", SubtitleDeliveryMethod.EXTERNAL),
+                                SubtitleProfile("ass", SubtitleDeliveryMethod.EXTERNAL),
+                            ),
+                        )
+                    )
+                    val playbackInfo =
+                        jellyfinApi.mediaInfoApi.getPostedPlaybackInfo(
+                            itemId,
+                            PlaybackInfoDto(
+                                userId = jellyfinApi.userId!!,
+                                enableTranscoding = true,
+                                enableDirectPlay = true,
+                                enableDirectStream = true,
+                                autoOpenLiveStream = true,
+                                deviceProfile = deviceProfile.deviceProfile,
+                                maxStreamingBitrate = videoBitRate,
+                            ),
+                        )
+                    val playSessionId = playbackInfo.content.playSessionId
+                    val mediaSource = playbackInfo.content.mediaSources.firstOrNull()
+                    val transcodingUrl = mediaSource?.transcodingUrl
+
+
+
+                    // URL METHOD
+                    val baseUrl = jellyfinApi.api.baseUrl
+                    val cleanBaseUrl = baseUrl?.removePrefix("http://")?.removePrefix("https://")
+                    val newUri = Uri.parse(transcodingUrl).buildUpon()
+                        .scheme("https")
+                        .authority(cleanBaseUrl)
+                        //.appendQueryParameter("ffmpegTranscoding", "true")
+                        .appendQueryParameter("maxVideoBitrate", videoBitRate.toString())
+                        .appendQueryParameter("TranscodeReasons", "ContainerBitrateExceedsLimit")
+                        .appendQueryParameter("static", "false")
+                        .appendQueryParameter("maxHeight", videoBitRate.toString())
+                        .appendQueryParameter("PlaySessionId", playSessionId)
+                        .build()
+                    val mediaItemBuilder = MediaItem.Builder()
+                        .setMediaId(currentItem.itemId.toString())
+                        .setUri(newUri)
+                        .setMediaMetadata(
+                            MediaMetadata.Builder()
+                                .setTitle(currentItem.name)
+                                .build(),
+                        )
+                    //.setSubtitleConfigurations(player.currentMediaItem!!.subtitleConfigurations)
+                    player.setMediaItem(mediaItemBuilder.build())
+                    player.prepare()
+                    player.seekTo(currentPosition)
+                    player.play()
+                    //isQualityChangeInProgress = true
+                }else if (transcodingResolution == 1080) {
+                    jellyfinRepository.getStreamUrl(itemId, currentItem.mediaSourceId)
+                }
+            } catch (e: Exception) {
+                Timber.e(e)
+            }
+        }
     }
 }
 

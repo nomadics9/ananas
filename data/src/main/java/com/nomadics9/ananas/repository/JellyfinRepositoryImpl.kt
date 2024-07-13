@@ -564,4 +564,14 @@ class JellyfinRepositoryImpl(
     override fun getUserId(): UUID {
         return jellyfinApi.userId!!
     }
+
+    override fun getVideoTranscodeBitRate(transcodeResolution: Int): Pair<Int?, Int?> {
+        return when (transcodeResolution) {
+            1080 -> 14616000 to 384000
+            720 -> 7616000 to 384000
+            480 -> 2616000 to 384000
+            360 -> 292000 to 128000
+            else -> null to null
+        }
+    }
 }

@@ -10,6 +10,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="center">
 
+
         <!-- Video surface will be inserted as the first child of the content frame. -->
 
         <View
@@ -88,6 +89,12 @@
             android:text="@string/watch_credits"
             android:visibility="gone"
             tools:visibility="visible" />
+
+        <Button
+            android:id="@+id/btnChangeQuality"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Change Quality" />
 
         <Button
             android:id="@+id/btn_skip_intro"

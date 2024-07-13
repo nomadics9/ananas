@@ -112,4 +112,6 @@ interface JellyfinRepository {
     suspend fun getDownloads(): List<FindroidItem>
 
     fun getUserId(): UUID
+
+    fun getVideoTranscodeBitRate(transcodeResolution: Int): Pair<Int?, Int?>
 }

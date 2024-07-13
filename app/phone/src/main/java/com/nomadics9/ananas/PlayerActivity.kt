@@ -1,5 +1,6 @@
 package com.nomadics9.ananas
 
+import android.app.AlertDialog
 import android.app.AppOpsManager
 import android.app.PictureInPictureParams
 import android.content.Context
@@ -86,6 +87,12 @@ class PlayerActivity : BasePlayerActivity() {
 
         binding = ActivityPlayerBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        val changeQualityButton: Button = findViewById(R.id.btnChangeQuality)
+        changeQualityButton.setOnClickListener {
+            showQualitySelectionDialog()
+        }
+
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
 
         binding.playerView.player = viewModel.player
@@ -417,6 +424,19 @@ class PlayerActivity : BasePlayerActivity() {
             enterPictureInPictureMode(pipParams())
         } catch (_: IllegalArgumentException) { }
     }
+
+    private fun showQualitySelectionDialog() {
+        val qualities = arrayOf("1080p", "720p", "480p", "360p")
+
+        AlertDialog.Builder(this)
+            .setTitle("Select Video Quality")
+            .setItems(qualities) { _, which ->
+                val selectedQuality = qualities[which]
+                viewModel.changeVideoQuality(selectedQuality)
+            }
+            .show()
+    }
+
 
     override fun onPictureInPictureModeChanged(
         isInPictureInPictureMode: Boolean,

@@ -285,4 +285,8 @@ class JellyfinRepositoryOfflineImpl(
     override fun getUserId(): UUID {
         return jellyfinApi.userId!!
     }
+
+    override fun getVideoTranscodeBitRate(transcodeResolution: Int): Pair<Int?, Int?> {
+        TODO("Not yet implemented")
+    }
 }
