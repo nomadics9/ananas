@@ -8,29 +8,32 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Select Quality" />
+        android:text="Select Quality"
+        />
 
     <Button
         android:id="@+id/btnQuality1080"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="1080p" />
-
     <Button
         android:id="@+id/btnQuality720"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="720p" />
+        android:text="720p"
+        />
 
     <Button
         android:id="@+id/btnQuality480"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="480p" />
+        android:text="480p"
+        />
 
     <Button
         android:id="@+id/btnQuality360"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="360p" />
+        android:text="360p"
+        />
 </LinearLayout>

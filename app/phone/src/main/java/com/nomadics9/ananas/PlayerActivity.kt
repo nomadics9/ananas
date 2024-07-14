@@ -1,6 +1,5 @@
 package com.nomadics9.ananas
 
-import android.app.AlertDialog
 import android.app.AppOpsManager
 import android.app.PictureInPictureParams
 import android.content.Context
@@ -25,15 +24,18 @@ import android.widget.ImageView
 import android.widget.Space
 import android.widget.TextView
 import androidx.activity.viewModels
+import androidx.appcompat.app.AlertDialog
 import androidx.core.view.isVisible
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.media3.common.C
+import androidx.media3.common.Player
 import androidx.media3.ui.DefaultTimeBar
 import androidx.media3.ui.PlayerControlView
 import androidx.media3.ui.PlayerView
 import androidx.navigation.navArgs
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 import com.nomadics9.ananas.databinding.ActivityPlayerBinding
 import com.nomadics9.ananas.dialogs.SpeedSelectionDialogFragment
@@ -88,7 +90,7 @@ class PlayerActivity : BasePlayerActivity() {
         binding = ActivityPlayerBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val changeQualityButton: Button = findViewById(R.id.btnChangeQuality)
+        val changeQualityButton: ImageButton = findViewById(R.id.btnChangeQuality)
         changeQualityButton.setOnClickListener {
             showQualitySelectionDialog()
         }
@@ -426,9 +428,15 @@ class PlayerActivity : BasePlayerActivity() {
     }
 
     private fun showQualitySelectionDialog() {
-        val qualities = arrayOf("1080p", "720p", "480p", "360p")
+       val height = viewModel.getOriginalHeight()
 
-        AlertDialog.Builder(this)
+        val qualities = when (height) {
+            0 -> arrayOf("Auto", "Original - Max", "720p - 2Mbps", "480p - 1Mbps", "360p - 800kbps")
+            in 1001..1999 -> arrayOf("Auto", "Original (1080p) - Max", "720p - 2Mbps", "480p - 1Mbps", "360p - 800kbps")
+            in 2000..3000 ->  arrayOf("Auto", "Original (4K) - Max", "720p - 2Mbps", "480p - 1Mbps", "360p - 800kbps")
+            else -> arrayOf("Auto", "Original - Max", "720p - 2Mbps", "480p - 1Mbps", "360p - 800kbps")
+        }
+        MaterialAlertDialogBuilder(this)
             .setTitle("Select Video Quality")
             .setItems(qualities) { _, which ->
                 val selectedQuality = qualities[which]
@@ -436,6 +444,9 @@ class PlayerActivity : BasePlayerActivity() {
             }
             .show()
     }
+
+
+
 
 
     override fun onPictureInPictureModeChanged(

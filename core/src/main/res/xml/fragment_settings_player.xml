@@ -10,7 +10,7 @@
             app:key="pref_player_mpv"
             app:summary="@string/mpv_player_summary"
             app:title="@string/mpv_player"
-            app:defaultValue="true"/>
+            app:defaultValue="false"/>
         <ListPreference
             app:defaultValue="mediacodec"
             app:dependency="pref_player_mpv"

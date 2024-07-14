@@ -19,7 +19,6 @@ import androidx.media3.common.TrackSelectionParameters
 import androidx.media3.exoplayer.DefaultRenderersFactory
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.exoplayer.trackselection.DefaultTrackSelector
-import dagger.hilt.android.lifecycle.HiltViewModel
 import com.nomadics9.ananas.AppPreferences
 import com.nomadics9.ananas.api.JellyfinApi
 import com.nomadics9.ananas.models.FindroidSegment
@@ -29,6 +28,7 @@ import com.nomadics9.ananas.models.Trickplay
 import com.nomadics9.ananas.mpv.MPVPlayer
 import com.nomadics9.ananas.player.video.R
 import com.nomadics9.ananas.repository.JellyfinRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -40,12 +40,18 @@ import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import org.jellyfin.sdk.api.client.extensions.hlsSegmentApi
 import org.jellyfin.sdk.model.api.ClientCapabilitiesDto
 import org.jellyfin.sdk.model.api.DeviceProfile
 import org.jellyfin.sdk.model.api.DirectPlayProfile
 import org.jellyfin.sdk.model.api.DlnaProfileType
+import org.jellyfin.sdk.model.api.EncodingContext
 import org.jellyfin.sdk.model.api.MediaStreamProtocol
+import org.jellyfin.sdk.model.api.MediaStreamType
 import org.jellyfin.sdk.model.api.PlaybackInfoDto
+import org.jellyfin.sdk.model.api.ProfileCondition
+import org.jellyfin.sdk.model.api.ProfileConditionType
+import org.jellyfin.sdk.model.api.ProfileConditionValue
 import org.jellyfin.sdk.model.api.SubtitleDeliveryMethod
 import org.jellyfin.sdk.model.api.SubtitleProfile
 import org.jellyfin.sdk.model.api.TranscodeSeekInfo
@@ -66,6 +72,7 @@ constructor(
     private val savedStateHandle: SavedStateHandle,
 ) : ViewModel(), Player.Listener {
     val player: Player
+    private var originalHeight: Int = 0
 
     private val _uiState = MutableStateFlow(
         UiState(
@@ -186,6 +193,7 @@ constructor(
                             .setSubtitleConfigurations(mediaSubtitles)
                             .build()
                     mediaItems.add(mediaItem)
+
                 }
             } catch (e: Exception) {
                 Timber.e(e)
@@ -262,7 +270,8 @@ constructor(
                     val itemId = UUID.fromString(currentMediaItem.mediaId)
                     val seconds = player.currentPosition / 1000.0
 
-                    val currentSegment = segments[itemId]?.find { segment -> seconds in segment.startTime..<segment.endTime }
+                    val currentSegment =
+                        segments[itemId]?.find { segment -> seconds in segment.startTime..<segment.endTime }
                     _uiState.update { it.copy(currentSegment = currentSegment) }
                     Timber.tag("SegmentInfo").d("currentSegment: %s", currentSegment)
 
@@ -286,15 +295,16 @@ constructor(
             try {
                 items.first { it.itemId.toString() == player.currentMediaItem?.mediaId }
                     .let { item ->
-                        val itemTitle = if (item.parentIndexNumber != null && item.indexNumber != null) {
-                            if (item.indexNumberEnd == null) {
-                                "S${item.parentIndexNumber}:E${item.indexNumber} - ${item.name}"
+                        val itemTitle =
+                            if (item.parentIndexNumber != null && item.indexNumber != null) {
+                                if (item.indexNumberEnd == null) {
+                                    "S${item.parentIndexNumber}:E${item.indexNumber} - ${item.name}"
+                                } else {
+                                    "S${item.parentIndexNumber}:E${item.indexNumber}-${item.indexNumberEnd} - ${item.name}"
+                                }
                             } else {
-                                "S${item.parentIndexNumber}:E${item.indexNumber}-${item.indexNumberEnd} - ${item.name}"
+                                item.name
                             }
-                        } else {
-                            item.name
-                        }
                         _uiState.update {
                             it.copy(
                                 currentItemTitle = itemTitle,
@@ -322,13 +332,16 @@ constructor(
             ExoPlayer.STATE_IDLE -> {
                 stateString = "ExoPlayer.STATE_IDLE      -"
             }
+
             ExoPlayer.STATE_BUFFERING -> {
                 stateString = "ExoPlayer.STATE_BUFFERING -"
             }
+
             ExoPlayer.STATE_READY -> {
                 stateString = "ExoPlayer.STATE_READY     -"
                 _uiState.update { it.copy(fileLoaded = true) }
             }
+
             ExoPlayer.STATE_ENDED -> {
                 stateString = "ExoPlayer.STATE_ENDED     -"
                 eventsChannel.trySend(PlayerEvents.NavigateBack)
@@ -356,7 +369,10 @@ constructor(
             player.trackSelectionParameters = player.trackSelectionParameters
                 .buildUpon()
                 .setOverrideForType(
-                    TrackSelectionOverride(player.currentTracks.groups.filter { it.type == trackType && it.isSupported }[index].mediaTrackGroup, 0),
+                    TrackSelectionOverride(
+                        player.currentTracks.groups.filter { it.type == trackType && it.isSupported }[index].mediaTrackGroup,
+                        0
+                    ),
                 )
                 .setTrackTypeDisabled(trackType, false)
                 .build()
@@ -373,7 +389,10 @@ constructor(
         Timber.d("Trickplay Resolution: ${trickplayInfo.width}")
 
         withContext(Dispatchers.Default) {
-            val maxIndex = ceil(trickplayInfo.thumbnailCount.toDouble().div(trickplayInfo.tileWidth * trickplayInfo.tileHeight)).toInt()
+            val maxIndex = ceil(
+                trickplayInfo.thumbnailCount.toDouble()
+                    .div(trickplayInfo.tileWidth * trickplayInfo.tileHeight)
+            ).toInt()
             val bitmaps = mutableListOf<Bitmap>()
 
             for (i in 0..maxIndex) {
@@ -385,18 +404,32 @@ constructor(
                     val fullBitmap = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.size)
                     for (offsetY in 0..<trickplayInfo.height * trickplayInfo.tileHeight step trickplayInfo.height) {
                         for (offsetX in 0..<trickplayInfo.width * trickplayInfo.tileWidth step trickplayInfo.width) {
-                            val bitmap = Bitmap.createBitmap(fullBitmap, offsetX, offsetY, trickplayInfo.width, trickplayInfo.height)
+                            val bitmap = Bitmap.createBitmap(
+                                fullBitmap,
+                                offsetX,
+                                offsetY,
+                                trickplayInfo.width,
+                                trickplayInfo.height
+                            )
                             bitmaps.add(bitmap)
                         }
                     }
                 }
             }
-            _uiState.update { it.copy(currentTrickplay = Trickplay(trickplayInfo.interval, bitmaps)) }
+            _uiState.update {
+                it.copy(
+                    currentTrickplay = Trickplay(
+                        trickplayInfo.interval,
+                        bitmaps
+                    )
+                )
+            }
         }
     }
 
     /**
      * Get chapters of current item
+     *
      * @return list of [PlayerChapter]
      */
     private fun getChapters(): List<PlayerChapter>? {
@@ -405,6 +438,7 @@ constructor(
 
     /**
      * Get the index of the current chapter
+     *
      * @return the index of the current chapter
      */
     private fun getCurrentChapterIndex(): Int? {
@@ -421,6 +455,7 @@ constructor(
 
     /**
      * Get the index of the next chapter
+     *
      * @return the index of the next chapter
      */
     private fun getNextChapterIndex(): Int? {
@@ -431,8 +466,10 @@ constructor(
     }
 
     /**
-     * Get the index of the previous chapter.
-     * Only use this for seeking as it will return the current chapter when player position is more than 5 seconds past the start of the chapter
+     * Get the index of the previous chapter. Only use this for seeking as it
+     * will return the current chapter when player position is more than 5
+     * seconds past the start of the chapter
+     *
      * @return the index of the previous chapter
      */
     private fun getPreviousChapterIndex(): Int? {
@@ -448,11 +485,13 @@ constructor(
     }
 
     fun isFirstChapter(): Boolean? = getChapters()?.let { getCurrentChapterIndex() == 0 }
-    fun isLastChapter(): Boolean? = getChapters()?.let { chapters -> getCurrentChapterIndex() == chapters.size - 1 }
+    fun isLastChapter(): Boolean? =
+        getChapters()?.let { chapters -> getCurrentChapterIndex() == chapters.size - 1 }
 
     /**
      * Seek to chapter
-     * @param [chapterIndex] the index of the chapter to seek to
+     *
+     * @param chapterIndex the index of the chapter to seek to
      * @return the [PlayerChapter] which has been sought to
      */
     private fun seekToChapter(chapterIndex: Int): PlayerChapter? {
@@ -463,6 +502,7 @@ constructor(
 
     /**
      * Seek to the next chapter
+     *
      * @return the [PlayerChapter] which has been sought to
      */
     fun seekToNextChapter(): PlayerChapter? {
@@ -470,8 +510,9 @@ constructor(
     }
 
     /**
-     * Seek to the previous chapter
-     * Will seek to start of current chapter if player position is more than 5 seconds past start of chapter
+     * Seek to the previous chapter Will seek to start of current chapter if
+     * player position is more than 5 seconds past start of chapter
+     *
      * @return the [PlayerChapter] which has been sought to
      */
     fun seekToPreviousChapter(): PlayerChapter? {
@@ -486,115 +527,244 @@ constructor(
     private fun getTranscodeResolutions(preferredQuality: String): Int {
         return when (preferredQuality) {
             "1080p" -> 1080
-            "720p" -> 720
-            "480p" -> 480
-            "360p" -> 360
-            else -> 1080
+            "720p - 2Mbps" -> 720
+            "480p - 1Mbps" -> 480
+            "360p - 800kbps" -> 360
+            "Auto" -> 1
+            else -> 1
         }
     }
 
     fun changeVideoQuality(quality: String) {
         val mediaId = player.currentMediaItem?.mediaId ?: return
         val itemId = UUID.fromString(mediaId)
-        //val playerItem = playerItemMap[itemId] ?: return
         val currentItem = items.firstOrNull { it.itemId.toString() == mediaId } ?: return
         val currentPosition = player.currentPosition
 
         viewModelScope.launch {
             try {
                 val transcodingResolution = getTranscodeResolutions(quality)
-                val (videoBitRate, audioBitRate) = jellyfinRepository.getVideoTranscodeBitRate(transcodingResolution)
-                if (transcodingResolution != null) {
-                    val deviceProfile = ClientCapabilitiesDto(
-                        supportedCommands = emptyList(),
-                        playableMediaTypes = emptyList(),
-                        supportsMediaControl = true,
-                        supportsPersistentIdentifier = true,
-                        deviceProfile = DeviceProfile(
-                            name = "Ananas User",
-                            id = jellyfinRepository.getUserId().toString(),
-                            maxStaticBitrate = 1_000_000_000,
-                            maxStreamingBitrate = 1_000_000_000,
-                            codecProfiles = emptyList(),
-                            containerProfiles = emptyList(),
-                            directPlayProfiles = listOf(
-                                DirectPlayProfile(type = DlnaProfileType.VIDEO),
-                                DirectPlayProfile(type = DlnaProfileType.AUDIO),
+                val (videoBitRate, audioBitRate) = jellyfinRepository.getVideoTranscodeBitRate(
+                    transcodingResolution
+                )
+                val deviceProfile = ClientCapabilitiesDto(
+                    supportedCommands = emptyList(),
+                    playableMediaTypes = emptyList(),
+                    supportsMediaControl = true,
+                    supportsPersistentIdentifier = true,
+                    deviceProfile = DeviceProfile(
+                        name = "AnanasUser",
+                        id = jellyfinRepository.getUserId().toString(),
+                        maxStaticBitrate = videoBitRate,
+                        maxStreamingBitrate = videoBitRate,
+                        codecProfiles = emptyList(),
+                        containerProfiles = listOf(),
+                        directPlayProfiles = listOf(
+                            DirectPlayProfile(type = DlnaProfileType.VIDEO),
+                            DirectPlayProfile(type = DlnaProfileType.AUDIO),
+                        ),
+                        transcodingProfiles = listOf(
+                            TranscodingProfile(
+                                container = "ts",
+                                context = EncodingContext.STREAMING,
+                                protocol = MediaStreamProtocol.HLS,
+                                audioCodec = "aac,ac3,eac3",
+                                videoCodec = "hevc,h264",
+                                type = DlnaProfileType.VIDEO,
+                                conditions = listOf(
+                                    ProfileCondition(
+                                        condition = ProfileConditionType.LESS_THAN_EQUAL,
+                                        property = ProfileConditionValue.VIDEO_BITRATE,
+                                        value = "8000000",
+                                        isRequired = true,
+                                    )
+                                ),
+                                copyTimestamps = true,
+                                enableSubtitlesInManifest = true,
+                                transcodeSeekInfo = TranscodeSeekInfo.AUTO,
                             ),
-                            transcodingProfiles = listOf(
-                                TranscodingProfile(
-                                    container = "ts",
-                                    protocol = MediaStreamProtocol.HLS,
-                                    audioCodec = "aac",
-                                    videoCodec = "hevc",
-                                    type = DlnaProfileType.VIDEO,
-                                    conditions = emptyList(),
-                                    copyTimestamps = true,
-                                    enableSubtitlesInManifest = true,
-                                    transcodeSeekInfo = TranscodeSeekInfo.AUTO,
-                                )
-                            ),
-                            subtitleProfiles = listOf(
-                                SubtitleProfile("srt", SubtitleDeliveryMethod.EXTERNAL),
-                                SubtitleProfile("ass", SubtitleDeliveryMethod.EXTERNAL),
-                            ),
-                        )
+                        ),
+                        subtitleProfiles = listOf(
+                            SubtitleProfile("srt", SubtitleDeliveryMethod.EXTERNAL),
+                            SubtitleProfile("ass", SubtitleDeliveryMethod.EXTERNAL),
+                            SubtitleProfile("sub", SubtitleDeliveryMethod.EXTERNAL),
+                            SubtitleProfile("vtt", SubtitleDeliveryMethod.EXTERNAL),
+                            SubtitleProfile("ssa", SubtitleDeliveryMethod.EXTERNAL),
+                            SubtitleProfile("pgs", SubtitleDeliveryMethod.EXTERNAL),
+                            SubtitleProfile("dvb_teletext", SubtitleDeliveryMethod.EXTERNAL),
+                            SubtitleProfile("dvd_subtitle", SubtitleDeliveryMethod.EXTERNAL)
+                        ),
                     )
-                    val playbackInfo =
-                        jellyfinApi.mediaInfoApi.getPostedPlaybackInfo(
-                            itemId,
-                            PlaybackInfoDto(
-                                userId = jellyfinApi.userId!!,
-                                enableTranscoding = true,
-                                enableDirectPlay = true,
-                                enableDirectStream = true,
-                                autoOpenLiveStream = true,
-                                deviceProfile = deviceProfile.deviceProfile,
-                                maxStreamingBitrate = videoBitRate,
-                            ),
-                        )
-                    val playSessionId = playbackInfo.content.playSessionId
-                    val mediaSource = playbackInfo.content.mediaSources.firstOrNull()
-                    val transcodingUrl = mediaSource?.transcodingUrl
+                )
+                val playbackInfo =
+                    jellyfinApi.mediaInfoApi.getPostedPlaybackInfo(
+                        itemId,
+                        PlaybackInfoDto(
+                            userId = jellyfinApi.userId!!,
+                            enableTranscoding = true,
+                            enableDirectPlay = false,
+                            enableDirectStream = true,
+                            autoOpenLiveStream = true,
+                            deviceProfile = deviceProfile.deviceProfile,
+                            maxStreamingBitrate = videoBitRate,
+                        ),
+                    )
+                val playSessionId = playbackInfo.content.playSessionId
+                val getDeviceId =
+                    jellyfinApi.devicesApi.getDeviceOptions(jellyfinApi.userId.toString())
+                val deviceId = getDeviceId.content.deviceId
+                if (playSessionId != null) {
+                    jellyfinApi.api.hlsSegmentApi.stopEncodingProcess(
+                        deviceId,
+                        playSessionId
+                    )
+                }
+                val mediaSource = playbackInfo.content.mediaSources.firstOrNull()
+                if (mediaSource == null) {
+                    Timber.e("Media source is null")
+                } else {
+                    Timber.d("Media source found: $mediaSource")
+                }
+                val transcodingUrl = mediaSource!!.transcodingUrl
+                val mediaSubtitles = currentItem.externalSubtitles.map { externalSubtitle ->
+                    MediaItem.SubtitleConfiguration.Builder(externalSubtitle.uri)
+                        .setLabel(externalSubtitle.title.ifBlank { application.getString(R.string.external) })
+                        .setMimeType(externalSubtitle.mimeType)
+                        .build()
+                }
+//                Timber.tag("MediaStreams").d("Media Streams: %s", mediaSource?.mediaStreams)
+                //TODO: Embedded sub support
+//                val embeddedSubtitles = mediaSource?.mediaStreams
+//                    ?.filter { it.type == MediaStreamType.SUBTITLE && !it.isExternal }
+//                    ?.map { mediaStream ->
+//                        MediaItem.SubtitleConfiguration.Builder(Uri.parse(mediaStream.deliveryUrl!!))
+//                            .setMimeType(
+//                                when (mediaStream.codec) {
+//                                    "subrip" -> MimeTypes.APPLICATION_SUBRIP
+//                                    "webvtt" -> MimeTypes.APPLICATION_SUBRIP
+//                                    "ass" -> MimeTypes.TEXT_SSA
+//                                    else -> MimeTypes.TEXT_UNKNOWN
+//                                }
+//                            )
+//                            .setLanguage(mediaStream.language ?: "und")
+//                            .setLabel(mediaStream.title ?: "Embedded Subtitle")
+//                            .build()
+//                    }
+//                    ?.toMutableList() ?: mutableListOf()
+
+                //  val allSubtitles = embeddedSubtitles.apply { addAll(mediaSubtitles) }
+                val baseUrl = jellyfinApi.api.baseUrl
+                val cleanBaseUrl = baseUrl?.removePrefix("http://")?.removePrefix("https://")
+                val staticUrl = jellyfinApi.videosApi.getVideoStreamUrl(
+                    itemId,
+                    static = true,
+                    playSessionId = playSessionId,
+                    deviceId = deviceId,
+                    mediaSourceId = currentItem.mediaSourceId,
+                    subtitleMethod = SubtitleDeliveryMethod.EXTERNAL
+                )
 
 
-
-                    // URL METHOD
-                    val baseUrl = jellyfinApi.api.baseUrl
-                    val cleanBaseUrl = baseUrl?.removePrefix("http://")?.removePrefix("https://")
-                    val newUri = Uri.parse(transcodingUrl).buildUpon()
+                val uri =
+                    Uri.parse(transcodingUrl).buildUpon()
                         .scheme("https")
                         .authority(cleanBaseUrl)
-                        //.appendQueryParameter("ffmpegTranscoding", "true")
-                        .appendQueryParameter("maxVideoBitrate", videoBitRate.toString())
-                        .appendQueryParameter("TranscodeReasons", "ContainerBitrateExceedsLimit")
-                        .appendQueryParameter("static", "false")
-                        .appendQueryParameter("maxHeight", videoBitRate.toString())
-                        .appendQueryParameter("PlaySessionId", playSessionId)
                         .build()
-                    val mediaItemBuilder = MediaItem.Builder()
-                        .setMediaId(currentItem.itemId.toString())
-                        .setUri(newUri)
-                        .setMediaMetadata(
-                            MediaMetadata.Builder()
-                                .setTitle(currentItem.name)
-                                .build(),
-                        )
-                    //.setSubtitleConfigurations(player.currentMediaItem!!.subtitleConfigurations)
-                    player.setMediaItem(mediaItemBuilder.build())
-                    player.prepare()
-                    player.seekTo(currentPosition)
-                    player.play()
-                    //isQualityChangeInProgress = true
-                }else if (transcodingResolution == 1080) {
-                    jellyfinRepository.getStreamUrl(itemId, currentItem.mediaSourceId)
+
+                fun Uri.Builder.setOrReplaceQueryParameter(
+                    name: String,
+                    value: String
+                ): Uri.Builder {
+                    val currentQueryParams = this.build().queryParameterNames
+
+                    // Create a new builder for the URI
+                    val newBuilder = Uri.parse(this.build().toString()).buildUpon()
+
+                    // Track if the parameter was replaced
+                    var parameterReplaced = false
+
+                    // Re-add all parameters
+                    currentQueryParams.forEach { param ->
+                        val paramValue = this.build().getQueryParameter(param)
+                        if (param == name) {
+                            // Replace the parameter value
+                            parameterReplaced = true
+                            newBuilder.appendQueryParameter(name, value)
+                        } else {
+                            // Append the existing parameter
+                            newBuilder.appendQueryParameter(param, paramValue)
+                        }
+                    }
+
+                    // Append the new parameter only if it wasn't replaced
+                    if (!parameterReplaced) {
+                        newBuilder.appendQueryParameter(name, value)
+                    }
+
+                    return newBuilder
                 }
+
+                val uriBuilder = uri.buildUpon()
+                //.setOrReplaceQueryParameter("PlaySessionId", playSessionId!!)
+
+                if (transcodingResolution == 1) {
+                    uriBuilder.setOrReplaceQueryParameter("EnableAdaptiveBitrateStreaming", "true")
+                    uriBuilder.setOrReplaceQueryParameter("Static", "false")
+                    uriBuilder.appendQueryParameter("MaxVideoHeight","1080" )
+                } else if (transcodingResolution == 720 || transcodingResolution == 480 || transcodingResolution == 360) {
+                    uriBuilder.setOrReplaceQueryParameter(
+                        "MaxVideoBitRate",
+                        videoBitRate.toString()
+                    )
+                    uriBuilder.setOrReplaceQueryParameter("VideoBitrate", videoBitRate.toString())
+                    uriBuilder.setOrReplaceQueryParameter("AudioBitrate", audioBitRate.toString())
+                    uriBuilder.setOrReplaceQueryParameter("Static", "false")
+                    uriBuilder.appendQueryParameter(
+                        "MaxVideoHeight",
+                        transcodingResolution.toString()
+                    )
+                    uriBuilder.appendQueryParameter("subtitleMethod", "External")
+                }
+
+
+                val newUri = uriBuilder.build()
+                Timber.e("URI IS %s", newUri)
+                val mediaItemBuilder = MediaItem.Builder()
+                    .setMediaId(currentItem.itemId.toString())
+                if (transcodingResolution == 1080) {
+                    mediaItemBuilder.setUri(staticUrl)
+                } else {
+                    mediaItemBuilder.setUri(newUri)
+                }
+                    .setMediaMetadata(
+                        MediaMetadata.Builder()
+                            .setTitle(currentItem.name)
+                            .build(),
+                    )
+                    .setSubtitleConfigurations(mediaSubtitles)
+
+                player.setMediaItem(mediaItemBuilder.build())
+                player.prepare()
+                player.seekTo(currentPosition)
+                player.play()
+
+                val originalHeight = mediaSource.mediaStreams
+                    ?.firstOrNull { it.type == MediaStreamType.VIDEO }?.height ?: -1
+                // Store the original height
+                this@PlayerActivityViewModel.originalHeight = originalHeight
+
+                //isQualityChangeInProgress = true
             } catch (e: Exception) {
                 Timber.e(e)
             }
         }
     }
+
+    fun getOriginalHeight(): Int {
+        return originalHeight
+    }
 }
+
 
 sealed interface PlayerEvents {
     data object NavigateBack : PlayerEvents
