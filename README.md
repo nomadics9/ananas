@@ -9,7 +9,7 @@ Personal fork
 ## Features
 - Completely native interface
 - Supported media items: movies, series, seasons, episodes 
-  - Direct play only, (no transcoding)
+  - Direct play and Transcoding
 - Offline playback / downloads
 - ExoPlayer
   - Video codecs: H.263, H.264, H.265, VP8, VP9, AV1 
