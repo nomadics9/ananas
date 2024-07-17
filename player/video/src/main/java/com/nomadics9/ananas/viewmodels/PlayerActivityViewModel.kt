@@ -67,7 +67,6 @@ class PlayerActivityViewModel
 constructor(
     private val application: Application,
     private val jellyfinRepository: JellyfinRepository,
-    private val jellyfinApi: JellyfinApi,
     private val appPreferences: AppPreferences,
     private val savedStateHandle: SavedStateHandle,
 ) : ViewModel(), Player.Listener {
@@ -547,77 +546,11 @@ constructor(
                 val (videoBitRate, audioBitRate) = jellyfinRepository.getVideoTranscodeBitRate(
                     transcodingResolution
                 )
-                val deviceProfile = ClientCapabilitiesDto(
-                    supportedCommands = emptyList(),
-                    playableMediaTypes = emptyList(),
-                    supportsMediaControl = true,
-                    supportsPersistentIdentifier = true,
-                    deviceProfile = DeviceProfile(
-                        name = "AnanasUser",
-                        id = jellyfinRepository.getUserId().toString(),
-                        maxStaticBitrate = videoBitRate,
-                        maxStreamingBitrate = videoBitRate,
-                        codecProfiles = emptyList(),
-                        containerProfiles = listOf(),
-                        directPlayProfiles = listOf(
-                            DirectPlayProfile(type = DlnaProfileType.VIDEO),
-                            DirectPlayProfile(type = DlnaProfileType.AUDIO),
-                        ),
-                        transcodingProfiles = listOf(
-                            TranscodingProfile(
-                                container = "ts",
-                                context = EncodingContext.STREAMING,
-                                protocol = MediaStreamProtocol.HLS,
-                                audioCodec = "aac,ac3,eac3",
-                                videoCodec = "hevc,h264",
-                                type = DlnaProfileType.VIDEO,
-                                conditions = listOf(
-                                    ProfileCondition(
-                                        condition = ProfileConditionType.LESS_THAN_EQUAL,
-                                        property = ProfileConditionValue.VIDEO_BITRATE,
-                                        value = "8000000",
-                                        isRequired = true,
-                                    )
-                                ),
-                                copyTimestamps = true,
-                                enableSubtitlesInManifest = true,
-                                transcodeSeekInfo = TranscodeSeekInfo.AUTO,
-                            ),
-                        ),
-                        subtitleProfiles = listOf(
-                            SubtitleProfile("srt", SubtitleDeliveryMethod.EXTERNAL),
-                            SubtitleProfile("ass", SubtitleDeliveryMethod.EXTERNAL),
-                            SubtitleProfile("sub", SubtitleDeliveryMethod.EXTERNAL),
-                            SubtitleProfile("vtt", SubtitleDeliveryMethod.EXTERNAL),
-                            SubtitleProfile("ssa", SubtitleDeliveryMethod.EXTERNAL),
-                            SubtitleProfile("pgs", SubtitleDeliveryMethod.EXTERNAL),
-                            SubtitleProfile("dvb_teletext", SubtitleDeliveryMethod.EXTERNAL),
-                            SubtitleProfile("dvd_subtitle", SubtitleDeliveryMethod.EXTERNAL)
-                        ),
-                    )
-                )
-                val playbackInfo =
-                    jellyfinApi.mediaInfoApi.getPostedPlaybackInfo(
-                        itemId,
-                        PlaybackInfoDto(
-                            userId = jellyfinApi.userId!!,
-                            enableTranscoding = true,
-                            enableDirectPlay = false,
-                            enableDirectStream = true,
-                            autoOpenLiveStream = true,
-                            deviceProfile = deviceProfile.deviceProfile,
-                            maxStreamingBitrate = videoBitRate,
-                        ),
-                    )
+                val deviceProfile = jellyfinRepository.buildDeviceProfile(videoBitRate, "ts", EncodingContext.STREAMING)
+                val playbackInfo = jellyfinRepository.getPostedPlaybackInfo(itemId,true,deviceProfile,videoBitRate)
                 val playSessionId = playbackInfo.content.playSessionId
-                val getDeviceId =
-                    jellyfinApi.devicesApi.getDeviceOptions(jellyfinApi.userId.toString())
-                val deviceId = getDeviceId.content.deviceId
                 if (playSessionId != null) {
-                    jellyfinApi.api.hlsSegmentApi.stopEncodingProcess(
-                        deviceId,
-                        playSessionId
-                    )
+                    jellyfinRepository.stopEncodingProcess(playSessionId)
                 }
                 val mediaSource = playbackInfo.content.mediaSources.firstOrNull()
                 if (mediaSource == null) {
@@ -632,8 +565,8 @@ constructor(
                         .setMimeType(externalSubtitle.mimeType)
                         .build()
                 }
-//                Timber.tag("MediaStreams").d("Media Streams: %s", mediaSource?.mediaStreams)
-                //TODO: Embedded sub support
+
+//                TODO: Embedded sub support
 //                val embeddedSubtitles = mediaSource?.mediaStreams
 //                    ?.filter { it.type == MediaStreamType.SUBTITLE && !it.isExternal }
 //                    ?.map { mediaStream ->
@@ -651,18 +584,11 @@ constructor(
 //                            .build()
 //                    }
 //                    ?.toMutableList() ?: mutableListOf()
+//                val allSubtitles = embeddedSubtitles.apply { addAll(mediaSubtitles) }
 
-                //  val allSubtitles = embeddedSubtitles.apply { addAll(mediaSubtitles) }
-                val baseUrl = jellyfinApi.api.baseUrl
-                val cleanBaseUrl = baseUrl?.removePrefix("http://")?.removePrefix("https://")
-                val staticUrl = jellyfinApi.videosApi.getVideoStreamUrl(
-                    itemId,
-                    static = true,
-                    playSessionId = playSessionId,
-                    deviceId = deviceId,
-                    mediaSourceId = currentItem.mediaSourceId,
-                    subtitleMethod = SubtitleDeliveryMethod.EXTERNAL
-                )
+                val baseUrl = jellyfinRepository.getBaseUrl()
+                val cleanBaseUrl = baseUrl.removePrefix("http://").removePrefix("https://")
+                val staticUrl = jellyfinRepository.getStreamUrl(itemId, currentItem.mediaSourceId)
 
 
                 val uri =
@@ -719,6 +645,7 @@ constructor(
                     uriBuilder.setOrReplaceQueryParameter("VideoBitrate", videoBitRate.toString())
                     uriBuilder.setOrReplaceQueryParameter("AudioBitrate", audioBitRate.toString())
                     uriBuilder.setOrReplaceQueryParameter("Static", "false")
+                    uriBuilder.appendQueryParameter("PlaySessionId", playSessionId)
                     uriBuilder.appendQueryParameter(
                         "MaxVideoHeight",
                         transcodingResolution.toString()

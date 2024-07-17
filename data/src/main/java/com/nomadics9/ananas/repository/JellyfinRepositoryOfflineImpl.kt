@@ -23,9 +23,13 @@ import com.nomadics9.ananas.models.toFindroidSource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
+import org.jellyfin.sdk.api.client.Response
 import org.jellyfin.sdk.model.api.BaseItemDto
 import org.jellyfin.sdk.model.api.BaseItemKind
+import org.jellyfin.sdk.model.api.DeviceProfile
+import org.jellyfin.sdk.model.api.EncodingContext
 import org.jellyfin.sdk.model.api.ItemFields
+import org.jellyfin.sdk.model.api.PlaybackInfoResponse
 import org.jellyfin.sdk.model.api.PublicSystemInfo
 import org.jellyfin.sdk.model.api.SortOrder
 import org.jellyfin.sdk.model.api.UserConfiguration
@@ -286,7 +290,42 @@ class JellyfinRepositoryOfflineImpl(
         return jellyfinApi.userId!!
     }
 
-    override fun getVideoTranscodeBitRate(transcodeResolution: Int): Pair<Int?, Int?> {
+    override suspend fun getDeviceId(): String {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun buildDeviceProfile(
+        maxBitrate: Int,
+        container: String,
+        context: EncodingContext
+    ): DeviceProfile {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun getVideoStreambyContainerUrl(
+        itemId: UUID,
+        mediaSourceId: String,
+        playSessionId: String,
+        videoBitrate: Int,
+        container: String
+    ): String {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun getPostedPlaybackInfo(
+        itemId: UUID,
+        enableDirectStream: Boolean,
+        deviceProfile: DeviceProfile,
+        maxBitrate: Int
+    ): Response<PlaybackInfoResponse> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun stopEncodingProcess(playSessionId: String) {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun getVideoTranscodeBitRate(transcodeResolution: Int): Pair<Int, Int> {
         TODO("Not yet implemented")
     }
 }

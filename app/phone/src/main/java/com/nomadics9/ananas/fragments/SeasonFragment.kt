@@ -31,7 +31,9 @@ import timber.log.Timber
 
 import androidx.appcompat.app.AlertDialog
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.nomadics9.ananas.AppPreferences
 import com.nomadics9.ananas.models.UiText
+import javax.inject.Inject
 
 
 @AndroidEntryPoint
@@ -43,6 +45,9 @@ class SeasonFragment : Fragment() {
 
     private lateinit var errorDialog: ErrorDialogFragment
     private lateinit var downloadPreparingDialog: AlertDialog
+
+    @Inject
+    lateinit var appPreferences: AppPreferences
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -195,6 +200,15 @@ class SeasonFragment : Fragment() {
     }
 
     private fun createEpisodesToDownloadDialog(storageIndex: Int = 0) {
+        if (!appPreferences.downloadQualityDefault)
+        createPickQualityDialog {
+            showDownloadDialog(storageIndex)
+        } else {
+            showDownloadDialog(storageIndex)
+        }
+    }
+
+    private fun showDownloadDialog(storageIndex: Int = 0) {
         val builder = MaterialAlertDialogBuilder(requireContext())
         val dialog = builder
             .setTitle(com.nomadics9.ananas.core.R.string.download_season_dialog_title)
@@ -210,6 +224,33 @@ class SeasonFragment : Fragment() {
             .create()
         dialog.show()
     }
+
+    private fun createPickQualityDialog(onQualitySelected: () -> Unit) {
+        val qualityEntries = resources.getStringArray(com.nomadics9.ananas.core.R.array.quality_entries)
+        val qualityValues = resources.getStringArray(com.nomadics9.ananas.core.R.array.quality_values)
+        val quality = appPreferences.downloadQuality
+        val currentQualityIndex = qualityValues.indexOf(quality)
+
+        var selectedQuality = quality
+
+        val builder = MaterialAlertDialogBuilder(requireContext())
+        builder.setTitle("Download Quality")
+        builder.setSingleChoiceItems(qualityEntries, currentQualityIndex) { _, which ->
+            selectedQuality = qualityValues[which]
+        }
+        builder.setPositiveButton("Download") { dialog, _ ->
+            appPreferences.downloadQuality = selectedQuality
+            dialog.dismiss()
+            onQualitySelected()
+        }
+        builder.setNegativeButton("Cancel") { dialog, _ ->
+            dialog.dismiss()
+        }
+
+        val dialog = builder.create()
+        dialog.show()
+    }
+
 
 
 

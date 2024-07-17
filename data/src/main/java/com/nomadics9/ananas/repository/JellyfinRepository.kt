@@ -11,9 +11,14 @@ import com.nomadics9.ananas.models.FindroidShow
 import com.nomadics9.ananas.models.FindroidSource
 import com.nomadics9.ananas.models.SortBy
 import kotlinx.coroutines.flow.Flow
+import org.jellyfin.sdk.api.client.Response
 import org.jellyfin.sdk.model.api.BaseItemDto
 import org.jellyfin.sdk.model.api.BaseItemKind
+import org.jellyfin.sdk.model.api.DeviceInfoQueryResult
+import org.jellyfin.sdk.model.api.DeviceProfile
+import org.jellyfin.sdk.model.api.EncodingContext
 import org.jellyfin.sdk.model.api.ItemFields
+import org.jellyfin.sdk.model.api.PlaybackInfoResponse
 import org.jellyfin.sdk.model.api.PublicSystemInfo
 import org.jellyfin.sdk.model.api.SortOrder
 import org.jellyfin.sdk.model.api.UserConfiguration
@@ -113,5 +118,15 @@ interface JellyfinRepository {
 
     fun getUserId(): UUID
 
-    fun getVideoTranscodeBitRate(transcodeResolution: Int): Pair<Int?, Int?>
+    suspend fun getDeviceId(): String
+
+    suspend fun getVideoTranscodeBitRate(transcodeResolution: Int): Pair<Int, Int>
+
+    suspend fun buildDeviceProfile(maxBitrate: Int, container: String, context: EncodingContext): DeviceProfile
+
+    suspend fun getVideoStreambyContainerUrl(itemId: UUID, mediaSourceId: String, playSessionId: String, videoBitrate: Int, container: String): String
+
+    suspend fun getPostedPlaybackInfo(itemId: UUID, enableDirectStream: Boolean, deviceProfile: DeviceProfile ,maxBitrate: Int): Response<PlaybackInfoResponse>
+
+    suspend fun stopEncodingProcess(playSessionId: String)
 }

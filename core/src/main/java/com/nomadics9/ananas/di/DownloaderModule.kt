@@ -6,6 +6,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import com.nomadics9.ananas.AppPreferences
+import com.nomadics9.ananas.api.JellyfinApi
 import com.nomadics9.ananas.database.ServerDatabaseDao
 import com.nomadics9.ananas.repository.JellyfinRepository
 import com.nomadics9.ananas.utils.Downloader
