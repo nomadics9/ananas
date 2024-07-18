@@ -136,7 +136,7 @@ class PlayerViewModel @Inject internal constructor(
         } else {
             mediaSources[mediaSourceIndex]
         }
-        val externalSubtitles = if (mediaSource.type == FindroidSourceType.LOCAL) {
+        val externalSubtitles = if (mediaSource.type.toString() == "LOCAL" ) {
             mediaSource.mediaStreams
                 .filter { mediaStream ->
                     mediaStream.type == MediaStreamType.SUBTITLE && !mediaStream.path.isNullOrBlank()
