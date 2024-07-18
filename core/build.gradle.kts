@@ -30,6 +30,7 @@ android {
     flavorDimensions += "variant"
     productFlavors {
         register("libre")
+        create("Ananas")
     }
 
     compileOptions {

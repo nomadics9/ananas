@@ -14,6 +14,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
+import com.nomadics9.ananas.BuildConfig
 import dagger.hilt.android.AndroidEntryPoint
 import com.nomadics9.ananas.adapters.DiscoveredServerListAdapter
 import com.nomadics9.ananas.databinding.FragmentAddServerBinding
@@ -89,7 +90,12 @@ class AddServerFragment : Fragment() {
                 }
             }
         }
-        connectToServer(DEFAULT_SERVER_ADDRESS)
+        if (BuildConfig.FLAVOR == "Ananas") {
+            fun connectToServerDirectly(serverAddress: String = BuildConfig.DEFAULT_SERVER_ADDRESS) {
+                viewModel.checkServer(serverAddress.removeSuffix("/"))
+            }
+            connectToServerDirectly()
+        }
         return binding.root
     }
 
@@ -129,17 +135,20 @@ class AddServerFragment : Fragment() {
         }
     }
 
+    private fun connectToServer() {
+        val serverAddress = (binding.editTextServerAddress as AppCompatEditText).text.toString()
+        viewModel.checkServer(serverAddress.removeSuffix("/"))
+    }
+
+
 //    private fun connectToServer() {
 //        val serverAddress = (binding.editTextServerAddress as AppCompatEditText).text.toString()
-//        viewModel.checkServer(serverAddress.removeSuffix("/"))
+//        if (serverAddress.isNotBlank()) {
+//            viewModel.checkServer(serverAddress.removeSuffix("/"))
+//        } else {
+//            viewModel.checkServer(BuildConfig.DEFAULT_SERVER_ADDRESS.removeSuffix("/"))
+//        }
 //    }
-
-    companion object {
-        private const val DEFAULT_SERVER_ADDRESS = "https://askar.tv"
-    }
-    private fun connectToServer(serverAddress: String = DEFAULT_SERVER_ADDRESS) {
-    viewModel.checkServer(serverAddress.removeSuffix("/"))
-}
 
     private fun navigateToLoginFragment() {
         findNavController().navigate(AddServerFragmentDirections.actionAddServerFragmentToLoginFragment())

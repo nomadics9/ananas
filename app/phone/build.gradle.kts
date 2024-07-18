@@ -23,6 +23,8 @@ android {
         versionName = Versions.appName
 
         testInstrumentationRunner = "com.nomadics9.ananas.HiltTestRunner"
+        buildConfigField( "String", "DEFAULT_SERVER_ADDRESS", "\" \"")
+        buildConfigField( "String", "REQUEST_SERVER_ADDRESS", "\" \"")
     }
 
     applicationVariants.all {
@@ -57,9 +59,15 @@ android {
 
     flavorDimensions += "variant"
     productFlavors {
-        register("libre") {
+        create("libre") {
             dimension = "variant"
             isDefault = true
+        }
+        create("Ananas") {
+            dimension = "variant"
+            isDefault = false
+            buildConfigField( "String", "DEFAULT_SERVER_ADDRESS", "\"https://askar.tv\"")
+            buildConfigField( "String", "REQUEST_SERVER_ADDRESS", "\"https://r.askar.tv\"")
         }
     }
 

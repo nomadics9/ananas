@@ -11,6 +11,7 @@ import android.webkit.WebViewClient
 import android.widget.ProgressBar
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
+import com.nomadics9.ananas.BuildConfig
 import com.nomadics9.ananas.R
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -53,7 +54,7 @@ class RequestsWebViewFragment : Fragment() {
         }
 
         // Load your URL here
-        webView.loadUrl("https://r.askar.tv")
+        webView.loadUrl(BuildConfig.REQUEST_SERVER_ADDRESS)
 
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
