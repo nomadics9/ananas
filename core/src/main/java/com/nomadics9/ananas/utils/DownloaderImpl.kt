@@ -6,10 +6,8 @@ import android.net.Uri
 import android.os.Environment
 import android.os.StatFs
 import android.text.format.Formatter
-import androidx.core.net.toFile
 import androidx.core.net.toUri
 import com.nomadics9.ananas.AppPreferences
-import com.nomadics9.ananas.api.JellyfinApi
 import com.nomadics9.ananas.database.ServerDatabaseDao
 import com.nomadics9.ananas.models.FindroidEpisode
 import com.nomadics9.ananas.models.FindroidItem
@@ -29,34 +27,9 @@ import com.nomadics9.ananas.models.toFindroidSourceDto
 import com.nomadics9.ananas.models.toFindroidTrickplayInfoDto
 import com.nomadics9.ananas.models.toFindroidUserDataDto
 import com.nomadics9.ananas.repository.JellyfinRepository
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import org.jellyfin.sdk.api.client.extensions.dynamicHlsApi
-import org.jellyfin.sdk.api.client.extensions.videosApi
-import org.jellyfin.sdk.model.api.ClientCapabilitiesDto
-import org.jellyfin.sdk.model.api.DeviceProfile
-import org.jellyfin.sdk.model.api.DirectPlayProfile
-import org.jellyfin.sdk.model.api.DlnaProfileType
 import org.jellyfin.sdk.model.api.EncodingContext
-import org.jellyfin.sdk.model.api.MediaStreamProtocol
-import org.jellyfin.sdk.model.api.PlaybackInfoDto
-import org.jellyfin.sdk.model.api.ProfileCondition
-import org.jellyfin.sdk.model.api.ProfileConditionType
-import org.jellyfin.sdk.model.api.ProfileConditionValue
-import org.jellyfin.sdk.model.api.SubtitleDeliveryMethod
-import org.jellyfin.sdk.model.api.SubtitleProfile
-import org.jellyfin.sdk.model.api.TranscodeSeekInfo
-import org.jellyfin.sdk.model.api.TranscodingProfile
 import timber.log.Timber
 import java.io.File
-import java.io.FileOutputStream
-import java.io.IOException
-import java.io.InputStream
-import java.io.OutputStream
-import java.net.URL
 import java.util.UUID
 import kotlin.Exception
 import kotlin.math.ceil
@@ -419,7 +392,8 @@ class DownloaderImpl(
             val playbackInfo = jellyfinRepository.getPostedPlaybackInfo(itemId,false,deviceProfile,maxBitrate)
             val mediaSourceId = playbackInfo.content.mediaSources.firstOrNull()?.id!!
             val playSessionId = playbackInfo.content.playSessionId!!
-            val downloadUrl = jellyfinRepository.getVideoStreambyContainerUrl(itemId, mediaSourceId, playSessionId, maxBitrate, "ts")
+            val deviceId = jellyfinRepository.getDeviceId()
+            val downloadUrl = jellyfinRepository.getVideoStreambyContainerUrl(itemId, deviceId, mediaSourceId, playSessionId, maxBitrate, "ts")
 
             val transcodeUri = buildTranscodeUri(downloadUrl, maxBitrate, quality)
             Timber.d("Constructed Transcode URL: $transcodeUri")

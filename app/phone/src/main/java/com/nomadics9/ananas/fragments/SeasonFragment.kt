@@ -240,8 +240,8 @@ class SeasonFragment : Fragment() {
         }
         builder.setPositiveButton("Download") { dialog, _ ->
             appPreferences.downloadQuality = selectedQuality
-            dialog.dismiss()
             onQualitySelected()
+            dialog.dismiss()
         }
         builder.setNegativeButton("Cancel") { dialog, _ ->
             dialog.dismiss()

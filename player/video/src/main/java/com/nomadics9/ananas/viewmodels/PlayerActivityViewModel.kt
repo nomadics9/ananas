@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Handler
 import android.os.Looper
+import androidx.core.net.toUri
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -13,6 +14,7 @@ import androidx.media3.common.AudioAttributes
 import androidx.media3.common.C
 import androidx.media3.common.MediaItem
 import androidx.media3.common.MediaMetadata
+import androidx.media3.common.MimeTypes
 import androidx.media3.common.Player
 import androidx.media3.common.TrackSelectionOverride
 import androidx.media3.common.TrackSelectionParameters
@@ -40,22 +42,8 @@ import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import org.jellyfin.sdk.api.client.extensions.hlsSegmentApi
-import org.jellyfin.sdk.model.api.ClientCapabilitiesDto
-import org.jellyfin.sdk.model.api.DeviceProfile
-import org.jellyfin.sdk.model.api.DirectPlayProfile
-import org.jellyfin.sdk.model.api.DlnaProfileType
 import org.jellyfin.sdk.model.api.EncodingContext
-import org.jellyfin.sdk.model.api.MediaStreamProtocol
 import org.jellyfin.sdk.model.api.MediaStreamType
-import org.jellyfin.sdk.model.api.PlaybackInfoDto
-import org.jellyfin.sdk.model.api.ProfileCondition
-import org.jellyfin.sdk.model.api.ProfileConditionType
-import org.jellyfin.sdk.model.api.ProfileConditionValue
-import org.jellyfin.sdk.model.api.SubtitleDeliveryMethod
-import org.jellyfin.sdk.model.api.SubtitleProfile
-import org.jellyfin.sdk.model.api.TranscodeSeekInfo
-import org.jellyfin.sdk.model.api.TranscodingProfile
 import timber.log.Timber
 import java.util.UUID
 import javax.inject.Inject
@@ -68,6 +56,7 @@ constructor(
     private val application: Application,
     private val jellyfinRepository: JellyfinRepository,
     private val appPreferences: AppPreferences,
+    private val jellyfinApi: JellyfinApi,
     private val savedStateHandle: SavedStateHandle,
 ) : ViewModel(), Player.Listener {
     val player: Player
@@ -530,13 +519,12 @@ constructor(
             "480p - 1Mbps" -> 480
             "360p - 800kbps" -> 360
             "Auto" -> 1
-            else -> 1
+            else -> 1080
         }
     }
 
     fun changeVideoQuality(quality: String) {
         val mediaId = player.currentMediaItem?.mediaId ?: return
-        val itemId = UUID.fromString(mediaId)
         val currentItem = items.firstOrNull { it.itemId.toString() == mediaId } ?: return
         val currentPosition = player.currentPosition
 
@@ -546,137 +534,97 @@ constructor(
                 val (videoBitRate, audioBitRate) = jellyfinRepository.getVideoTranscodeBitRate(
                     transcodingResolution
                 )
-                val deviceProfile = jellyfinRepository.buildDeviceProfile(videoBitRate, "ts", EncodingContext.STREAMING)
-                val playbackInfo = jellyfinRepository.getPostedPlaybackInfo(itemId,true,deviceProfile,videoBitRate)
+                val deviceProfile = jellyfinRepository.buildDeviceProfile(videoBitRate, "mkv", EncodingContext.STREAMING)
+                val playbackInfo = jellyfinRepository.getPostedPlaybackInfo(currentItem.itemId,true,deviceProfile,videoBitRate)
                 val playSessionId = playbackInfo.content.playSessionId
                 if (playSessionId != null) {
                     jellyfinRepository.stopEncodingProcess(playSessionId)
                 }
-                val mediaSource = playbackInfo.content.mediaSources.firstOrNull()
-                if (mediaSource == null) {
-                    Timber.e("Media source is null")
-                } else {
-                    Timber.d("Media source found: $mediaSource")
-                }
-                val transcodingUrl = mediaSource!!.transcodingUrl
-                val mediaSubtitles = currentItem.externalSubtitles.map { externalSubtitle ->
+                val mediaSources = jellyfinRepository.getMediaSources(currentItem.itemId, true)
+
+
+                val externalSubtitles = currentItem.externalSubtitles.map { externalSubtitle ->
                     MediaItem.SubtitleConfiguration.Builder(externalSubtitle.uri)
                         .setLabel(externalSubtitle.title.ifBlank { application.getString(R.string.external) })
+                        .setLanguage(externalSubtitle.language.ifBlank { "Unknown" })
                         .setMimeType(externalSubtitle.mimeType)
                         .build()
                 }
 
-//                TODO: Embedded sub support
-//                val embeddedSubtitles = mediaSource?.mediaStreams
-//                    ?.filter { it.type == MediaStreamType.SUBTITLE && !it.isExternal }
-//                    ?.map { mediaStream ->
-//                        MediaItem.SubtitleConfiguration.Builder(Uri.parse(mediaStream.deliveryUrl!!))
-//                            .setMimeType(
-//                                when (mediaStream.codec) {
-//                                    "subrip" -> MimeTypes.APPLICATION_SUBRIP
-//                                    "webvtt" -> MimeTypes.APPLICATION_SUBRIP
-//                                    "ass" -> MimeTypes.TEXT_SSA
-//                                    else -> MimeTypes.TEXT_UNKNOWN
-//                                }
-//                            )
-//                            .setLanguage(mediaStream.language ?: "und")
-//                            .setLabel(mediaStream.title ?: "Embedded Subtitle")
-//                            .build()
-//                    }
-//                    ?.toMutableList() ?: mutableListOf()
-//                val allSubtitles = embeddedSubtitles.apply { addAll(mediaSubtitles) }
-
-                val baseUrl = jellyfinRepository.getBaseUrl()
-                val cleanBaseUrl = baseUrl.removePrefix("http://").removePrefix("https://")
-                val staticUrl = jellyfinRepository.getStreamUrl(itemId, currentItem.mediaSourceId)
-
-
-                val uri =
-                    Uri.parse(transcodingUrl).buildUpon()
-                        .scheme("https")
-                        .authority(cleanBaseUrl)
-                        .build()
-
-                fun Uri.Builder.setOrReplaceQueryParameter(
-                    name: String,
-                    value: String
-                ): Uri.Builder {
-                    val currentQueryParams = this.build().queryParameterNames
-
-                    // Create a new builder for the URI
-                    val newBuilder = Uri.parse(this.build().toString()).buildUpon()
-
-                    // Track if the parameter was replaced
-                    var parameterReplaced = false
-
-                    // Re-add all parameters
-                    currentQueryParams.forEach { param ->
-                        val paramValue = this.build().getQueryParameter(param)
-                        if (param == name) {
-                            // Replace the parameter value
-                            parameterReplaced = true
-                            newBuilder.appendQueryParameter(name, value)
-                        } else {
-                            // Append the existing parameter
-                            newBuilder.appendQueryParameter(param, paramValue)
-                        }
+                val embeddedSubtitles = mediaSources[currentMediaItemIndex].mediaStreams
+                    .filter { it.type == MediaStreamType.SUBTITLE && !it.isExternal && it.path != null }
+                    .map { mediaStream ->
+                        val test = mediaStream.codec
+                        Timber.d("Deliver: %s", test)
+                        var deliveryUrl = mediaStream.path
+                        Timber.d("Deliverurl: %s", deliveryUrl)
+                        if (mediaStream.codec == "webvtt") {
+                            deliveryUrl = deliveryUrl?.replace("Stream.srt", "Stream.vtt")}
+                        MediaItem.SubtitleConfiguration.Builder(Uri.parse(deliveryUrl))
+                            .setMimeType(
+                                when (mediaStream.codec) {
+                                    "subrip" -> MimeTypes.APPLICATION_SUBRIP
+                                    "webvtt" -> MimeTypes.TEXT_VTT
+                                    "ssa" -> MimeTypes.TEXT_SSA
+                                    "pgs" -> MimeTypes.APPLICATION_PGS
+                                    "ass" -> MimeTypes.TEXT_SSA  // ASS is a subtitle format that is essentially an extension of SSA
+                                    "srt" -> MimeTypes.APPLICATION_SUBRIP  // SRT is another common name for SubRip
+                                    "vtt" -> MimeTypes.TEXT_VTT  // VTT is a common extension for WebVTT
+                                    "ttml" -> MimeTypes.APPLICATION_TTML  // TTML (Timed Text Markup Language)
+                                    "dfxp" -> MimeTypes.APPLICATION_TTML  // DFXP is a profile of TTML
+                                    "stl" -> MimeTypes.APPLICATION_TTML  // EBU STL (Subtitling Data Exchange Format)
+                                    "sbv" -> MimeTypes.APPLICATION_SUBRIP // YouTube's SBV format is similar to SubRip
+                                    else -> MimeTypes.TEXT_UNKNOWN
+                                }
+                            )
+                            .setLanguage(mediaStream.language?.ifBlank { "Unknown" })
+                            .setLabel("Embedded")
+                            .build()
                     }
+                    .toMutableList()
 
-                    // Append the new parameter only if it wasn't replaced
-                    if (!parameterReplaced) {
-                        newBuilder.appendQueryParameter(name, value)
-                    }
 
-                    return newBuilder
-                }
+                val allSubtitles = embeddedSubtitles.apply { addAll(externalSubtitles) }
 
-                val uriBuilder = uri.buildUpon()
-                //.setOrReplaceQueryParameter("PlaySessionId", playSessionId!!)
-
-                if (transcodingResolution == 1) {
-                    uriBuilder.setOrReplaceQueryParameter("EnableAdaptiveBitrateStreaming", "true")
-                    uriBuilder.setOrReplaceQueryParameter("Static", "false")
-                    uriBuilder.appendQueryParameter("MaxVideoHeight","1080" )
-                } else if (transcodingResolution == 720 || transcodingResolution == 480 || transcodingResolution == 360) {
-                    uriBuilder.setOrReplaceQueryParameter(
-                        "MaxVideoBitRate",
-                        videoBitRate.toString()
-                    )
-                    uriBuilder.setOrReplaceQueryParameter("VideoBitrate", videoBitRate.toString())
-                    uriBuilder.setOrReplaceQueryParameter("AudioBitrate", audioBitRate.toString())
-                    uriBuilder.setOrReplaceQueryParameter("Static", "false")
-                    uriBuilder.appendQueryParameter("PlaySessionId", playSessionId)
-                    uriBuilder.appendQueryParameter(
-                        "MaxVideoHeight",
-                        transcodingResolution.toString()
-                    )
-                    uriBuilder.appendQueryParameter("subtitleMethod", "External")
+                val url = if (transcodingResolution == 1080){
+                    jellyfinRepository.getStreamUrl(currentItem.itemId, currentItem.mediaSourceId, playSessionId)
+                } else {
+                    val mediaSourceId = mediaSources[currentMediaItemIndex].id
+                    val deviceId = jellyfinRepository.getDeviceId()
+                    val url = jellyfinRepository.getTranscodedVideoStream(currentItem.itemId, deviceId ,mediaSourceId, playSessionId!!, videoBitRate)
+                    val uriBuilder = url.toUri().buildUpon()
+                    val apiKey = jellyfinApi.api.accessToken
+                    uriBuilder.appendQueryParameter("api_key",apiKey )
+                    val newUri = uriBuilder.build()
+                    newUri.toString()
                 }
 
 
-                val newUri = uriBuilder.build()
-                Timber.e("URI IS %s", newUri)
+
+                Timber.e("URI IS %s", url)
                 val mediaItemBuilder = MediaItem.Builder()
                     .setMediaId(currentItem.itemId.toString())
-                if (transcodingResolution == 1080) {
-                    mediaItemBuilder.setUri(staticUrl)
-                } else {
-                    mediaItemBuilder.setUri(newUri)
-                }
+                    .setUri(url)
+                    .setSubtitleConfigurations(allSubtitles)
                     .setMediaMetadata(
                         MediaMetadata.Builder()
                             .setTitle(currentItem.name)
                             .build(),
                     )
-                    .setSubtitleConfigurations(mediaSubtitles)
 
+
+                player.pause()
                 player.setMediaItem(mediaItemBuilder.build())
                 player.prepare()
                 player.seekTo(currentPosition)
+                playWhenReady = true
                 player.play()
 
-                val originalHeight = mediaSource.mediaStreams
-                    ?.firstOrNull { it.type == MediaStreamType.VIDEO }?.height ?: -1
+                val originalHeight = mediaSources[currentMediaItemIndex].mediaStreams
+                    .filter { it.type == MediaStreamType.VIDEO }
+                    .map {mediaStream -> mediaStream.height}.first() ?: 1080
+
+
                 // Store the original height
                 this@PlayerActivityViewModel.originalHeight = originalHeight
 

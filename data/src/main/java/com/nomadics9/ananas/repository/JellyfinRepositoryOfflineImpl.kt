@@ -1,6 +1,7 @@
 package com.nomadics9.ananas.repository
 
 import android.content.Context
+import android.devicelock.DeviceId
 import androidx.paging.PagingData
 import com.nomadics9.ananas.AppPreferences
 import com.nomadics9.ananas.api.JellyfinApi
@@ -26,6 +27,7 @@ import kotlinx.coroutines.withContext
 import org.jellyfin.sdk.api.client.Response
 import org.jellyfin.sdk.model.api.BaseItemDto
 import org.jellyfin.sdk.model.api.BaseItemKind
+import org.jellyfin.sdk.model.api.DeviceInfo
 import org.jellyfin.sdk.model.api.DeviceProfile
 import org.jellyfin.sdk.model.api.EncodingContext
 import org.jellyfin.sdk.model.api.ItemFields
@@ -177,7 +179,7 @@ class JellyfinRepositoryOfflineImpl(
             database.getSources(itemId).map { it.toFindroidSource(database) }
         }
 
-    override suspend fun getStreamUrl(itemId: UUID, mediaSourceId: String): String {
+    override suspend fun getStreamUrl(itemId: UUID, mediaSourceId: String, playSessionId: String?): String {
         TODO("Not yet implemented")
     }
 
@@ -304,10 +306,21 @@ class JellyfinRepositoryOfflineImpl(
 
     override suspend fun getVideoStreambyContainerUrl(
         itemId: UUID,
+        deviceId: String,
         mediaSourceId: String,
         playSessionId: String,
         videoBitrate: Int,
         container: String
+    ): String {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun getTranscodedVideoStream(
+        itemId: UUID,
+        deviceId: String,
+        mediaSourceId: String,
+        playSessionId: String,
+        videoBitrate: Int
     ): String {
         TODO("Not yet implemented")
     }

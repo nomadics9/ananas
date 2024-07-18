@@ -30,6 +30,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
 import org.jellyfin.sdk.api.client.Response
+import org.jellyfin.sdk.api.client.extensions.dynamicHlsApi
 import org.jellyfin.sdk.api.client.extensions.get
 import org.jellyfin.sdk.api.client.extensions.hlsSegmentApi
 import org.jellyfin.sdk.model.api.BaseItemDto
@@ -56,6 +57,7 @@ import org.jellyfin.sdk.model.api.PublicSystemInfo
 import org.jellyfin.sdk.model.api.SortOrder
 import org.jellyfin.sdk.model.api.SubtitleDeliveryMethod
 import org.jellyfin.sdk.model.api.SubtitleProfile
+import org.jellyfin.sdk.model.api.TranscodeReason
 import org.jellyfin.sdk.model.api.TranscodeSeekInfo
 import org.jellyfin.sdk.model.api.TranscodingProfile
 import org.jellyfin.sdk.model.api.UserConfiguration
@@ -335,14 +337,27 @@ class JellyfinRepositoryImpl(
             sources
         }
 
-    override suspend fun getStreamUrl(itemId: UUID, mediaSourceId: String): String =
+    override suspend fun getStreamUrl(itemId: UUID, mediaSourceId: String, playSessionId: String?): String =
         withContext(Dispatchers.IO) {
             try {
-                jellyfinApi.videosApi.getVideoStreamUrl(
-                    itemId,
-                    static = true,
-                    mediaSourceId = mediaSourceId,
-                )
+                val url = if (playSessionId != null) {
+                    jellyfinApi.videosApi.getVideoStreamUrl(
+                        itemId,
+                        static = true,
+                        mediaSourceId = mediaSourceId,
+                        playSessionId = playSessionId,
+                        deviceId = getDeviceId(),
+                        context = EncodingContext.STATIC
+                    )
+                } else {
+                    jellyfinApi.videosApi.getVideoStreamUrl(
+                        itemId,
+                        static = true,
+                        mediaSourceId = mediaSourceId,
+                        deviceId = getDeviceId(),
+                    )
+                }
+                url
             } catch (e: Exception) {
                 Timber.e(e)
                 ""
@@ -584,7 +599,7 @@ class JellyfinRepositoryImpl(
             720 -> 2000000 to 384000 // Adjusted for 720p
             480 -> 1000000 to 384000 // Adjusted for 480p
             360 -> 800000 to 128000   // Adjusted for 360p
-            else -> 8000000 to 384000
+            else -> 12000000 to 384000
         }
     }
 
@@ -660,10 +675,11 @@ class JellyfinRepositoryImpl(
         return playbackInfo
     }
 
-    override suspend fun getVideoStreambyContainerUrl(itemId: UUID, mediaSourceId: String, playSessionId: String, videoBitrate: Int, container: String): String {
+    override suspend fun getVideoStreambyContainerUrl(itemId: UUID, deviceId: String, mediaSourceId: String, playSessionId: String, videoBitrate: Int, container: String): String {
         val url = jellyfinApi.videosApi.getVideoStreamByContainerUrl(
             itemId,
             static = false,
+            deviceId = deviceId,
             mediaSourceId = mediaSourceId,
             playSessionId = playSessionId,
             videoBitRate = videoBitrate,
@@ -673,18 +689,63 @@ class JellyfinRepositoryImpl(
             container = container,
             startTimeTicks = 0,
             copyTimestamps = true,
+            subtitleMethod = SubtitleDeliveryMethod.EXTERNAL
         )
         return url
     }
 
+    override suspend fun getTranscodedVideoStream(itemId: UUID, deviceId: String, mediaSourceId: String, playSessionId: String, videoBitrate: Int): String {
+        val isAuto = videoBitrate == 12000000
+        val url = if (!isAuto) {
+            jellyfinApi.api.dynamicHlsApi.getMasterHlsVideoPlaylistUrl(
+                itemId,
+                static = false,
+                deviceId = deviceId,
+                mediaSourceId = mediaSourceId,
+                playSessionId = playSessionId,
+                videoBitRate = videoBitrate,
+                enableAdaptiveBitrateStreaming = false,
+                audioBitRate = 384000,
+                videoCodec = "hevc",
+                audioCodec = "aac,ac3,eac3",
+                startTimeTicks = 0,
+                copyTimestamps = true,
+                subtitleMethod = SubtitleDeliveryMethod.EXTERNAL,
+                context = EncodingContext.STREAMING,
+                segmentContainer = "ts",
+                transcodeReasons = "ContainerBitrateExceedsLimit",
+            )
+        } else {
+            jellyfinApi.api.dynamicHlsApi.getMasterHlsVideoPlaylistUrl(
+                itemId,
+                static = false,
+                deviceId = deviceId,
+                mediaSourceId = mediaSourceId,
+                playSessionId = playSessionId,
+                enableAdaptiveBitrateStreaming = true,
+                videoCodec = "hevc",
+                audioCodec = "aac,ac3,eac3",
+                startTimeTicks = 0,
+                copyTimestamps = true,
+                subtitleMethod = SubtitleDeliveryMethod.EXTERNAL,
+                context = EncodingContext.STREAMING,
+                segmentContainer = "ts",
+                transcodeReasons = "ContainerBitrateExceedsLimit",
+            )
+        }
+        return url
+    }
+
+
     override suspend fun getDeviceId(): String {
-        val deviceId = jellyfinApi.devicesApi.getDevices(getUserId())
-        return deviceId.toString()
+        val devices = jellyfinApi.devicesApi.getDevices(getUserId())
+        return devices.content.items?.firstOrNull()?.id!!
     }
 
     override suspend fun stopEncodingProcess(playSessionId: String) {
+        val deviceId = getDeviceId()
         jellyfinApi.api.hlsSegmentApi.stopEncodingProcess(
-            deviceId = getDeviceId(),
+            deviceId = deviceId,
             playSessionId = playSessionId
         )
     }

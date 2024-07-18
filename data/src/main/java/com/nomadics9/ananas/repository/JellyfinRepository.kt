@@ -14,6 +14,7 @@ import kotlinx.coroutines.flow.Flow
 import org.jellyfin.sdk.api.client.Response
 import org.jellyfin.sdk.model.api.BaseItemDto
 import org.jellyfin.sdk.model.api.BaseItemKind
+import org.jellyfin.sdk.model.api.DeviceInfo
 import org.jellyfin.sdk.model.api.DeviceInfoQueryResult
 import org.jellyfin.sdk.model.api.DeviceProfile
 import org.jellyfin.sdk.model.api.EncodingContext
@@ -86,7 +87,7 @@ interface JellyfinRepository {
 
     suspend fun getMediaSources(itemId: UUID, includePath: Boolean = false): List<FindroidSource>
 
-    suspend fun getStreamUrl(itemId: UUID, mediaSourceId: String): String
+    suspend fun getStreamUrl(itemId: UUID, mediaSourceId: String, playSessionId: String? = null): String
 
     suspend fun getSegmentsTimestamps(itemId: UUID): List<FindroidSegment>?
 
@@ -124,7 +125,9 @@ interface JellyfinRepository {
 
     suspend fun buildDeviceProfile(maxBitrate: Int, container: String, context: EncodingContext): DeviceProfile
 
-    suspend fun getVideoStreambyContainerUrl(itemId: UUID, mediaSourceId: String, playSessionId: String, videoBitrate: Int, container: String): String
+    suspend fun getVideoStreambyContainerUrl(itemId: UUID, deviceId: String, mediaSourceId: String, playSessionId: String, videoBitrate: Int, container: String): String
+
+    suspend fun getTranscodedVideoStream(itemId: UUID, deviceId: String, mediaSourceId: String, playSessionId: String, videoBitrate: Int): String
 
     suspend fun getPostedPlaybackInfo(itemId: UUID, enableDirectStream: Boolean, deviceProfile: DeviceProfile ,maxBitrate: Int): Response<PlaybackInfoResponse>
 

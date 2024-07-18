@@ -172,59 +172,63 @@ class EpisodeBottomSheetFragment : BottomSheetDialogFragment() {
         }else if (!appPreferences.downloadQualityDefault) {
             createPickQualityDialog()
         } else {
-            binding.itemActions.downloadButton.setIconResource(AndroidR.color.transparent)
-            binding.itemActions.progressDownload.isIndeterminate = true
-            binding.itemActions.progressDownload.isVisible = true
-            if (requireContext().getExternalFilesDirs(null).filterNotNull().size > 1) {
-                val storageDialog = getStorageSelectionDialog(
-                    requireContext(),
-                    onItemSelected = { storageIndex ->
-                        if (viewModel.item.sources.size > 1) {
-                            val dialog = getVideoVersionDialog(
-                                requireContext(),
-                                viewModel.item,
-                                onItemSelected = { sourceIndex ->
-                                    createDownloadPreparingDialog()
-                                    viewModel.download(sourceIndex, storageIndex)
-                                },
-                                onCancel = {
-                                    binding.itemActions.progressDownload.isVisible = false
-                                    binding.itemActions.downloadButton.setIconResource(CoreR.drawable.ic_download)
-                                },
-                            )
-                            dialog.show()
-                            return@getStorageSelectionDialog
-                        }
-                        createDownloadPreparingDialog()
-                        viewModel.download(storageIndex = storageIndex)
-                    },
-                    onCancel = {
-                        binding.itemActions.progressDownload.isVisible = false
-                        binding.itemActions.downloadButton.setIconResource(CoreR.drawable.ic_download)
-                    },
-                )
-                storageDialog.show()
-                return
-            }
-            if (viewModel.item.sources.size > 1) {
-                val dialog = getVideoVersionDialog(
-                    requireContext(),
-                    viewModel.item,
-                    onItemSelected = { sourceIndex ->
-                        createDownloadPreparingDialog()
-                        viewModel.download(sourceIndex)
-                    },
-                    onCancel = {
-                        binding.itemActions.progressDownload.isVisible = false
-                        binding.itemActions.downloadButton.setIconResource(CoreR.drawable.ic_download)
-                    },
-                )
-                dialog.show()
-                return
-            }
-            createDownloadPreparingDialog()
-            viewModel.download()
+            download()
+           }
+    }
+
+    private fun download(){
+        binding.itemActions.downloadButton.setIconResource(AndroidR.color.transparent)
+        binding.itemActions.progressDownload.isIndeterminate = true
+        binding.itemActions.progressDownload.isVisible = true
+        if (requireContext().getExternalFilesDirs(null).filterNotNull().size > 1) {
+            val storageDialog = getStorageSelectionDialog(
+                requireContext(),
+                onItemSelected = { storageIndex ->
+                    if (viewModel.item.sources.size > 1) {
+                        val dialog = getVideoVersionDialog(
+                            requireContext(),
+                            viewModel.item,
+                            onItemSelected = { sourceIndex ->
+                                createDownloadPreparingDialog()
+                                viewModel.download(sourceIndex, storageIndex)
+                            },
+                            onCancel = {
+                                binding.itemActions.progressDownload.isVisible = false
+                                binding.itemActions.downloadButton.setIconResource(CoreR.drawable.ic_download)
+                            },
+                        )
+                        dialog.show()
+                        return@getStorageSelectionDialog
+                    }
+                    createDownloadPreparingDialog()
+                    viewModel.download(storageIndex = storageIndex)
+                },
+                onCancel = {
+                    binding.itemActions.progressDownload.isVisible = false
+                    binding.itemActions.downloadButton.setIconResource(CoreR.drawable.ic_download)
+                },
+            )
+            storageDialog.show()
+            return
         }
+        if (viewModel.item.sources.size > 1) {
+            val dialog = getVideoVersionDialog(
+                requireContext(),
+                viewModel.item,
+                onItemSelected = { sourceIndex ->
+                    createDownloadPreparingDialog()
+                    viewModel.download(sourceIndex)
+                },
+                onCancel = {
+                    binding.itemActions.progressDownload.isVisible = false
+                    binding.itemActions.downloadButton.setIconResource(CoreR.drawable.ic_download)
+                },
+            )
+            dialog.show()
+            return
+        }
+        createDownloadPreparingDialog()
+        viewModel.download()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -424,7 +428,7 @@ class EpisodeBottomSheetFragment : BottomSheetDialogFragment() {
         builder.setPositiveButton("Download") { dialog, _ ->
             appPreferences.downloadQuality = selectedQuality
             dialog.dismiss()
-            handleDownload()
+            download()
         }
         builder.setNegativeButton("Cancel") { dialog, _ ->
             dialog.dismiss()
