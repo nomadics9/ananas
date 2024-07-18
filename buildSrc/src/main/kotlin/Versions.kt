@@ -1,8 +1,8 @@
 import org.gradle.api.JavaVersion
 
 object Versions {
-    const val appCode = 10
-    const val appName = "ananasRelease-0.10.0@0.14.2"
+    const val appCode = 11
+    const val appName = "0.10.1-0.14.2"
 
     const val compileSdk = 34
     const val buildTools = "34.0.0"
