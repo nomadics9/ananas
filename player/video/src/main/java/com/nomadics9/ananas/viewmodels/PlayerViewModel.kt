@@ -136,7 +136,27 @@ class PlayerViewModel @Inject internal constructor(
         } else {
             mediaSources[mediaSourceIndex]
         }
-        val externalSubtitles = mediaSource.mediaStreams
+        val externalSubtitles = if (mediaSource.type == FindroidSourceType.LOCAL) {
+            mediaSource.mediaStreams
+                .filter { mediaStream ->
+                    mediaStream.type == MediaStreamType.SUBTITLE && !mediaStream.path.isNullOrBlank()
+                }
+                .map { mediaStream ->
+                    ExternalSubtitle(
+                        mediaStream.title,
+                        mediaStream.language,
+                        Uri.parse(mediaStream.path!!),
+                        when (mediaStream.codec) {
+                            "subrip" -> MimeTypes.APPLICATION_SUBRIP
+                            "webvtt" -> MimeTypes.APPLICATION_SUBRIP
+                            "pgs" -> MimeTypes.APPLICATION_PGS
+                            "ass" -> MimeTypes.TEXT_SSA
+                            else -> MimeTypes.TEXT_UNKNOWN
+                        },
+                    )
+                }
+        }else {
+          mediaSource.mediaStreams
             .filter { mediaStream ->
                 mediaStream.isExternal && mediaStream.type == MediaStreamType.SUBTITLE && !mediaStream.path.isNullOrBlank()
             }
@@ -148,11 +168,13 @@ class PlayerViewModel @Inject internal constructor(
                     when (mediaStream.codec) {
                         "subrip" -> MimeTypes.APPLICATION_SUBRIP
                         "webvtt" -> MimeTypes.APPLICATION_SUBRIP
+                        "pgs" -> MimeTypes.APPLICATION_PGS
                         "ass" -> MimeTypes.TEXT_SSA
                         else -> MimeTypes.TEXT_UNKNOWN
                     },
                 )
             }
+        }
         val trickplayInfo = when (this) {
             is FindroidSources -> {
                 this.trickplayInfo?.get(mediaSource.id)?.let {

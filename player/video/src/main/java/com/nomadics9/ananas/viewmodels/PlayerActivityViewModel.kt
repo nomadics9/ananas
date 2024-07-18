@@ -577,7 +577,7 @@ constructor(
                                     else -> MimeTypes.TEXT_UNKNOWN
                                 }
                             )
-                            .setLanguage(mediaStream.language?.ifBlank { "Unknown" })
+                            .setLanguage(mediaStream.language.ifBlank { "Unknown" })
                             .setLabel("Embedded")
                             .build()
                     }

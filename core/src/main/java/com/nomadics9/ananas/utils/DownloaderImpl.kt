@@ -28,6 +28,7 @@ import com.nomadics9.ananas.models.toFindroidTrickplayInfoDto
 import com.nomadics9.ananas.models.toFindroidUserDataDto
 import com.nomadics9.ananas.repository.JellyfinRepository
 import org.jellyfin.sdk.model.api.EncodingContext
+import org.jellyfin.sdk.model.api.MediaStreamType
 import timber.log.Timber
 import java.io.File
 import java.util.UUID
@@ -118,6 +119,7 @@ class DownloaderImpl(
                 database.insertSource(source.toFindroidSourceDto(item.id, path.path.orEmpty()))
                 database.insertUserData(item.toFindroidUserDataDto(jellyfinRepository.getUserId()))
                 downloadExternalMediaStreams(item, source, storageIndex)
+                downloadEmbeddedMediaStreams(item, source, storageIndex)
                 if (trickplayInfo != null) {
                     downloadTrickplayData(item.id, source.id, trickplayInfo)
                 }
@@ -147,6 +149,7 @@ class DownloaderImpl(
                 database.insertSource(source.toFindroidSourceDto(item.id, path.path.orEmpty()))
                 database.insertUserData(item.toFindroidUserDataDto(jellyfinRepository.getUserId()))
                 downloadExternalMediaStreams(item, source, storageIndex)
+                downloadEmbeddedMediaStreams(item, source, storageIndex)
                 if (trickplayInfo != null) {
                     downloadTrickplayData(item.id, source.id, trickplayInfo)
                 }
@@ -340,6 +343,45 @@ class DownloaderImpl(
             database.setMediaStreamDownloadId(id, downloadId)
         }
     }
+
+    private fun downloadEmbeddedMediaStreams(
+        item: FindroidItem,
+        source: FindroidSource,
+        storageIndex: Int = 0
+    ) {
+        val storageLocation = context.getExternalFilesDirs(null)[storageIndex]
+        val subtitleStreams = source.mediaStreams.filter { !it.isExternal && it.type == MediaStreamType.SUBTITLE && it.path != null }
+        for (mediaStream in subtitleStreams) {
+            var deliveryUrl = mediaStream.path!!
+            if (mediaStream.codec == "webvtt") {
+                deliveryUrl = deliveryUrl.replace("Stream.srt", "Stream.vtt")
+            }
+            val id = UUID.randomUUID()
+            val streamPath = Uri.fromFile(
+                File(
+                    storageLocation,
+                    "downloads/${item.id}.${source.id}.$id.download"
+                )
+            )
+            database.insertMediaStream(
+                mediaStream.toFindroidMediaStreamDto(
+                    id,
+                    source.id,
+                    streamPath.path.orEmpty()
+                )
+            )
+            val request = DownloadManager.Request(Uri.parse(deliveryUrl))
+                .setTitle(mediaStream.title)
+                .setAllowedOverMetered(appPreferences.downloadOverMobileData)
+                .setAllowedOverRoaming(appPreferences.downloadWhenRoaming)
+                .setNotificationVisibility(DownloadManager.Request.VISIBILITY_HIDDEN)
+                .setDestinationUri(streamPath)
+
+            val downloadId = downloadManager.enqueue(request)
+            database.setMediaStreamDownloadId(id, downloadId)
+        }
+    }
+
 
     private suspend fun downloadTrickplayData(
         itemId: UUID,
