@@ -24,19 +24,16 @@ import android.widget.ImageView
 import android.widget.Space
 import android.widget.TextView
 import androidx.activity.viewModels
-import androidx.appcompat.app.AlertDialog
 import androidx.core.view.isVisible
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.media3.common.C
-import androidx.media3.common.Player
 import androidx.media3.ui.DefaultTimeBar
 import androidx.media3.ui.PlayerControlView
 import androidx.media3.ui.PlayerView
 import androidx.navigation.navArgs
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import dagger.hilt.android.AndroidEntryPoint
 import com.nomadics9.ananas.databinding.ActivityPlayerBinding
 import com.nomadics9.ananas.dialogs.SpeedSelectionDialogFragment
 import com.nomadics9.ananas.dialogs.TrackSelectionDialogFragment
@@ -45,6 +42,7 @@ import com.nomadics9.ananas.utils.PlayerGestureHelper
 import com.nomadics9.ananas.utils.PreviewScrubListener
 import com.nomadics9.ananas.viewmodels.PlayerActivityViewModel
 import com.nomadics9.ananas.viewmodels.PlayerEvents
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
@@ -54,7 +52,6 @@ var isControlsLocked: Boolean = false
 
 @AndroidEntryPoint
 class PlayerActivity : BasePlayerActivity() {
-
     @Inject
     lateinit var appPreferences: AppPreferences
 
@@ -115,12 +112,13 @@ class PlayerActivity : BasePlayerActivity() {
         configureInsets(lockedControls)
 
         if (appPreferences.playerGestures) {
-            playerGestureHelper = PlayerGestureHelper(
-                appPreferences,
-                this,
-                binding.playerView,
-                getSystemService(AUDIO_SERVICE) as AudioManager,
-            )
+            playerGestureHelper =
+                PlayerGestureHelper(
+                    appPreferences,
+                    this,
+                    binding.playerView,
+                    getSystemService(AUDIO_SERVICE) as AudioManager,
+                )
         }
 
         binding.playerView.findViewById<View>(R.id.back_button).setOnClickListener {
@@ -155,7 +153,12 @@ class PlayerActivity : BasePlayerActivity() {
                                     skipButton.text =
                                         getString(CoreR.string.skip_intro_button)
                                     skipButton.isVisible =
-                                        !isInPictureInPictureMode && !buttonPressed && (showSkip == true || (binding.playerView.isControllerFullyVisible && currentSegment?.skip == true))
+                                        !isInPictureInPictureMode &&
+                                        !buttonPressed &&
+                                        (
+                                            showSkip == true ||
+                                                (binding.playerView.isControllerFullyVisible && currentSegment?.skip == true)
+                                        )
                                     watchCreditsButton.isVisible = false
                                 }
 
@@ -167,7 +170,10 @@ class PlayerActivity : BasePlayerActivity() {
                                             getString(CoreR.string.skip_credit_button_last)
                                         }
                                     skipButton.isVisible =
-                                        !isInPictureInPictureMode && !buttonPressed && currentSegment?.skip == true && !binding.playerView.isControllerFullyVisible
+                                        !isInPictureInPictureMode &&
+                                        !buttonPressed &&
+                                        currentSegment?.skip == true &&
+                                        !binding.playerView.isControllerFullyVisible
                                     watchCreditsButton.isVisible = skipButton.isVisible
                                 }
 
@@ -181,12 +187,15 @@ class PlayerActivity : BasePlayerActivity() {
                                     when (currentSegment?.type) {
                                         "intro" -> {
                                             skipButton.isVisible =
-                                                !buttonPressed && (showSkip == true || (visibility == View.VISIBLE && currentSegment?.skip == true))
+                                                !buttonPressed &&
+                                                (showSkip == true || (visibility == View.VISIBLE && currentSegment?.skip == true))
                                         }
 
                                         "credit" -> {
                                             skipButton.isVisible =
-                                                !buttonPressed && currentSegment?.skip == true && visibility == View.GONE
+                                                !buttonPressed &&
+                                                currentSegment?.skip == true &&
+                                                visibility == View.GONE
                                             watchCreditsButton.isVisible = skipButton.isVisible
                                         }
                                     }
@@ -268,7 +277,8 @@ class PlayerActivity : BasePlayerActivity() {
                                 if (appPreferences.playerPipGesture) {
                                     try {
                                         setPictureInPictureParams(pipParams(event.isPlaying))
-                                    } catch (_: IllegalArgumentException) { }
+                                    } catch (_: IllegalArgumentException) {
+                                    }
                                 }
                             }
                         }
@@ -346,11 +356,12 @@ class PlayerActivity : BasePlayerActivity() {
 
         if (appPreferences.playerTrickplay) {
             val imagePreview = binding.playerView.findViewById<ImageView>(R.id.image_preview)
-            previewScrubListener = PreviewScrubListener(
-                imagePreview,
-                timeBar,
-                viewModel.player,
-            )
+            previewScrubListener =
+                PreviewScrubListener(
+                    imagePreview,
+                    timeBar,
+                    viewModel.player,
+                )
 
             timeBar.addListener(previewScrubListener!!)
         }
@@ -381,34 +392,38 @@ class PlayerActivity : BasePlayerActivity() {
     private fun pipParams(enableAutoEnter: Boolean = viewModel.player.isPlaying): PictureInPictureParams {
         val displayAspectRatio = Rational(binding.playerView.width, binding.playerView.height)
 
-        val aspectRatio = binding.playerView.player?.videoSize?.let {
-            Rational(
-                it.width.coerceAtMost((it.height * 2.39f).toInt()),
-                it.height.coerceAtMost((it.width * 2.39f).toInt()),
-            )
-        }
+        val aspectRatio =
+            binding.playerView.player?.videoSize?.let {
+                Rational(
+                    it.width.coerceAtMost((it.height * 2.39f).toInt()),
+                    it.height.coerceAtMost((it.width * 2.39f).toInt()),
+                )
+            }
 
-        val sourceRectHint = if (displayAspectRatio < aspectRatio!!) {
-            val space = ((binding.playerView.height - (binding.playerView.width.toFloat() / aspectRatio.toFloat())) / 2).toInt()
-            Rect(
-                0,
-                space,
-                binding.playerView.width,
-                (binding.playerView.width.toFloat() / aspectRatio.toFloat()).toInt() + space,
-            )
-        } else {
-            val space = ((binding.playerView.width - (binding.playerView.height.toFloat() * aspectRatio.toFloat())) / 2).toInt()
-            Rect(
-                space,
-                0,
-                (binding.playerView.height.toFloat() * aspectRatio.toFloat()).toInt() + space,
-                binding.playerView.height,
-            )
-        }
+        val sourceRectHint =
+            if (displayAspectRatio < aspectRatio!!) {
+                val space = ((binding.playerView.height - (binding.playerView.width.toFloat() / aspectRatio.toFloat())) / 2).toInt()
+                Rect(
+                    0,
+                    space,
+                    binding.playerView.width,
+                    (binding.playerView.width.toFloat() / aspectRatio.toFloat()).toInt() + space,
+                )
+            } else {
+                val space = ((binding.playerView.width - (binding.playerView.height.toFloat() * aspectRatio.toFloat())) / 2).toInt()
+                Rect(
+                    space,
+                    0,
+                    (binding.playerView.height.toFloat() * aspectRatio.toFloat()).toInt() + space,
+                    binding.playerView.height,
+                )
+            }
 
-        val builder = PictureInPictureParams.Builder()
-            .setAspectRatio(aspectRatio)
-            .setSourceRectHint(sourceRectHint)
+        val builder =
+            PictureInPictureParams
+                .Builder()
+                .setAspectRatio(aspectRatio)
+                .setSourceRectHint(sourceRectHint)
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             builder.setAutoEnterEnabled(enableAutoEnter)
@@ -424,30 +439,51 @@ class PlayerActivity : BasePlayerActivity() {
 
         try {
             enterPictureInPictureMode(pipParams())
-        } catch (_: IllegalArgumentException) { }
+        } catch (_: IllegalArgumentException) {
+        }
     }
 
     private fun showQualitySelectionDialog() {
-       val height = viewModel.getOriginalHeight()
+        val height = viewModel.getOriginalHeight()
+        val qualityEntries = resources.getStringArray(CoreR.array.quality_entries).toList()
+        val qualityValues = resources.getStringArray(CoreR.array.quality_values).toList()
 
-        val qualities = when (height) {
-            0 -> arrayOf("Auto", "Original - Max", "720p - 2Mbps", "480p - 1Mbps", "360p - 800kbps")
-            in 1001..1999 -> arrayOf("Auto", "Original (1080p) - Max", "720p - 2Mbps", "480p - 1Mbps", "360p - 800kbps")
-            in 2000..3000 ->  arrayOf("Auto", "Original (4K) - Max", "720p - 2Mbps", "480p - 1Mbps", "360p - 800kbps")
-            else -> arrayOf("Auto", "Original - Max", "720p - 2Mbps", "480p - 1Mbps", "360p - 800kbps")
-        }
+        // Map entries to values
+        val qualityMap = qualityEntries.zip(qualityValues).toMap()
+
+        val qualities: List<String> =
+            when (height) {
+                0 -> qualityEntries
+                in 1001..1999 ->
+                    listOf(
+                        qualityEntries[0],
+                        "${qualityEntries[1]} (1080p)",
+                        qualityEntries[2],
+                        qualityEntries[3],
+                        qualityEntries[4],
+                        qualityEntries[5],
+                    )
+                in 2000..3000 ->
+                    listOf(
+                        qualityEntries[0],
+                        "${qualityEntries[1]} (4K)",
+                        qualityEntries[2],
+                        qualityEntries[3],
+                        qualityEntries[4],
+                        qualityEntries[5],
+                    )
+                else -> qualityEntries
+            }
+
         MaterialAlertDialogBuilder(this)
             .setTitle("Select Video Quality")
-            .setItems(qualities) { _, which ->
-                val selectedQuality = qualities[which]
-                viewModel.changeVideoQuality(selectedQuality)
-            }
-            .show()
+            .setItems(qualities.toTypedArray()) { _, which ->
+                val selectedQualityEntry = qualities[which]
+                val selectedQualityValue =
+                    qualityMap.entries.find { it.key.contains(selectedQualityEntry.split(" ")[0]) }?.value ?: selectedQualityEntry
+                viewModel.changeVideoQuality(selectedQualityValue)
+            }.show()
     }
-
-
-
-
 
     override fun onPictureInPictureModeChanged(
         isInPictureInPictureMode: Boolean,
@@ -463,25 +499,29 @@ class PlayerActivity : BasePlayerActivity() {
                 playerGestureHelper?.updateZoomMode(false)
 
                 // Brightness mode Auto
-                window.attributes = window.attributes.apply {
-                    screenBrightness = WindowManager.LayoutParams.BRIGHTNESS_OVERRIDE_NONE
-                }
+                window.attributes =
+                    window.attributes.apply {
+                        screenBrightness = WindowManager.LayoutParams.BRIGHTNESS_OVERRIDE_NONE
+                    }
             }
             false -> {
                 binding.playerView.useController = true
                 playerGestureHelper?.updateZoomMode(wasZoom)
 
                 // Override auto brightness
-                window.attributes = window.attributes.apply {
-                    screenBrightness = if (appPreferences.playerBrightnessRemember) {
-                        appPreferences.playerBrightness
-                    } else {
-                        Settings.System.getInt(
-                            contentResolver,
-                            Settings.System.SCREEN_BRIGHTNESS,
-                        ).toFloat() / 255
+                window.attributes =
+                    window.attributes.apply {
+                        screenBrightness =
+                            if (appPreferences.playerBrightnessRemember) {
+                                appPreferences.playerBrightness
+                            } else {
+                                Settings.System
+                                    .getInt(
+                                        contentResolver,
+                                        Settings.System.SCREEN_BRIGHTNESS,
+                                    ).toFloat() / 255
+                            }
                     }
-                }
             }
         }
     }
