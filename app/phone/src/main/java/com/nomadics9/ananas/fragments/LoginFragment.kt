@@ -25,6 +25,7 @@ import com.nomadics9.ananas.database.ServerDatabaseDao
 import com.nomadics9.ananas.databinding.FragmentLoginBinding
 import com.nomadics9.ananas.viewmodels.LoginEvent
 import com.nomadics9.ananas.viewmodels.LoginViewModel
+import io.noties.markwon.Markwon
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
@@ -157,7 +158,21 @@ class LoginFragment : Fragment() {
         binding.editTextPasswordLayout.isEnabled = true
 
         uiState.disclaimer?.let { disclaimer ->
-            binding.loginDisclaimer.text = fromHtml(disclaimer, 0)
+            if (BuildConfig.FLAVOR == "Ananas") {
+                val lines = disclaimer.lines()
+                val lineToRemoveIndex = 3
+                val filteredLines = lines.toMutableList().apply {
+                    if (size > lineToRemoveIndex) {
+                        removeAt(lineToRemoveIndex)
+                    }
+                }
+                val filteredDisclaimer = filteredLines.joinToString("\n")
+                val markwon = Markwon.create(requireContext())
+                markwon.setMarkdown(binding.loginDisclaimer, filteredDisclaimer)
+            } else {
+            val markwon = Markwon.create(requireContext())
+            markwon.setMarkdown(binding.loginDisclaimer, disclaimer)
+            }
         }
     }
 
