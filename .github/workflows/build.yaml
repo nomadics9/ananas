@@ -25,6 +25,7 @@ jobs:
   assemble:
     name: Assemble
     runs-on: ubuntu-22.04
+    if: startsWith(github.event.head_commit.message, 'build:')
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
