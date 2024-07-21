@@ -47,6 +47,7 @@ import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
 import com.nomadics9.ananas.core.R as CoreR
+import com.nomadics9.ananas.models.VideoQuality
 
 var isControlsLocked: Boolean = false
 
@@ -86,12 +87,10 @@ class PlayerActivity : BasePlayerActivity() {
 
         binding = ActivityPlayerBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
         val changeQualityButton: ImageButton = findViewById(R.id.btnChangeQuality)
         changeQualityButton.setOnClickListener {
             showQualitySelectionDialog()
         }
-
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
 
         binding.playerView.player = viewModel.player
@@ -356,12 +355,11 @@ class PlayerActivity : BasePlayerActivity() {
 
         if (appPreferences.playerTrickplay) {
             val imagePreview = binding.playerView.findViewById<ImageView>(R.id.image_preview)
-            previewScrubListener =
-                PreviewScrubListener(
-                    imagePreview,
-                    timeBar,
-                    viewModel.player,
-                )
+            previewScrubListener = PreviewScrubListener(
+                imagePreview,
+                timeBar,
+                viewModel.player,
+            )
 
             timeBar.addListener(previewScrubListener!!)
         }
@@ -439,50 +437,32 @@ class PlayerActivity : BasePlayerActivity() {
 
         try {
             enterPictureInPictureMode(pipParams())
-        } catch (_: IllegalArgumentException) {
-        }
+        } catch (_: IllegalArgumentException) { }
     }
 
+    private var selectedIndex = 1  // Default to "Original" (index 1)
     private fun showQualitySelectionDialog() {
-        val height = viewModel.getOriginalHeight()
+        val originalResolution = viewModel.getOriginalResolution() ?: 0
         val qualityEntries = resources.getStringArray(CoreR.array.quality_entries).toList()
         val qualityValues = resources.getStringArray(CoreR.array.quality_values).toList()
 
-        // Map entries to values
-        val qualityMap = qualityEntries.zip(qualityValues).toMap()
+        val qualities = qualityEntries.toMutableList()
+        val closestQuality = VideoQuality.entries
+            .filter { it != VideoQuality.Auto && it != VideoQuality.Original }
+            .minByOrNull { kotlin.math.abs(it.height*it.width - originalResolution) }
 
-        val qualities: List<String> =
-            when (height) {
-                0 -> qualityEntries
-                in 1001..1999 ->
-                    listOf(
-                        qualityEntries[0],
-                        "${qualityEntries[1]} (1080p)",
-                        qualityEntries[2],
-                        qualityEntries[3],
-                        qualityEntries[4],
-                        qualityEntries[5],
-                    )
-                in 2000..3000 ->
-                    listOf(
-                        qualityEntries[0],
-                        "${qualityEntries[1]} (4K)",
-                        qualityEntries[2],
-                        qualityEntries[3],
-                        qualityEntries[4],
-                        qualityEntries[5],
-                    )
-                else -> qualityEntries
-            }
-
+        if (closestQuality != null) {
+            qualities[1] = "${qualities[1]} (${closestQuality})"
+        }
         MaterialAlertDialogBuilder(this)
-            .setTitle("Select Video Quality")
-            .setItems(qualities.toTypedArray()) { _, which ->
-                val selectedQualityEntry = qualities[which]
-                val selectedQualityValue =
-                    qualityMap.entries.find { it.key.contains(selectedQualityEntry.split(" ")[0]) }?.value ?: selectedQualityEntry
+            .setTitle(CoreR.string.select_quality)
+            .setSingleChoiceItems(qualities.toTypedArray(), selectedIndex) { dialog, which ->
+                selectedIndex = which
+                val selectedQualityValue = qualityValues[which]
                 viewModel.changeVideoQuality(selectedQualityValue)
-            }.show()
+                dialog.dismiss()
+            }
+            .show()
     }
 
     override fun onPictureInPictureModeChanged(

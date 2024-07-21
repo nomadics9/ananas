@@ -79,15 +79,8 @@ class DownloaderImpl(
                     ),
                 )
             }
-            val qualityPreference = appPreferences.downloadQuality!!
-            Timber.d("Quality preference: $qualityPreference")
-            return if (qualityPreference != "Original") {
-                Timber.d("Handling Transcoding download for item: ${item.id}")
-                handleTranscodeDownload(item, source, storageIndex, trickplayInfo, segments, path, qualityPreference)
-            } else {
-                Timber.d("Handling original download for item: ${item.id}")
-                downloadOriginalItem(item, source, storageIndex, trickplayInfo, segments, path)
-            }
+            handleDownload(item, source, storageIndex, trickplayInfo, segments, path)
+            return Pair(-1, null)
         } catch (e: Exception) {
             try {
                 val source = jellyfinRepository.getMediaSources(item.id).first { it.id == sourceId }
@@ -108,79 +101,7 @@ class DownloaderImpl(
         }
     }
 
-    private suspend fun handleTranscodeDownload(
-        item: FindroidItem,
-        source: FindroidSource,
-        storageIndex: Int,
-        trickplayInfo: FindroidTrickplayInfo?,
-        segments: List<FindroidSegment>?,
-        path: Uri,
-        quality: String,
-    ): Pair<Long, UiText?> {
-        val transcodingUrl = getTranscodedUrl(item.id, quality)
-        when (item) {
-            is FindroidMovie -> {
-                database.insertMovie(item.toFindroidMovieDto(appPreferences.currentServer!!))
-                database.insertSource(source.toFindroidSourceDto(item.id, path.path.orEmpty()))
-                database.insertUserData(item.toFindroidUserDataDto(jellyfinRepository.getUserId()))
-                downloadExternalMediaStreams(item, source, storageIndex)
-                downloadEmbeddedMediaStreams(item, source, storageIndex)
-                if (trickplayInfo != null) {
-                    downloadTrickplayData(item.id, source.id, trickplayInfo)
-                }
-                if (segments != null) {
-                    database.insertSegments(segments.toFindroidSegmentsDto(item.id))
-                }
-                val request =
-                    DownloadManager
-                        .Request(transcodingUrl)
-                        .setTitle(item.name)
-                        .setAllowedOverMetered(appPreferences.downloadOverMobileData)
-                        .setAllowedOverRoaming(appPreferences.downloadWhenRoaming)
-                        .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
-                        .setDestinationUri(path)
-                val downloadId = downloadManager.enqueue(request)
-                database.setSourceDownloadId(source.id, downloadId)
-                return Pair(downloadId, null)
-            }
-
-            is FindroidEpisode -> {
-                database.insertShow(
-                    jellyfinRepository
-                        .getShow(item.seriesId)
-                        .toFindroidShowDto(appPreferences.currentServer!!),
-                )
-                database.insertSeason(
-                    jellyfinRepository.getSeason(item.seasonId).toFindroidSeasonDto(),
-                )
-                database.insertEpisode(item.toFindroidEpisodeDto(appPreferences.currentServer!!))
-                database.insertSource(source.toFindroidSourceDto(item.id, path.path.orEmpty()))
-                database.insertUserData(item.toFindroidUserDataDto(jellyfinRepository.getUserId()))
-                downloadExternalMediaStreams(item, source, storageIndex)
-                downloadEmbeddedMediaStreams(item, source, storageIndex)
-                if (trickplayInfo != null) {
-                    downloadTrickplayData(item.id, source.id, trickplayInfo)
-                }
-                if (segments != null) {
-                    database.insertSegments(segments.toFindroidSegmentsDto(item.id))
-                }
-                val request =
-                    DownloadManager
-                        .Request(transcodingUrl)
-                        .setTitle(item.name)
-                        .setAllowedOverMetered(appPreferences.downloadOverMobileData)
-                        .setAllowedOverRoaming(appPreferences.downloadWhenRoaming)
-                        .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
-                        .setDestinationUri(path)
-                val downloadId = downloadManager.enqueue(request)
-                database.setSourceDownloadId(source.id, downloadId)
-                return Pair(downloadId, null)
-            }
-        }
-        return Pair(-1, null)
-    }
-
-    private suspend fun downloadOriginalItem(
+    private suspend fun handleDownload(
         item: FindroidItem,
         source: FindroidSource,
         storageIndex: Int,
@@ -200,17 +121,34 @@ class DownloaderImpl(
                 if (segments != null) {
                     database.insertSegments(segments.toFindroidSegmentsDto(item.id))
                 }
-                val request =
-                    DownloadManager
-                        .Request(source.path.toUri())
-                        .setTitle(item.name)
-                        .setAllowedOverMetered(appPreferences.downloadOverMobileData)
-                        .setAllowedOverRoaming(appPreferences.downloadWhenRoaming)
-                        .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
-                        .setDestinationUri(path)
-                val downloadId = downloadManager.enqueue(request)
-                database.setSourceDownloadId(source.id, downloadId)
-                return Pair(downloadId, null)
+                if (appPreferences.downloadQuality != VideoQuality.Original.toString()) {
+                    downloadEmbeddedMediaStreams(item, source, storageIndex)
+                    val transcodingUrl =
+                        getTranscodedUrl(item.id, appPreferences.downloadQuality!!)
+                    val request =
+                        DownloadManager
+                            .Request(transcodingUrl)
+                            .setTitle(item.name)
+                            .setAllowedOverMetered(appPreferences.downloadOverMobileData)
+                            .setAllowedOverRoaming(appPreferences.downloadWhenRoaming)
+                            .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
+                            .setDestinationUri(path)
+                    val downloadId = downloadManager.enqueue(request)
+                    database.setSourceDownloadId(source.id, downloadId)
+                    return Pair(downloadId, null)
+                } else {
+                    val request =
+                        DownloadManager
+                            .Request(source.path.toUri())
+                            .setTitle(item.name)
+                            .setAllowedOverMetered(appPreferences.downloadOverMobileData)
+                            .setAllowedOverRoaming(appPreferences.downloadWhenRoaming)
+                            .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
+                            .setDestinationUri(path)
+                    val downloadId = downloadManager.enqueue(request)
+                    database.setSourceDownloadId(source.id, downloadId)
+                    return Pair(downloadId, null)
+                }
             }
 
             is FindroidEpisode -> {
@@ -232,17 +170,34 @@ class DownloaderImpl(
                 if (segments != null) {
                     database.insertSegments(segments.toFindroidSegmentsDto(item.id))
                 }
-                val request =
-                    DownloadManager
-                        .Request(source.path.toUri())
-                        .setTitle(item.name)
-                        .setAllowedOverMetered(appPreferences.downloadOverMobileData)
-                        .setAllowedOverRoaming(appPreferences.downloadWhenRoaming)
-                        .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
-                        .setDestinationUri(path)
-                val downloadId = downloadManager.enqueue(request)
-                database.setSourceDownloadId(source.id, downloadId)
-                return Pair(downloadId, null)
+                if (appPreferences.downloadQuality != VideoQuality.Original.toString()) {
+                    downloadEmbeddedMediaStreams(item, source, storageIndex)
+                    val transcodingUrl =
+                        getTranscodedUrl(item.id, appPreferences.downloadQuality!!)
+                    val request =
+                        DownloadManager
+                            .Request(transcodingUrl)
+                            .setTitle(item.name)
+                            .setAllowedOverMetered(appPreferences.downloadOverMobileData)
+                            .setAllowedOverRoaming(appPreferences.downloadWhenRoaming)
+                            .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
+                            .setDestinationUri(path)
+                    val downloadId = downloadManager.enqueue(request)
+                    database.setSourceDownloadId(source.id, downloadId)
+                    return Pair(downloadId, null)
+                } else {
+                    val request =
+                        DownloadManager
+                            .Request(source.path.toUri())
+                            .setTitle(item.name)
+                            .setAllowedOverMetered(appPreferences.downloadOverMobileData)
+                            .setAllowedOverRoaming(appPreferences.downloadWhenRoaming)
+                            .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
+                            .setDestinationUri(path)
+                    val downloadId = downloadManager.enqueue(request)
+                    database.setSourceDownloadId(source.id, downloadId)
+                    return Pair(downloadId, null)
+                }
             }
         }
         return Pair(-1, null)
@@ -483,8 +438,8 @@ class DownloaderImpl(
                     mediaSourceId,
                     playSessionId,
                     VideoQuality.getBitrate(videoQuality),
-                    VideoQuality.getQualityInt(videoQuality),
                     "mkv",
+                    VideoQuality.getHeight(videoQuality),
                 )
 
             return downloadUrl.toUri()

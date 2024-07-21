@@ -18,6 +18,7 @@ import com.nomadics9.ananas.models.PlayerChapter
 import com.nomadics9.ananas.models.PlayerItem
 import com.nomadics9.ananas.models.TrickplayInfo
 import com.nomadics9.ananas.repository.JellyfinRepository
+import com.nomadics9.ananas.setSubtitlesMimeTypes
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
@@ -136,6 +137,7 @@ class PlayerViewModel @Inject internal constructor(
         } else {
             mediaSources[mediaSourceIndex]
         }
+        // Embedded Sub externally for offline playback
         val externalSubtitles = if (mediaSource.type.toString() == "LOCAL" ) {
             mediaSource.mediaStreams
                 .filter { mediaStream ->
@@ -146,13 +148,7 @@ class PlayerViewModel @Inject internal constructor(
                         mediaStream.title,
                         mediaStream.language,
                         Uri.parse(mediaStream.path!!),
-                        when (mediaStream.codec) {
-                            "subrip" -> MimeTypes.APPLICATION_SUBRIP
-                            "webvtt" -> MimeTypes.APPLICATION_SUBRIP
-                            "pgs" -> MimeTypes.APPLICATION_PGS
-                            "ass" -> MimeTypes.TEXT_SSA
-                            else -> MimeTypes.TEXT_UNKNOWN
-                        },
+                        setSubtitlesMimeTypes(mediaStream.codec),
                     )
                 }
         }else {
@@ -165,13 +161,7 @@ class PlayerViewModel @Inject internal constructor(
                     mediaStream.title,
                     mediaStream.language,
                     Uri.parse(mediaStream.path!!),
-                    when (mediaStream.codec) {
-                        "subrip" -> MimeTypes.APPLICATION_SUBRIP
-                        "webvtt" -> MimeTypes.APPLICATION_SUBRIP
-                        "pgs" -> MimeTypes.APPLICATION_PGS
-                        "ass" -> MimeTypes.TEXT_SSA
-                        else -> MimeTypes.TEXT_UNKNOWN
-                    },
+                    setSubtitlesMimeTypes(mediaStream.codec)
                 )
             }
         }

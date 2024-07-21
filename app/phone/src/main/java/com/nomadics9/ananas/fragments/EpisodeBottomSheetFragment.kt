@@ -172,11 +172,11 @@ class EpisodeBottomSheetFragment : BottomSheetDialogFragment() {
         }else if (!appPreferences.downloadQualityDefault) {
             createPickQualityDialog()
         } else {
-            download()
+            startDownload()
            }
     }
 
-    private fun download(){
+    private fun startDownload(){
         binding.itemActions.downloadButton.setIconResource(AndroidR.color.transparent)
         binding.itemActions.progressDownload.isIndeterminate = true
         binding.itemActions.progressDownload.isVisible = true
@@ -413,8 +413,8 @@ class EpisodeBottomSheetFragment : BottomSheetDialogFragment() {
     }
 
     private fun createPickQualityDialog() {
-        val qualityEntries = resources.getStringArray(com.nomadics9.ananas.core.R.array.quality_entries)
-        val qualityValues = resources.getStringArray(com.nomadics9.ananas.core.R.array.quality_values)
+        val qualityEntries = resources.getStringArray(CoreR.array.download_quality_entries)
+        val qualityValues = resources.getStringArray(CoreR.array.download_quality_values)
         val quality = appPreferences.downloadQuality
         val currentQualityIndex = qualityValues.indexOf(quality)
         var selectedQuality = quality
@@ -428,7 +428,7 @@ class EpisodeBottomSheetFragment : BottomSheetDialogFragment() {
         builder.setPositiveButton("Download") { dialog, _ ->
             appPreferences.downloadQuality = selectedQuality
             dialog.dismiss()
-            download()
+            startDownload()
         }
         builder.setNegativeButton("Cancel") { dialog, _ ->
             dialog.dismiss()

@@ -336,8 +336,8 @@ class JellyfinRepositoryOfflineImpl(
         mediaSourceId: String,
         playSessionId: String,
         videoBitrate: Int,
-        maxHeight: Int,
         container: String,
+        maxHeight: Int,
     ): String {
         TODO("Not yet implemented")
     }
@@ -362,6 +362,10 @@ class JellyfinRepositoryOfflineImpl(
     }
 
     override suspend fun stopEncodingProcess(playSessionId: String) {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun getAccessToken(): String? {
         TODO("Not yet implemented")
     }
 }

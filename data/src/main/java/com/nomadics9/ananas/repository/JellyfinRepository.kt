@@ -88,40 +88,21 @@ interface JellyfinRepository {
         offline: Boolean = false,
     ): List<FindroidEpisode>
 
-    suspend fun getMediaSources(
-        itemId: UUID,
-        includePath: Boolean = false,
-    ): List<FindroidSource>
+    suspend fun getMediaSources(itemId: UUID, includePath: Boolean = false): List<FindroidSource>
 
-    suspend fun getStreamUrl(
-        itemId: UUID,
-        mediaSourceId: String,
-        playSessionId: String? = null,
-    ): String
+    suspend fun getStreamUrl(itemId: UUID, mediaSourceId: String, playSessionId: String? = null): String
 
     suspend fun getSegmentsTimestamps(itemId: UUID): List<FindroidSegment>?
 
-    suspend fun getTrickplayData(
-        itemId: UUID,
-        width: Int,
-        index: Int,
-    ): ByteArray?
+    suspend fun getTrickplayData(itemId: UUID, width: Int, index: Int): ByteArray?
 
     suspend fun postCapabilities()
 
     suspend fun postPlaybackStart(itemId: UUID)
 
-    suspend fun postPlaybackStop(
-        itemId: UUID,
-        positionTicks: Long,
-        playedPercentage: Int,
-    )
+    suspend fun postPlaybackStop(itemId: UUID, positionTicks: Long, playedPercentage: Int)
 
-    suspend fun postPlaybackProgress(
-        itemId: UUID,
-        positionTicks: Long,
-        isPaused: Boolean,
-    )
+    suspend fun postPlaybackProgress(itemId: UUID, positionTicks: Long, isPaused: Boolean)
 
     suspend fun markAsFavorite(itemId: UUID)
 
@@ -155,8 +136,8 @@ interface JellyfinRepository {
         mediaSourceId: String,
         playSessionId: String,
         videoBitrate: Int,
-        maxHeight: Int,
         container: String,
+        maxHeight: Int,
     ): String
 
     suspend fun getTranscodedVideoStream(
@@ -175,4 +156,6 @@ interface JellyfinRepository {
     ): Response<PlaybackInfoResponse>
 
     suspend fun stopEncodingProcess(playSessionId: String)
+
+    suspend fun getAccessToken(): String?
 }

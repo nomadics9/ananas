@@ -209,11 +209,11 @@ class MovieFragment : Fragment() {
         } else if (!appPreferences.downloadQualityDefault) {
             createPickQualityDialog()
         } else {
-            download()
+            startDownload()
         }
     }
 
-    private fun download() {
+    private fun startDownload() {
         binding.itemActions.downloadButton.setIconResource(android.R.color.transparent)
         binding.itemActions.progressDownload.isIndeterminate = true
         binding.itemActions.progressDownload.isVisible = true
@@ -506,8 +506,8 @@ class MovieFragment : Fragment() {
     }
 
     private fun createPickQualityDialog() {
-        val qualityEntries = resources.getStringArray(CoreR.array.quality_entries)
-        val qualityValues = resources.getStringArray(CoreR.array.quality_values)
+        val qualityEntries = resources.getStringArray(CoreR.array.download_quality_entries)
+        val qualityValues = resources.getStringArray(CoreR.array.download_quality_values)
         val quality = appPreferences.downloadQuality
         val currentQualityIndex = qualityValues.indexOf(quality)
         var selectedQuality = quality
@@ -520,7 +520,7 @@ class MovieFragment : Fragment() {
         }
         builder.setPositiveButton("Download") { dialog, _ ->
             appPreferences.downloadQuality = selectedQuality
-            download()
+            startDownload()
             dialog.dismiss()
         }
         builder.setNegativeButton("Cancel") { dialog, _ ->

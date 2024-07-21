@@ -384,7 +384,7 @@ class JellyfinRepositoryImpl(
         playSessionId: String?,
     ): String =
         withContext(Dispatchers.IO) {
-            // val deviceId = getDeviceId()
+            val deviceId = getDeviceId()
             try {
                 val url =
                     if (playSessionId != null) {
@@ -393,7 +393,7 @@ class JellyfinRepositoryImpl(
                             static = true,
                             mediaSourceId = mediaSourceId,
                             playSessionId = playSessionId,
-                            // deviceId = deviceId,
+                            deviceId = deviceId,
                             context = EncodingContext.STREAMING,
                         )
                     } else {
@@ -401,7 +401,7 @@ class JellyfinRepositoryImpl(
                             itemId,
                             static = true,
                             mediaSourceId = mediaSourceId,
-                            // deviceId = deviceId,
+                            deviceId = deviceId,
                         )
                     }
                 url
@@ -752,8 +752,8 @@ class JellyfinRepositoryImpl(
         mediaSourceId: String,
         playSessionId: String,
         videoBitrate: Int,
-        maxHeight: Int,
         container: String,
+        maxHeight: Int,
     ): String {
         val url =
             jellyfinApi.videosApi.getVideoStreamByContainerUrl(
@@ -764,9 +764,9 @@ class JellyfinRepositoryImpl(
                 playSessionId = playSessionId,
                 videoBitRate = videoBitrate,
                 maxHeight = maxHeight,
-                audioBitRate = 128000,
-                videoCodec = "hevc",
-                audioCodec = "aac",
+                audioBitRate = 328000,
+                videoCodec = appPreferences.transcodeCodec,
+                audioCodec = "aac,ac3,eac3",
                 container = container,
                 startTimeTicks = 0,
                 copyTimestamps = true,
@@ -782,7 +782,7 @@ class JellyfinRepositoryImpl(
         playSessionId: String,
         videoBitrate: Int,
     ): String {
-        val isAuto = videoBitrate == VideoQuality.getBitrate(VideoQuality.PAuto)
+        val isAuto = videoBitrate == VideoQuality.getBitrate(VideoQuality.Auto)
         val url: String
         try {
             url =
@@ -795,9 +795,9 @@ class JellyfinRepositoryImpl(
                         playSessionId = playSessionId,
                         videoBitRate = videoBitrate,
                         enableAdaptiveBitrateStreaming = false,
-                        audioBitRate = 128000,
-                        videoCodec = "hevc",
-                        audioCodec = "aac",
+                        audioBitRate = 328000,
+                        videoCodec = appPreferences.transcodeCodec,
+                        audioCodec = "aac,ac3,eac3",
                         startTimeTicks = 0,
                         copyTimestamps = true,
                         subtitleMethod = SubtitleDeliveryMethod.EXTERNAL,
@@ -813,8 +813,8 @@ class JellyfinRepositoryImpl(
                         mediaSourceId = mediaSourceId,
                         playSessionId = playSessionId,
                         enableAdaptiveBitrateStreaming = true,
-                        videoCodec = "hevc",
-                        audioCodec = "aac",
+                        videoCodec = appPreferences.transcodeCodec,
+                        audioCodec = "aac,ac3,eac3",
                         startTimeTicks = 0,
                         copyTimestamps = true,
                         subtitleMethod = SubtitleDeliveryMethod.EXTERNAL,
@@ -838,5 +838,9 @@ class JellyfinRepositoryImpl(
             deviceId = deviceId,
             playSessionId = playSessionId,
         )
+    }
+
+    override suspend fun getAccessToken(): String? {
+        return jellyfinApi.api.accessToken
     }
 }
