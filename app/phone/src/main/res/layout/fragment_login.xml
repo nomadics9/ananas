@@ -141,6 +141,19 @@
                     android:visibility="invisible" />
             </RelativeLayout>
 
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="24dp">
+
+            <Button
+                android:id="@+id/button_forget_password"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/forget_password" />
+            </RelativeLayout>
+
             <TextView
                 android:id="@+id/login_disclaimer"
                 android:layout_width="match_parent"

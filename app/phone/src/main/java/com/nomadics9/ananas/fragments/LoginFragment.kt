@@ -1,5 +1,7 @@
 package com.nomadics9.ananas.fragments
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.text.Html.fromHtml
 import android.view.LayoutInflater
@@ -17,6 +19,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import dagger.hilt.android.AndroidEntryPoint
 import com.nomadics9.ananas.AppPreferences
+import com.nomadics9.ananas.BuildConfig
 import com.nomadics9.ananas.adapters.UserLoginListAdapter
 import com.nomadics9.ananas.database.ServerDatabaseDao
 import com.nomadics9.ananas.databinding.FragmentLoginBinding
@@ -76,6 +79,17 @@ class LoginFragment : Fragment() {
         binding.usersRecyclerView.adapter = UserLoginListAdapter { user ->
             (binding.editTextUsername as AppCompatEditText).setText(user.name)
             (binding.editTextPassword as AppCompatEditText).requestFocus()
+        }
+
+
+        if (BuildConfig.FLAVOR == "Ananas") {
+            binding.buttonForgetPassword.setOnClickListener {
+                val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(BuildConfig.FORGET_PASSWORD_ADDRESS))
+                startActivity(browserIntent)
+            }
+            binding.buttonForgetPassword.isVisible = true
+        } else {
+            binding.buttonForgetPassword.isVisible = false
         }
 
         viewLifecycleOwner.lifecycleScope.launch {

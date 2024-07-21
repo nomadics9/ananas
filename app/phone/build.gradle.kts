@@ -25,6 +25,7 @@ android {
         testInstrumentationRunner = "com.nomadics9.ananas.HiltTestRunner"
         buildConfigField( "String", "DEFAULT_SERVER_ADDRESS", "\" \"")
         buildConfigField( "String", "REQUEST_SERVER_ADDRESS", "\" \"")
+        buildConfigField("String", "FORGET_PASSWORD_ADDRESS", "\" \"")
     }
 
     applicationVariants.all {
@@ -68,6 +69,7 @@ android {
             isDefault = false
             buildConfigField( "String", "DEFAULT_SERVER_ADDRESS", "\"https://askar.tv\"")
             buildConfigField( "String", "REQUEST_SERVER_ADDRESS", "\"https://r.askar.tv\"")
+            buildConfigField("String", "FORGET_PASSWORD_ADDRESS", "\"https://user.askar.tv/my/account\"")
         }
     }
 
