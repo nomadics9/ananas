@@ -226,8 +226,8 @@ class SeasonFragment : Fragment() {
     }
 
     private fun createPickQualityDialog(onQualitySelected: () -> Unit) {
-        val qualityEntries = resources.getStringArray(com.nomadics9.ananas.core.R.array.quality_entries)
-        val qualityValues = resources.getStringArray(com.nomadics9.ananas.core.R.array.quality_values)
+        val qualityEntries = resources.getStringArray(com.nomadics9.ananas.core.R.array.download_quality_entries)
+        val qualityValues = resources.getStringArray(com.nomadics9.ananas.core.R.array.download_quality_values)
         val quality = appPreferences.downloadQuality
         val currentQualityIndex = qualityValues.indexOf(quality)
 
