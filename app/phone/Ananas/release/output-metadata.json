@@ -16,9 +16,9 @@
         }
       ],
       "attributes": [],
-      "versionCode": 15,
-      "versionName": "0.10.5-0.14.2",
-      "outputFile": "ananas-v0.10.5-0.14.2-Ananas-armeabi-v7a.apk"
+      "versionCode": 16,
+      "versionName": "0.10.6-0.14.2",
+      "outputFile": "ananas-v0.10.6-0.14.2-Ananas-armeabi-v7a.apk"
     },
     {
       "type": "ONE_OF_MANY",
@@ -29,9 +29,9 @@
         }
       ],
       "attributes": [],
-      "versionCode": 15,
-      "versionName": "0.10.5-0.14.2",
-      "outputFile": "ananas-v0.10.5-0.14.2-Ananas-arm64-v8a.apk"
+      "versionCode": 16,
+      "versionName": "0.10.6-0.14.2",
+      "outputFile": "ananas-v0.10.6-0.14.2-Ananas-arm64-v8a.apk"
     },
     {
       "type": "ONE_OF_MANY",
@@ -42,9 +42,9 @@
         }
       ],
       "attributes": [],
-      "versionCode": 15,
-      "versionName": "0.10.5-0.14.2",
-      "outputFile": "ananas-v0.10.5-0.14.2-Ananas-x86_64.apk"
+      "versionCode": 16,
+      "versionName": "0.10.6-0.14.2",
+      "outputFile": "ananas-v0.10.6-0.14.2-Ananas-x86_64.apk"
     },
     {
       "type": "ONE_OF_MANY",
@@ -55,9 +55,9 @@
         }
       ],
       "attributes": [],
-      "versionCode": 15,
-      "versionName": "0.10.5-0.14.2",
-      "outputFile": "ananas-v0.10.5-0.14.2-Ananas-x86.apk"
+      "versionCode": 16,
+      "versionName": "0.10.6-0.14.2",
+      "outputFile": "ananas-v0.10.6-0.14.2-Ananas-x86.apk"
     }
   ],
   "elementType": "File",
@@ -66,20 +66,20 @@
       "minApi": 28,
       "maxApi": 30,
       "baselineProfiles": [
-        "baselineProfiles/1/ananas-v0.10.5-0.14.2-Ananas-armeabi-v7a.dm",
-        "baselineProfiles/1/ananas-v0.10.5-0.14.2-Ananas-arm64-v8a.dm",
-        "baselineProfiles/1/ananas-v0.10.5-0.14.2-Ananas-x86_64.dm",
-        "baselineProfiles/1/ananas-v0.10.5-0.14.2-Ananas-x86.dm"
+        "baselineProfiles/1/ananas-v0.10.6-0.14.2-Ananas-armeabi-v7a.dm",
+        "baselineProfiles/1/ananas-v0.10.6-0.14.2-Ananas-arm64-v8a.dm",
+        "baselineProfiles/1/ananas-v0.10.6-0.14.2-Ananas-x86_64.dm",
+        "baselineProfiles/1/ananas-v0.10.6-0.14.2-Ananas-x86.dm"
       ]
     },
     {
       "minApi": 31,
       "maxApi": 2147483647,
       "baselineProfiles": [
-        "baselineProfiles/0/ananas-v0.10.5-0.14.2-Ananas-armeabi-v7a.dm",
-        "baselineProfiles/0/ananas-v0.10.5-0.14.2-Ananas-arm64-v8a.dm",
-        "baselineProfiles/0/ananas-v0.10.5-0.14.2-Ananas-x86_64.dm",
-        "baselineProfiles/0/ananas-v0.10.5-0.14.2-Ananas-x86.dm"
+        "baselineProfiles/0/ananas-v0.10.6-0.14.2-Ananas-armeabi-v7a.dm",
+        "baselineProfiles/0/ananas-v0.10.6-0.14.2-Ananas-arm64-v8a.dm",
+        "baselineProfiles/0/ananas-v0.10.6-0.14.2-Ananas-x86_64.dm",
+        "baselineProfiles/0/ananas-v0.10.6-0.14.2-Ananas-x86.dm"
       ]
     }
   ],
