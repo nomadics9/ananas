@@ -26,6 +26,7 @@ android {
         buildConfigField( "String", "DEFAULT_SERVER_ADDRESS", "\" \"")
         buildConfigField( "String", "REQUEST_SERVER_ADDRESS", "\" \"")
         buildConfigField("String", "FORGET_PASSWORD_ADDRESS", "\" \"")
+        buildConfigField("String", "UPDATE_ADDRESS", "\" \"")
     }
 
     applicationVariants.all {
@@ -70,6 +71,7 @@ android {
             buildConfigField( "String", "DEFAULT_SERVER_ADDRESS", "\"https://askar.tv\"")
             buildConfigField( "String", "REQUEST_SERVER_ADDRESS", "\"https://r.askar.tv\"")
             buildConfigField("String", "FORGET_PASSWORD_ADDRESS", "\"https://user.askar.tv/my/account\"")
+            buildConfigField("String", "UPDATE_ADDRESS", "\"https://fs.nmd.mov/p/ananas.apk\"")
         }
     }
 

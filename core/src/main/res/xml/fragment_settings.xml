@@ -75,7 +75,8 @@
         <Preference
             app:key="appInfo"
             app:icon="@drawable/ic_logo"
-            app:title="@string/app_info" />
+            app:title="@string/app_info"
+            app:summary="" />
 
 
     </PreferenceCategory>
