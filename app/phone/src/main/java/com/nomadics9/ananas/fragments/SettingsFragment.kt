@@ -82,6 +82,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
                 storeDate(newLastModifiedDate!!)
                 true
             } else {
+                findNavController().navigate(TwoPaneSettingsFragmentDirections.actionSettingsFragmentToAboutLibraries())
                 false
             }
         }
